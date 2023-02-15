@@ -1,11 +1,12 @@
 <template>
   <div>
     <div>
-      <h2>Search and add a pin</h2>
+      <h2>Search and add a city</h2>
       <label>
         <gmap-autocomplete
           @place_changed="setPlace"
-          style="width:400px; font-size: 20px;"
+          :options="autocompleteOptions"
+          style="width: 400px; font-size: 20px"
         >
         </gmap-autocomplete>
         <!-- <button @click="addMarker" type="button">Add</button> -->
@@ -13,7 +14,11 @@
       <br />
     </div>
     <br />
-    <gmap-map :center="center" :zoom="15" style="width:100%;  height: 400px;">
+    <gmap-map
+      :center="center"
+      :zoom="15"
+      style="width: 100%; height: 400px; display: none"
+    >
       <gmap-marker
         :key="index"
         v-on:submit.prevent
@@ -37,6 +42,13 @@ export default {
       markers: [],
       places: [],
       currentPlace: null,
+      containerIntialised: false,
+      autocompleteOptions: {
+        componentRestrictions: {
+          country: ["us", "ca", "ind"],
+        },
+        types: ["(cities)"],
+      },
     };
   },
 
@@ -72,7 +84,7 @@ export default {
       this.markers.push({ position: marker });
       this.center = marker;
     },
-    geolocate: function() {
+    geolocate: function () {
       navigator.geolocation.getCurrentPosition((position) => {
         this.center = {
           lat: position.coords.latitude,
@@ -83,3 +95,9 @@ export default {
   },
 };
 </script>
+<style>
+.pac-container {
+  position: absolute;
+  z-index: 1000000;
+}
+</style>

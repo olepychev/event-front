@@ -9,7 +9,10 @@
         <!-- Section Banner -->
         <div
           class="dlab-bnr-inr text-center dlab-bnr-inr-sm overlay-black-dark"
-          style="background-image:url(images/main-slider/slide1.jpg); background-size: cover;"
+          style="
+            background-image: url(images/main-slider/slide1.jpg);
+            background-size: cover;
+          "
           id="app-banner"
         >
           <div class="container">
@@ -49,7 +52,7 @@
               <form class="filter-form" action="wedding-venues-search.html">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-6 col-6">
-                    <select class="form-control" style="height: 100%;">
+                    <select class="form-control">
                       <option>We’re looking for</option>
                       <option>Photographers</option>
                       <option>Florists</option>
@@ -243,9 +246,7 @@
                           >Sub Event Type</label
                         >
                         <select id="subEventType" v-model="eventData.subType">
-                          <option>
-                            OTHER
-                          </option>
+                          <option>OTHER</option>
                         </select>
                       </div>
                     </div>
@@ -378,9 +379,7 @@
                         />
                       </div>
                     </div>
-                    <button class="btn btn-success">
-                      Save
-                    </button>
+                    <button class="btn btn-success">Save</button>
                   </fieldset>
                 </form>
               </div>
@@ -588,7 +587,8 @@ export default {
             this.eventData.estimatedGuests = this.addCommas(
               this.preFilledEventData.estimatedGuests
             );
-            this.eventData.description = this.preFilledEventData.shortDescription;
+            this.eventData.description =
+              this.preFilledEventData.shortDescription;
             this.startDateInput = this.preFilledEventData.fromDate;
             let time = {
               start: new Date(this.preFilledEventData.fromDate),
@@ -789,10 +789,7 @@ export default {
               str += val[i - 1] + ", ";
             } else str += val[i - 1];
           }
-          this.eventData.budget = str
-            .split("")
-            .reverse()
-            .join("");
+          this.eventData.budget = str.split("").reverse().join("");
         }
         setTimeout(() => {
           if (
@@ -839,10 +836,7 @@ export default {
               str += val[i - 1] + ", ";
             } else str += val[i - 1];
           }
-          this.eventData.estimatedGuests = str
-            .split("")
-            .reverse()
-            .join("");
+          this.eventData.estimatedGuests = str.split("").reverse().join("");
         }
         setTimeout(() => {
           if (

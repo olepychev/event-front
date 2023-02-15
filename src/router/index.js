@@ -59,6 +59,11 @@ const routes = [
     name: "/rsvp_page",
     component: () => import("../views/RsvpPage"),
   },
+  {
+    path: "/planner-add-event",
+    name: "planner-add-event",
+    component: () => import("../views/planner-add-event"),
+  },
 ];
 
 const router = new VueRouter({
