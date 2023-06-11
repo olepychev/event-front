@@ -12,7 +12,7 @@ window.toastr = require("toastr");
 Vue.use(VueToastr2);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyD8OJWvqCanCoFm8ZQM8YFOaxIlAHwUIcQ",
+    key: "AIzaSyDGQ93SShkmSS8sUN71cVO433709GjC1BI",
     libraries: "places", // necessary for places input
   },
 });

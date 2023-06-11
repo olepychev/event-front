@@ -12,6 +12,7 @@
     "@syncfusion/ej2": "^17.4.46",
     "@syncfusion/ej2-vue-base": "^17.4.47",
     "@syncfusion/ej2-vue-calendars": "^17.4.46",
+    "@vue/runtime-core": "^3.3.4",
     "axios": "^0.19.2",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "bootstrap": "^4.4.1",
