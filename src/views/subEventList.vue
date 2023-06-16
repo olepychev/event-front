@@ -2153,6 +2153,22 @@ window.JQuery = require("jquery");
 import axios from "axios";
 import { format } from "path";
 export default {
+  beforeRouteEnter(to, from, next) {
+    if (to.query.param1 === 'mainEventId') {
+      delete to.query.param1
+      next({ ...to, replace: true })
+    } else {
+      next()
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    if (to.query.param1 === 'mainEventId') {
+      delete to.query.param1
+      next({ ...to, replace: true })
+    } else {
+      next()
+    }
+  },
   name: "SubEventList",
   components: {
     Header,

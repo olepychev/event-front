@@ -1980,6 +1980,8 @@ export default {
           } else {
             window.toastr.error("Failed to add new Event");
           }
+        }).catch((err) => {
+          window.toastr.error("Failed to add new Event");
         })
     },
     GoToStep(pos) {
