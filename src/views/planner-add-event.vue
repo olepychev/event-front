@@ -1838,62 +1838,62 @@ export default {
     
     GoToFinish() {
 
-      const startFormattedTime = this.formattedDateForSubmit(
-        this.eventData.Time.start
-      );
-      const endFormattedTime = this.formattedDateForSubmit(
-        this.eventData.Time.end
-      );
+      // const startFormattedTime = this.formattedDateForSubmit(
+      //   this.eventData.Time.start
+      // );
+      // const endFormattedTime = this.formattedDateForSubmit(
+      //   this.eventData.Time.end
+      // );
 
-      let locationData = {
-        address: this.eventData.address.address,
-        city: this.eventData.address.city,
-        state: this.eventData.address.state,
-        country: this.eventData.address.country,
-        postalCode: this.eventData.address.postalCode,
-        longitude: this.eventData.address.longitude,
-        latitude: this.eventData.address.latitude,
-      };
+      // let locationData = {
+      //   address: this.eventData.address.address,
+      //   city: this.eventData.address.city,
+      //   state: this.eventData.address.state,
+      //   country: this.eventData.address.country,
+      //   postalCode: this.eventData.address.postalCode,
+      //   longitude: this.eventData.address.longitude,
+      //   latitude: this.eventData.address.latitude,
+      // };
 
-      let requestData = {
-        title: this.eventData.title,
-        multiEvent: "Y",
-        emailAddress: this.eventData.emailAddress,
-        emailPartnerAddress: this.eventData.emailPartnerAddress,
-        eventType: this.eventData.type,
-        eventSubType: this.eventData.subType,
-        budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
-        estimatedGuests: Number(
-          this.eventData.estimatedGuests.replace(/[, " "]/g, "")
-        ),
-        fromDate: startFormattedTime,
-        toDate: endFormattedTime,
-        shortDescription: this.eventData.description,
-        location: locationData,
-      };
-      console.log(requestData);
+      // let requestData = {
+      //   title: this.eventData.title,
+      //   multiEvent: "Y",
+      //   emailAddress: this.eventData.emailAddress,
+      //   emailPartnerAddress: this.eventData.emailPartnerAddress,
+      //   eventType: this.eventData.type,
+      //   eventSubType: this.eventData.subType,
+      //   budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
+      //   estimatedGuests: Number(
+      //     this.eventData.estimatedGuests.replace(/[, " "]/g, "")
+      //   ),
+      //   fromDate: startFormattedTime,
+      //   toDate: endFormattedTime,
+      //   shortDescription: this.eventData.description,
+      //   location: locationData,
+      // };
+      // console.log(requestData);
 
       this.tabIndex = 0;
-      $(".close").click();
-      axios
-        .post("http://localhost:" + this.port + "/events", requestData)
-        .then((res) => {
-          console.log("res: ", res);
-          if (res.statusText === "Created") {
-            window.toastr.success("New Event Successfully Added");
-            this.$router.push({
-              name: "/subevent_list",
-              query: {
-                mainEventId: res.data,
-              },
-            });
-          } else {
-            window.toastr.error("Failed to add new Event");
-          }
-        });
+      // $(".close").click();
+      // axios
+      //   .post("http://localhost:" + this.port + "/events", requestData)
+      //   .then((res) => {
+      //     if (res.statusText === "Created") {
+      //       window.toastr.success("New Event Successfully Added");
+      //       this.$router.push({
+      //         name: "/subevent_list",
+      //         query: {
+      //           mainEventId: res.data,
+      //         },
+      //       });
+      //     } else {
+      //       window.toastr.error("Failed to add new Event");
+      //     }
+      //   });
     },
 
     GoToDashboard() {
+      this.tabIndex = 0;
       $('.close').click();
       this.$router.push({
         name: "/sub/dashboard",
@@ -2077,13 +2077,11 @@ export default {
         .then((res) => {
           if (res.statusText === "Created") {
             window.toastr.success("New Event Successfully Added");
-            Gotostep(1);
+            this.GoToStep(1);
           } else {
             window.toastr.error("Failed to add new Event");
           }
-        }).catch((err) => {
-          window.toastr.error("Failed to add new Event");
-        });
+        })
     },
     GoToStep(pos) {
       this.tabIndex += pos;
