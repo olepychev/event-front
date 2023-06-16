@@ -2003,7 +2003,7 @@ Hi,
                   <ul class="side-page-bx">
                     <li class="active"><a>Details</a></li>
 
-                    <li><a href="#" @click="editSubevent">Edit Event</a></li>
+                    <li><a @click="editSubevent">Edit Event</a></li>
 
                     <li>
                       <a href="#" @click="openGuestListPage">Guest List</a>
@@ -2197,7 +2197,8 @@ export default {
     this.mainEventId = this.$route.query.mainEventId
       ? this.$route.query.mainEventId
       : 415;  // TODO
-     this.selected = this.$route.query.subEventId
+
+    this.selected = this.$route.query.subEventId
       ? this.$route.query.subEventId
       : null;
     console.log(this.selected);

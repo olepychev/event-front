@@ -93,10 +93,7 @@
           <!-- Section Banner -->
           <div
             class="dlab-bnr-inr text-center dlab-bnr-inr-sm overlay-black-dark"
-            style="
-              background-image: url(images/main-slider/slide1.jpg);
-              background-size: cover;
-            "
+            style="background-image: url(images/main-slider/slide1.jpg); background-size: cover;"
             id="app-banner"
           >
             <div class="container">
@@ -722,11 +719,11 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="modal-dialog" role="document">
-              <form class="modal-content start-here" id="ProfileStep1">
+              <form class="modal-content start-here" id="ProfileStep1" v-show="tabIndex == 0">
                 <div class="planroll-nav">
                   <a href="#" class="prev">Back</a>
-                  <span>1 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep2')"
+                  <span>1 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)" :style="eventData.title == '' ? 'visibility: hidden': 'visibility: visible'"
                     >Skip</a
                   >
                 </div>
@@ -871,21 +868,22 @@
                     type="button"
                     class="btn gradient"
                     data-toggle="tooltip"
-                    @click="GoToStep('ProfileStep2')"
+                    @click="GoToStep(1)"
                     data-placement="top"
+                    :disabled="eventData.title == ''"
                     title="Congrats! Even your names look great together."
                   >
                     Let's get started!
                   </button>
                 </div>
               </form>
-              <form class="modal-content start-planning" id="ProfileStep2">
+              <form class="modal-content start-planning" id="ProfileStep2" v-show="tabIndex == 1">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep1')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
-                  <span>2 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep3')"
+                  <span>2 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)" :style="eventData.userName == '' ? 'visibility: hidden': 'visibility: visible'"
                     >Skip</a
                   >
                 </div>
@@ -920,20 +918,21 @@
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    @click="GoToStep('ProfileStep3')"
+                    @click="GoToStep(1)"
+                    :disabled="eventData.userName == ''"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
                   </button>
                 </div>
               </form>
-              <form class="modal-content start-here" id="ProfileStep3">
+              <form class="modal-content start-here" id="ProfileStep3" v-show="tabIndex == 2">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep2')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
-                  <span>3 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep4')"
+                  <span>3 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)"
                     >Skip</a
                   >
                 </div>
@@ -957,6 +956,7 @@
                     v-model="eventData.Time"
                     mode="dateTime"
                     is-range
+                    :min-date="new Date()"
                   ></v-date-picker>
                   <!-- SmartWizard html -->
                   <div v-if="eventData.type === 'WED'" class="col-md-12">
@@ -965,6 +965,7 @@
                       mode="dateTime"
                       :masks="TimeFormat"
                       is-range
+                      :min-date="new Date()"
                     >
                       <template
                         v-slot="{ inputValue, inputEvents, isDragging }"
@@ -1043,10 +1044,7 @@
                 </form>
                 <div
                   class="planroll-imgbx"
-                  style="
-                    background-image: url(images/icon/pic3.png);
-                    display: none;
-                  "
+                  style="background-image: url(images/icon/pic3.png); display: none;"
                 ></div>
                 <div
                   style="display: none"
@@ -1147,7 +1145,7 @@
                     type="button"
                     class="btn gradient"
                     data-toggle="tooltip"
-                    @click="GoToStep('ProfileStep4')"
+                    @click="GoToStep(1)"
                     data-placement="top"
                     title="Congrats! Even your names look great together."
                   >
@@ -1156,13 +1154,13 @@
                 </div>
               </form>
               <!-- date wizard area -->
-              <div class="modal-content date-wizard-area" id="ProfileStep4">
+              <div class="modal-content date-wizard-area" id="ProfileStep4" v-show="tabIndex == 3">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep3')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Prev</a
                   >
-                  <span>4 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep5')"
+                  <span>4 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)"
                     >Next</a
                   >
                 </div>
@@ -1199,28 +1197,37 @@
                   </div>
                 </div>
               </div>
-              <form class="modal-content start-here" id="ProfileStep5">
+              <form class="modal-content start-here" id="ProfileStep5" v-show="tabIndex == 4">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep4')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
-                  <span>5 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep6')"
+                  <span>5 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)"
                     >Skip</a
                   >
                 </div>
-                <div
-                  class="planroll-imgbx"
-                  style="background-image: url(images/icon/pic4.png)"
-                ></div>
+                <div class="d-flex justify-content-center">
+                  <div
+                    class="planroll-imgbx"
+                    style="background-image: url(images/icon/pic4.png); margin: 0 10px;"
+                  >
+                  </div>
+                  
+                  <div
+                    class="planroll-imgbx"
+                    style="background-image: url(images/icon/pic5.png); margin: 0 10px;"
+                  ></div>
+                </div>
                 <div class="start-here-bx wedding-reception-bx">
                   <div class="planroll-title">
-                    <h5 class="title">Do you have estimated guests in mind?</h5>
+                    <h5 class="title">Do you have estimated guests and budget in mind?</h5>
                   </div>
                   <div class="form-group">
                     <input
                       type="text"
                       class="form-control"
+                      :class="{'is-invalid': parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000}"
                       placeholder="Estimated number of guests?"
                       id="estimatedGuests"
                       v-model="eventData.estimatedGuests"
@@ -1229,6 +1236,28 @@
                       required
                     />
                   </div>
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"
+                          ><i class="fa fa-usd"></i
+                        ></span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        :class="{'is-invalid': parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000}"
+                        placeholder="Estimated wedding budget?"
+                        id="budget"
+                        v-model="eventData.budget"
+                        @keydown="EstimatedBudgetKeyDown"
+                        min="0"
+                        required
+                      />
+                    </div>
+                  </div>
+
                   <div class="form-group text-center">
                     <div class="custom-control custom-radio radio-lg d-inline">
                       <input
@@ -1251,20 +1280,20 @@
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    @click="GoToStep('ProfileStep6')"
+                    @click="GoToStep(1)"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
                   </button>
                 </div>
               </form>
-              <form class="modal-content start-here" id="ProfileStep6">
+              <!-- <form class="modal-content start-here" id="ProfileStep6" v-show="tabIndex == 5">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep5')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
-                  <span>6 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep7')"
+                  <span>6 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)"
                     >Skip</a
                   >
                 </div>
@@ -1324,20 +1353,20 @@
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    @click="GoToStep('ProfileStep7')"
+                    @click="GoToStep(1)"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
                   </button>
                 </div>
-              </form>
-              <form class="modal-content start-here" id="ProfileStep7">
+              </form> -->
+              <form class="modal-content start-here" id="ProfileStep7" v-show="tabIndex == 5">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep6')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
-                  <span>7 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep8')"
+                  <span>6 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)" :style="eventData.emailAddress == '' || !isEmailValid ? 'visibility: hidden': 'visibility: visible'"
                     >Skip</a
                   >
                 </div>
@@ -1358,7 +1387,21 @@
                       type="email"
                       v-model="eventData.emailAddress"
                       class="form-control"
+                      :class="{'is-invalid': !isEmailValid}"
+                      @keydown="(ev) => validateEmail(ev)"
                       placeholder="Add your email"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group" v-if="eventData.type != 'BIRTHDAY'">
+                    <input
+                      type="email"
+                      v-model="eventData.emailPartnerAddress"
+                      class="form-control"
+                      :class="{'is-invalid': !isPartnerEmailValid}"
+                      @keydown="(ev) => validatePartnerEmail(ev)"
+                      placeholder="Add your partner email"
                     />
                   </div>
                 </div>
@@ -1368,20 +1411,21 @@
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    @click="GoToStep('ProfileStep8')"
+                    :disabled="(eventData.emailAddress == '' || !isEmailValid)"
+                    @click="GoToStep(1)"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
                   </button>
                 </div>
               </form>
-              <form class="modal-content start-here" id="ProfileStep8">
+              <!-- <form class="modal-content start-here" id="ProfileStep8" v-show="tabIndex == 6">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep7')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
-                  <span>8 / 8</span>
-                  <a href="#" class="next" @click="GoToStep('ProfileStep9')"
+                  <span>7 / 6</span>
+                  <a href="#" class="next" @click="GoToStep(1)"
                     >Done</a
                   >
                 </div>
@@ -1418,10 +1462,10 @@
                     Confirm
                   </button>
                 </div>
-              </form>
-              <div class="modal-content start-here" id="ProfileStep9">
+              </form> -->
+              <div class="modal-content start-here" id="ProfileStep9" v-show="tabIndex == 6">
                 <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep('ProfileStep8')"
+                  <a href="#" class="prev" @click="GoToStep(-1)"
                     >Prev</a
                   >
                   <span>Done</span>
@@ -1599,6 +1643,7 @@ export default {
       eventData: {
         userName: "",
         emailAddress: "",
+        emailPartnerAddress: "",
         title: "",
         Time: {
           start: new Date(),
@@ -1632,6 +1677,9 @@ export default {
         { text: "John's wedding", value: "100" },
         { text: "Ring Ceremony", value: "101" },
       ],
+      tabIndex: 0,
+      isEmailValid: true,
+      isPartnerEmailValid: true,
       eventTypes: [
         {
           id: "wedding",
@@ -1667,8 +1715,6 @@ export default {
     // );
     // this.GoToStep("ProfileStep1");
 
-    console.log($(""));
-
     // jQuery(".modal-content").hide();
     // jQuery("#ProfileStep1").show();
     this.getEventTypes();
@@ -1680,9 +1726,9 @@ export default {
     //   "margin-top",
     //   Math.max(0, (jQuery(window).height() - dialog.height()) / 2)
     // );
-    $("#exampleModal").modal("show");
-    jQuery(".modal-content").hide();
-    jQuery("#ProfileStep1").show();
+    // jQuery(".modal-content").hide();
+    // jQuery("#ProfileStep1").show();
+    // $("#exampleModal").modal("show");
     // var modal = jQuery("#exampleModal"),
     //   dialog = modal.find(".modal-dialog");
     // console.log(modal);
@@ -1776,6 +1822,8 @@ export default {
       //   }
       // );
     },
+    allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
+    
     GoToFinish() {
       console.log("data:", this.eventData);
 
@@ -1800,6 +1848,7 @@ export default {
         title: this.eventData.title,
         multiEvent: "Y",
         emailAddress: this.eventData.emailAddress,
+        emailPartnerAddress: this.eventData.emailPartnerAddress,
         eventType: this.eventData.type,
         eventSubType: this.eventData.subType,
         budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
@@ -1812,6 +1861,9 @@ export default {
         location: locationData,
       };
       console.log(requestData);
+
+      this.tabIndex = 0;
+      $(".close").click();
       axios
         .post("http://localhost:" + this.port + "/events", requestData)
         .then((res) => {
@@ -1840,6 +1892,7 @@ export default {
           }
         }, 0);
       }
+      
       setTimeout(() => {
         if (
           key == "Backspace" &&
@@ -1861,7 +1914,9 @@ export default {
               str += val[i - 1] + ", ";
             } else str += val[i - 1];
           }
-          this.eventData.estimatedGuests = str.split("").reverse().join("");
+
+            this.eventData.estimatedGuests = str.split("").reverse().join("");
+
         }
         setTimeout(() => {
           if (
@@ -1908,7 +1963,10 @@ export default {
               str += val[i - 1] + ", ";
             } else str += val[i - 1];
           }
-          this.eventData.budget = str.split("").reverse().join("");
+
+            this.eventData.budget = str.split("").reverse().join("");
+
+          
         }
         setTimeout(() => {
           if (
@@ -1934,6 +1992,17 @@ export default {
           console.log(res.data.results[0].geometry.location);
         });
     },
+
+    validateEmail(e) {
+      const re = /\S+@\S+\.\S+/;
+      this.isEmailValid = re.test(String(e.target.value).toLowerCase());
+    },
+
+    validatePartnerEmail(e) {
+      const re = /\S+@\S+\.\S+/;
+      this.isPartnerEmailValid = re.test(String(e.target.value).toLowerCase());
+    },
+
     getEventTypes() {
       axios
         .get("http://localhost:" + this.port + "/events/types")
@@ -1947,10 +2016,11 @@ export default {
       window.$("html, body").animate({ scrollTop: 0 }, "slow");
       return false;
     },
-    GoToStep(id) {
-      jQuery(".modal-content").hide();
-      jQuery("#" + id).show();
-      console.log("Gotostep");
+    GoToStep(pos) {
+      this.tabIndex += pos;
+      // jQuery(".modal-content").hide();
+      // jQuery("#" + id).show();
+      // console.log("Gotostep");
     },
     formattedDateForSubmit(date) {
       return moment(date.toLocaleString("en-GB"), "DD/MM/YYYY HH:mm:ss").format(
@@ -1995,6 +2065,7 @@ export default {
       this.eventData.address.longitude = currentPlace.geometry.location.lng();
       this.eventData.address.latitude = currentPlace.geometry.location.lat();
     },
+
   },
 };
 </script>
@@ -2031,5 +2102,9 @@ h3 {
   margin-bottom: 10px;
   text-align: left;
   display: block;
+}
+
+button:disabled {
+  background: rgb(122,122,122) !important;
 }
 </style>

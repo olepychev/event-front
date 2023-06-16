@@ -176,7 +176,7 @@
         </div>
         <!-- contact area -->
         <div class="container">
-          <form class="vue-form" v-on:submit.prevent>
+          <form class="vue-form" @submit.stop.prevent="onSubmit">
             <fieldset>
               <div class="row col-md-12">
                 <h2>Add Event</h2>
@@ -424,7 +424,11 @@
                   />
                 </div>
               </div>
-              <button class="btn btn-success" @click="onSubmit">
+              <!-- <button class="btn btn-success" @click="onSubmit">
+                Add Event
+              </button> -->
+
+              <button class="btn btn-success" type="submit">
                 Add Event
               </button>
             </fieldset>
@@ -631,6 +635,8 @@ export default {
           } else {
             window.toastr.error("Failed to add new Event");
           }
+        }).catch((err) => {
+          window.toastr.error("Failed to add new Event");
         });
     },
     formattedDateTime(date) {
