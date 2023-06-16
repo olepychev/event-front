@@ -1678,7 +1678,6 @@ export default {
       },
       mainEventId: 0,
       mainEventName: "",
-      eventId: 0,
       eventTitle: "",
       expenseType: "",
       noData: false,
@@ -1897,9 +1896,9 @@ export default {
       $('.close').click();
       this.$router.push({
         name: "/sub/dashboard",
-        // query: {
-        //   mainEventId: res.data,
-        // },
+        query: {
+          mainEventId: this.mainEventId,
+        },
       });
     },
     GuestsKeyDown(e) {
@@ -2076,6 +2075,7 @@ export default {
         .post("http://localhost:" + this.port + "/events", requestData)
         .then((res) => {
           if (res.statusText === "Created") {
+            this.mainEventId = res.data
             window.toastr.success("New Event Successfully Added");
             this.GoToStep(1);
           } else {
