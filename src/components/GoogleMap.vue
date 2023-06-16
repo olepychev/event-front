@@ -9,7 +9,7 @@
           style="width: 400px; font-size: 20px"
         >
         </gmap-autocomplete>
-        <!-- <button @click="addMarker" type="button">Add</button> -->
+        <!-- <button @click="addMarker" type="button" v-if="isMap">Add</button> -->
       </label>
       <br />
     </div>
@@ -17,7 +17,9 @@
     <gmap-map
       :center="center"
       :zoom="15"
-      style="width: 100%; height: 400px; display: none"
+      style="width: 100%; height: 400px;"
+      :style="isMap ? 'display: block': 'display: none'"
+      @click="onClick"
     >
       <gmap-marker
         :key="index"
@@ -33,6 +35,10 @@
 <script>
 export default {
   name: "GoogleMap",
+
+  props: {
+    isMap: Boolean
+  },
 
   data() {
     return {
@@ -57,6 +63,38 @@ export default {
   },
 
   methods: {
+    onClick(event) {
+      // console.log('The user clicked at:', event.latLng);
+      // perform any actions you need to here
+
+      let geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ location: event.latLng }, (results, status) => {
+        if (status === 'OK') {
+          let place = results[0];
+          let city, address;
+          for (let i = 0; i < results[0].address_components.length; i++) {
+            const component = results[0].address_components[i];
+            if (component.types.includes('locality')) {
+              city = component.long_name;
+            }
+            if (component.types.includes('route')) {
+              address = component.long_name;
+            }
+          }
+
+          let placeData = {
+            formatted_address: place.formatted_address,
+            address_components: place.address_components,
+            geometry: place.geometry,
+            name: address,
+            vicinity: city,
+          };
+
+          this.$emit("added-address", placeData);
+          // Do something with the place object, e.g. update the place_changed data format.
+        }
+      });
+    },
     // receives a place object via the autocomplete component
     setPlace(place) {
       this.currentPlace = place;
@@ -64,7 +102,6 @@ export default {
     },
     addMarker() {
       if (this.currentPlace) {
-        console.log("currentPlace: ", this.currentPlace);
         const marker = {
           lat: this.currentPlace.geometry.location.lat(),
           lng: this.currentPlace.geometry.location.lng(),

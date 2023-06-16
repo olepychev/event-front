@@ -289,10 +289,11 @@
                         <label class="label" for="description"
                           >Description</label
                         >
-                        <input
+                        <textarea
                           type="text"
                           class="form-control"
                           id="description"
+                          style="height: 120px;"
                           v-model="eventData.description"
                           min="0"
                           @keydown="Descriptionchange"
@@ -311,11 +312,13 @@
                     <div class="row col-md-12">
                       <h3>Venue Address</h3>
                     </div>
+
                     <div class="row col-md-12">
                       <google-map
                         ref="update"
                         style="width: 100%"
                         @added-address="updateAddress"
+                        :isMap="true"
                       />
                     </div>
 
@@ -558,18 +561,17 @@ export default {
         });
     },
     updateAddress(currentPlace) {
-      console.log(currentPlace);
       this.eventData.address.address = currentPlace.name;
       this.eventData.address.city = currentPlace.vicinity;
       this.eventData.address.state = currentPlace.address_components.find(
         (element) => element.types[0] === "administrative_area_level_1"
-      ).long_name;
+      )?.long_name;
       this.eventData.address.country = currentPlace.address_components.find(
         (element) => element.types[0] === "country"
-      ).long_name;
+      )?.long_name;
       this.eventData.address.postalCode = currentPlace.address_components.find(
         (element) => element.types[0] === "postal_code"
-      ).long_name;
+      )?.long_name;
       this.eventData.address.longitude = currentPlace.geometry.location.lng();
       this.eventData.address.latitude = currentPlace.geometry.location.lat();
     },
