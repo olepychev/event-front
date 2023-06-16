@@ -1484,9 +1484,21 @@
                   <div class="found-matches">
                     <h4 class="title">We’ve found your matches!</h4>
                     <p>There are 8441 wedding venues in the United Kingdom.</p>
-                    <a href="wedding-venues-search.html" class="btn gradient"
+
+                    <div class="text-center">
+                      <button
+                        type="button"
+                        class="btn gradient m-auto"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        @click="GoToDashboard()"
+                      >
+                        Go to Dashboard
+                      </button>
+                    </div>
+                    <!-- <a href="wedding-venues-search.html" class="btn gradient"
                       ><i class="fa fa-search"></i> Go to Dashboard</a
-                    >
+                    > -->
                   </div>
                   <div class="form-group">
                     <ul class="myacountlist">
@@ -1880,6 +1892,16 @@ export default {
           }
         });
     },
+
+    GoToDashboard() {
+      $('.close').click();
+      this.$router.push({
+        name: "/sub/dashboard",
+        // query: {
+        //   mainEventId: res.data,
+        // },
+      });
+    },
     GuestsKeyDown(e) {
       let cursor = e.target.selectionStart;
       let value = e.target.value + "";
@@ -2053,14 +2075,15 @@ export default {
       axios
         .post("http://localhost:" + this.port + "/events", requestData)
         .then((res) => {
-          console.log("res: ", res);
           if (res.statusText === "Created") {
             window.toastr.success("New Event Successfully Added");
             Gotostep(1);
           } else {
             window.toastr.error("Failed to add new Event");
           }
-      });
+        }).catch((err) => {
+          window.toastr.error("Failed to add new Event");
+        });
     },
     GoToStep(pos) {
       this.tabIndex += pos;
