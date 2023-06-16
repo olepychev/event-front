@@ -1412,10 +1412,10 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     :disabled="(eventData.emailAddress == '' || !isEmailValid)"
-                    @click="GoToStep(1)"
+                    @click="CreateEvent()"
                     title="Congrats! Even your names look great together."
                   >
-                    Next Step
+                    Save & Create Event
                   </button>
                 </div>
               </form>
@@ -1485,7 +1485,7 @@
                     <h4 class="title">We’ve found your matches!</h4>
                     <p>There are 8441 wedding venues in the United Kingdom.</p>
                     <a href="wedding-venues-search.html" class="btn gradient"
-                      ><i class="fa fa-search"></i> See them now</a
+                      ><i class="fa fa-search"></i> Go to Dashboard</a
                     >
                   </div>
                   <div class="form-group">
@@ -1825,7 +1825,6 @@ export default {
     allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
     
     GoToFinish() {
-      console.log("data:", this.eventData);
 
       const startFormattedTime = this.formattedDateForSubmit(
         this.eventData.Time.start
@@ -2015,6 +2014,53 @@ export default {
     scroll2top() {
       window.$("html, body").animate({ scrollTop: 0 }, "slow");
       return false;
+    },
+    CreateEvent() {
+      const startFormattedTime = this.formattedDateForSubmit(
+        this.eventData.Time.start
+      );
+      const endFormattedTime = this.formattedDateForSubmit(
+        this.eventData.Time.end
+      );
+
+      let locationData = {
+        address: this.eventData.address.address,
+        city: this.eventData.address.city,
+        state: this.eventData.address.state,
+        country: this.eventData.address.country,
+        postalCode: this.eventData.address.postalCode,
+        longitude: this.eventData.address.longitude,
+        latitude: this.eventData.address.latitude,
+      };
+
+      let requestData = {
+        title: this.eventData.title,
+        multiEvent: "Y",
+        emailAddress: this.eventData.emailAddress,
+        emailPartnerAddress: this.eventData.emailPartnerAddress,
+        eventType: this.eventData.type,
+        eventSubType: this.eventData.subType,
+        budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
+        estimatedGuests: Number(
+          this.eventData.estimatedGuests.replace(/[, " "]/g, "")
+        ),
+        fromDate: startFormattedTime,
+        toDate: endFormattedTime,
+        shortDescription: this.eventData.description,
+        location: locationData,
+      };
+
+      axios
+        .post("http://localhost:" + this.port + "/events", requestData)
+        .then((res) => {
+          console.log("res: ", res);
+          if (res.statusText === "Created") {
+            window.toastr.success("New Event Successfully Added");
+            Gotostep(1);
+          } else {
+            window.toastr.error("Failed to add new Event");
+          }
+      });
     },
     GoToStep(pos) {
       this.tabIndex += pos;
