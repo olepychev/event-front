@@ -260,6 +260,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          :class="{'is-invalid': parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000}"
                           id="budget"
                           v-model="eventData.budget"
                           @keydown="EstimatedBudgetKeyDown"
@@ -274,6 +275,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          :class="{'is-invalid': parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000}"
                           id="estimatedGuests"
                           v-model="eventData.estimatedGuests"
                           @keydown="GuestsKeyDown"
@@ -465,8 +467,8 @@ export default {
         },
         type: "",
         subType: "",
-        budget: 0,
-        estimatedGuests: 0,
+        budget: "",
+        estimatedGuests: "",
         description: "",
         address: {
           address: "",
@@ -931,7 +933,7 @@ export default {
 .vue-form textarea,
 .vue-form select {
   padding: 12px;
-  border: 1px solid #cfd9db;
+  /* border: 1px solid #cfd9db; */
   background-color: #ffffff;
   border-radius: 0.25em;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
@@ -942,7 +944,7 @@ export default {
 .vue-form textarea:focus,
 .vue-form select:focus {
   outline: none;
-  border-color: #2c3e50;
+  /* border-color: #2c3e50; */
   box-shadow: 0 0 5px rgba(44, 151, 222, 0.2);
 }
 

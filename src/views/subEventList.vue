@@ -253,27 +253,27 @@
                                   <ul class="dec-exp-bx">
                                     <li>
                                       Attending Guests<span>{{
-                                        guestCount.guestCountDto.attending
+                                        guestCount.guestCountDto?.attending
                                       }}</span>
                                     </li>
                                     <li>
                                       Invited Guests<span>{{
-                                        guestCount.guestCountDto.invited
+                                        guestCount.guestCountDto?.invited
                                       }}</span>
                                     </li>
                                     <li>
                                       Maybe Attending<span>{{
-                                        guestCount.guestCountDto.mayBe
+                                        guestCount.guestCountDto?.mayBe
                                       }}</span>
                                     </li>
                                     <li>
                                       Guests Not Attending<span>{{
-                                        guestCount.guestCountDto.notAttending
+                                        guestCount.guestCountDto?.notAttending
                                       }}</span>
                                     </li>
                                     <li>
                                       Unconfirmed Guests<span>{{
-                                        guestCount.guestCountDto.unconfirmed
+                                        guestCount.guestCountDto?.unconfirmed
                                       }}</span>
                                     </li>
                                   </ul>
@@ -283,29 +283,29 @@
                                   <ul class="dec-exp-bx">
                                     <li>
                                       Total invites<span>{{
-                                        guestCount.inviteCountDto.total
+                                        guestCount.inviteCountDto?.total
                                       }}</span>
                                     </li>
                                     <li>
                                       Invited<span>{{
-                                        guestCount.inviteCountDto.invited
+                                        guestCount.inviteCountDto?.invited
                                       }}</span>
                                     </li>
                                     <li>
                                       Pending<span>{{
-                                        guestCount.inviteCountDto.pending
+                                        guestCount.inviteCountDto?.pending
                                       }}</span>
                                     </li>
                                     <li>
                                       Expected Attendees<span>{{
                                         guestCount.inviteCountDto
-                                          .expectedAttendees
+                                          ?.expectedAttendees
                                       }}</span>
                                     </li>
                                     <li>
                                       Invited Attendees<span>{{
                                         guestCount.inviteCountDto
-                                          .invitedAttendees
+                                          ?.invitedAttendees
                                       }}</span>
                                     </li>
                                   </ul>
@@ -2006,10 +2006,10 @@ Hi,
                     <li><a @click="editSubevent">Edit Event</a></li>
 
                     <li>
-                      <a href="#" @click="openGuestListPage">Guest List</a>
+                      <a @click="openGuestListPage">Guest List</a>
                     </li>
-                    <li><a href="#" @click="openBudgetPage">Budget</a></li>
-                    <li><a href="#" @click="addSubevent">Add Event</a></li>
+                    <li><a @click="openBudgetPage">Budget</a></li>
+                    <li><a @click="addSubevent">Add Event</a></li>
                     <!-- <li><a href="terms.html">Terms</a></li>
                     <li>
                       <a href="wedding-planning-tools.html"
@@ -2197,8 +2197,7 @@ export default {
     this.mainEventId = this.$route.query.mainEventId
       ? this.$route.query.mainEventId
       : 415;  // TODO
-
-    this.selected = this.$route.query.subEventId
+     this.selected = this.$route.query.subEventId
       ? this.$route.query.subEventId
       : null;
     console.log(this.selected);
