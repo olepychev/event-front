@@ -719,12 +719,13 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="modal-dialog" role="document">
-              <form class="modal-content start-here" id="ProfileStep1" v-show="tabIndex == 0">
+              <form class="vue-form modal-content start-here" id="ProfileStep1" v-show="tabIndex == 0" @submit.prevent="() => GoToStep(1)">
+                <fieldset>
                 <div class="planroll-nav">
                   <a href="#" class="prev">Back</a>
                   <span>1 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)" :style="eventData.title == '' ? 'visibility: hidden': 'visibility: visible'"
-                    >Skip</a
+                  <a href="#" class="next" @click="GoToStep(1)" style="visibility: hidden"
+                    >Next</a
                   >
                 </div>
                 <div
@@ -865,26 +866,25 @@
 
                 <div class="modal-footer text-center">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn gradient"
                     data-toggle="tooltip"
-                    @click="GoToStep(1)"
                     data-placement="top"
-                    :disabled="eventData.title == ''"
                     title="Congrats! Even your names look great together."
                   >
                     Let's get started!
                   </button>
                 </div>
+              </fieldset>
               </form>
-              <form class="modal-content start-planning" id="ProfileStep2" v-show="tabIndex == 1">
+              <form class="modal-content start-planning" id="ProfileStep2" v-show="tabIndex == 1" @submit.prevent="() => GoToStep(1)">
                 <div class="planroll-nav">
                   <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
                   <span>2 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)" :style="eventData.userName == '' ? 'visibility: hidden': 'visibility: visible'"
-                    >Skip</a
+                  <a href="#" class="next" @click="GoToStep(1)" style="visibility: hidden"
+                    >Next</a
                   >
                 </div>
                 <div
@@ -902,6 +902,7 @@
                       class="form-control"
                       v-model="eventData.userName"
                       placeholder="Your Name"
+                      required
                     />
                   </div>
                   <div v-if="eventData.type != 'BIRTHDAY'" class="form-group">
@@ -914,12 +915,10 @@
                 </div>
                 <div class="modal-footer text-center">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    @click="GoToStep(1)"
-                    :disabled="eventData.userName == ''"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
@@ -933,7 +932,7 @@
                   >
                   <span>3 / 6</span>
                   <a href="#" class="next" @click="GoToStep(1)"
-                    >Skip</a
+                    >Next</a
                   >
                 </div>
                 <div class="modal-header">
@@ -1154,7 +1153,7 @@
                 </div>
               </form>
               <!-- date wizard area -->
-              <div class="modal-content date-wizard-area" id="ProfileStep4" v-show="tabIndex == 3">
+              <div class="modal-content date-wizard-area" id="ProfileStep4" v-show="tabIndex == 3" @submit.prevent="() => GoToStep(1)">
                 <div class="planroll-nav">
                   <a href="#" class="prev" @click="GoToStep(-1)"
                     >Prev</a
@@ -1196,15 +1195,28 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="modal-footer text-center">
+                  <button
+                    type="submit"
+                    class="btn gradient"
+                    data-toggle="tooltip"
+                    @click="GoToStep(1)"
+                    data-placement="top"
+                    title="Congrats! Even your names look great together."
+                  >
+                    Next Step
+                  </button>
+                </div>
               </div>
-              <form class="modal-content start-here" id="ProfileStep5" v-show="tabIndex == 4">
+              <form class="modal-content start-here" id="ProfileStep5" v-show="tabIndex == 4" @submit.prevent="() => GoToStep(1)">
                 <div class="planroll-nav">
                   <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
                   <span>5 / 6</span>
                   <a href="#" class="next" @click="GoToStep(1)"
-                    >Skip</a
+                    >Next</a
                   >
                 </div>
                 <div class="d-flex justify-content-center">
@@ -1233,8 +1245,10 @@
                       v-model="eventData.estimatedGuests"
                       @keydown="GuestsKeyDown"
                       min="0"
-                      required
                     />
+                    <div v-if="parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000" style="text-align: left;">
+                      The maximum number of guests is 100 ,000 
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -1253,8 +1267,11 @@
                         v-model="eventData.budget"
                         @keydown="EstimatedBudgetKeyDown"
                         min="0"
-                        required
                       />
+                    </div>
+
+                    <div v-if="parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000" style="text-align: left;">
+                      The maximum buget is 1 ,000 ,000 ,000
                     </div>
                   </div>
 
@@ -1276,98 +1293,26 @@
                 </div>
                 <div class="modal-footer text-center">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    @click="GoToStep(1)"
+                    :disabled="parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000 || parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
                   </button>
                 </div>
               </form>
-              <!-- <form class="modal-content start-here" id="ProfileStep6" v-show="tabIndex == 5">
+             
+              <form class="modal-content start-here" id="ProfileStep7" v-show="tabIndex == 5" @submit.prevent="CreateEvent">
                 <div class="planroll-nav">
                   <a href="#" class="prev" @click="GoToStep(-1)"
                     >Back</a
                   >
                   <span>6 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)"
-                    >Skip</a
-                  >
-                </div>
-                <div
-                  class="planroll-imgbx"
-                  style="background-image: url(images/icon/pic5.png)"
-                ></div>
-                <div class="start-here-bx wedding-reception-bx">
-                  <div class="planroll-title">
-                    <h5 class="title">
-                      Do you have an overall wedding budget in mind?
-                    </h5>
-                    <p>
-                      Guess-timate your total budget so we can tell you what to
-                      spend on each supplier. Not sure? The average UK wedding
-                      costs around £17,000.
-                    </p>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"
-                          ><i class="fa fa-usd"></i
-                        ></span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Estimated wedding budget?"
-                        id="budget"
-                        v-model="eventData.budget"
-                        @keydown="EstimatedBudgetKeyDown"
-                        min="0"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group text-center">
-                    <div class="custom-control custom-radio radio-lg d-inline">
-                      <input
-                        type="radio"
-                        class="custom-control-input"
-                        id="know-yet1"
-                      />
-                      <label
-                        style="display: none"
-                        class="custom-control-label"
-                        for="know-yet1"
-                        >We don't know yet</label
-                      >
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer text-center">
-                  <button
-                    type="button"
-                    class="btn gradient"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    @click="GoToStep(1)"
-                    title="Congrats! Even your names look great together."
-                  >
-                    Next Step
-                  </button>
-                </div>
-              </form> -->
-              <form class="modal-content start-here" id="ProfileStep7" v-show="tabIndex == 5">
-                <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep(-1)"
-                    >Back</a
-                  >
-                  <span>6 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)" :style="eventData.emailAddress == '' || !isEmailValid ? 'visibility: hidden': 'visibility: visible'"
-                    >Skip</a
+                  <a href="#" class="next" @click="GoToStep(1)" style="visibility: hidden"
+                    >Next</a
                   >
                 </div>
                 <div
@@ -1407,62 +1352,17 @@
                 </div>
                 <div class="modal-footer text-center">
                   <button
-                    type="button"
+                    type="submit"
                     class="btn gradient"
                     data-toggle="tooltip"
                     data-placement="top"
-                    :disabled="(eventData.emailAddress == '' || !isEmailValid)"
-                    @click="CreateEvent()"
                     title="Congrats! Even your names look great together."
                   >
                     Save & Create Event
                   </button>
                 </div>
               </form>
-              <!-- <form class="modal-content start-here" id="ProfileStep8" v-show="tabIndex == 6">
-                <div class="planroll-nav">
-                  <a href="#" class="prev" @click="GoToStep(-1)"
-                    >Back</a
-                  >
-                  <span>7 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)"
-                    >Done</a
-                  >
-                </div>
-                <div
-                  class="planroll-imgbx"
-                  style="background-image: url(images/icon/pic7.png)"
-                ></div>
-                <div class="start-here-bx wedding-reception-bx">
-                  <div class="planroll-title">
-                    <h5 class="title">And finally...</h5>
-                    <p>
-                      All enquiries you send will come from this email address:
-                      Confirm your email address
-                    </p>
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="eventData.emailAddress"
-                      placeholder="confirm your email"
-                    />
-                  </div>
-                </div>
-                <div class="modal-footer text-center">
-                  <button
-                    type="button"
-                    class="btn gradient"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    @click="GoToStep('ProfileStep9')"
-                    title="Congrats! Even your names look great together."
-                  >
-                    Confirm
-                  </button>
-                </div>
-              </form> -->
+              
               <div class="modal-content start-here" id="ProfileStep9" v-show="tabIndex == 6">
                 <div class="planroll-nav">
                   <a href="#" class="prev" @click="GoToStep(-1)"
@@ -1834,7 +1734,6 @@ export default {
       // );
     },
     allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
-    
     GoToFinish() {
 
       // const startFormattedTime = this.formattedDateForSubmit(
@@ -2171,7 +2070,4 @@ h3 {
   display: block;
 }
 
-button:disabled {
-  background: rgb(122,122,122) !important;
-}
 </style>
