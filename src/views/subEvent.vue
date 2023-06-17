@@ -267,6 +267,10 @@
                           min="0"
                           required
                         />
+
+                        <div v-if="parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000" class="mytooltip">
+                          The maximum buget is 1 ,000 ,000 ,000
+                        </div>
                       </div>
                       <div class="col-md-6">
                         <label class="label" for="estimatedGuests"
@@ -282,6 +286,10 @@
                           min="0"
                           required
                         />
+
+                        <div v-if="parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000" class="mytooltip">
+                          The maximum number of guests is 100 ,000 
+                        </div>
                       </div>
                     </div>
                     <div class="row">
@@ -605,81 +613,90 @@ export default {
         });
     },
 
-    onSubmit() {
-        const startFormattedTime = this.formattedDateTime(
-          this.eventData.Time.start
-        );
-        const endFormattedTime = this.formattedDateTime(
-          this.eventData.Time.end
-        );
-        let locationData = {
-          address: this.eventData.address.address,
-          // address2: this.eventData.address.address2,
-          city: this.eventData.address.city,
-          state: this.eventData.address.state,
-          country: this.eventData.address.country,
-          postalCode: this.eventData.address.postalCode,
-          longitude: this.eventData.address.longitude,
-          latitude: this.eventData.address.latitude,
-          locationId: this.preFilledEventData.location
-            ? this.preFilledEventData.location.locationId
-            : 0,
-        };
-        let requestData = {
-          mainEventId: Number(this.mainEventId),
-          eventDetailType: this.preFilledEventData.eventDetailType
-            ? this.preFilledEventData.eventDetailType
-            : this.eventData.subType,
-          title: this.eventData.title,
-          eventOrder: this.preFilledEventData.eventOrder
-            ? this.preFilledEventData.eventOrder
-            : 1,
-          budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
+    isInValid() {
+      return parseInt(this.eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000 || parseInt(this.eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000 
+    },
 
-          estimatedGuests: Number(
-            this.eventData.estimatedGuests.replace(/[, " "]/g, "")
-          ),
-          fromDate: startFormattedTime,
-          toDate: endFormattedTime,
-          shortDescription: this.eventData.description,
-          location: locationData,
-        };
-        console.log(requestData);
-        if (this.subEventId) {
-          axios
-            .put(
-              "http://localhost:" + this.port + "/events/sub/" + this.selected,
-              requestData
-            )
-            .then((res) => {
-              console.log(res);
-              if (res.statusText === "OK") {
-                window.toastr.success("Event Successfully Edited");
-              }
-              else {
-                window.toastr.error("Failed to edit");
-              }
-              
-            }).catch((err) => {
-              window.toastr.error("Failed to Edit");
-            });
-        } else {
-          axios
-            .post("http://localhost:" + this.port + "/events/sub", requestData)
-            .then((res) => {
-              if (res.statusText === "Created") {
-                window.toastr.success("New Event Successfully Added");
-                this.$forceUpdate();
-              }
-              else {
-                window.toastr.error("Failed to Create");
-              }
-            })
-            .catch((e) => {
-              window.toastr.error(e.response.data.message);
-              console.log(e.response.data);
-            });
-        }
+    onSubmit() {
+
+    if(this.isInValid() == true) {
+      $('.is-invalid').focus();
+      return;
+    };
+    const startFormattedTime = this.formattedDateTime(
+      this.eventData.Time.start
+    );
+    const endFormattedTime = this.formattedDateTime(
+      this.eventData.Time.end
+    );
+    let locationData = {
+      address: this.eventData.address.address,
+      // address2: this.eventData.address.address2,
+      city: this.eventData.address.city,
+      state: this.eventData.address.state,
+      country: this.eventData.address.country,
+      postalCode: this.eventData.address.postalCode,
+      longitude: this.eventData.address.longitude,
+      latitude: this.eventData.address.latitude,
+      locationId: this.preFilledEventData.location
+        ? this.preFilledEventData.location.locationId
+        : 0,
+    };
+    let requestData = {
+      mainEventId: Number(this.mainEventId),
+      eventDetailType: this.preFilledEventData.eventDetailType
+        ? this.preFilledEventData.eventDetailType
+        : this.eventData.subType,
+      title: this.eventData.title,
+      eventOrder: this.preFilledEventData.eventOrder
+        ? this.preFilledEventData.eventOrder
+        : 1,
+      budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
+
+      estimatedGuests: Number(
+        this.eventData.estimatedGuests.replace(/[, " "]/g, "")
+      ),
+      fromDate: startFormattedTime,
+      toDate: endFormattedTime,
+      shortDescription: this.eventData.description,
+      location: locationData,
+    };
+    console.log(requestData);
+    if (this.subEventId) {
+      axios
+        .put(
+          "http://localhost:" + this.port + "/events/sub/" + this.selected,
+          requestData
+        )
+        .then((res) => {
+          console.log(res);
+          if (res.statusText === "OK") {
+            window.toastr.success("Event Successfully Edited");
+          }
+          else {
+            window.toastr.error("Failed to edit");
+          }
+          
+        }).catch((err) => {
+          window.toastr.error("Failed to Edit");
+        });
+    } else {
+      axios
+        .post("http://localhost:" + this.port + "/events/sub", requestData)
+        .then((res) => {
+          if (res.statusText === "Created") {
+            window.toastr.success("New Event Successfully Added");
+            this.$forceUpdate();
+          }
+          else {
+            window.toastr.error("Failed to Create");
+          }
+        })
+        .catch((e) => {
+          window.toastr.error(e.response.data.message);
+          console.log(e.response.data);
+        });
+      }
     },
     openDetailsPage() {
       this.$router.push({
@@ -836,6 +853,7 @@ export default {
       return x1 + x2;
     },
   },
+
 };
 </script>
 
@@ -925,5 +943,11 @@ div.row {
 div.row h2,
 h3 {
   margin-bottom: 0;
+}
+
+.mytooltip {
+  text-align: left;
+  margin: unset !important;
+  color: red;
 }
 </style>
