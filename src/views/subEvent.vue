@@ -320,6 +320,7 @@
                         @added-address="updateAddress"
                         :isMap="true"
                         @input-address="onAddressChange"
+                        :isSearchType="true"
                       />
                     </div>
 
@@ -331,6 +332,7 @@
                           class="form-control"
                           id="address"
                           v-model="eventData.address.address"
+                          required
                         />
                       </div>
                       <div class="col-md-6">

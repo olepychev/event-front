@@ -34,11 +34,14 @@
 </template>
 
 <script>
+import { stringify } from 'querystring';
+
 export default {
   name: "GoogleMap",
 
   props: {
-    isMap: Boolean
+    isMap: Boolean,
+    isSearchType: Boolean,
   },
 
   data() {
@@ -54,7 +57,7 @@ export default {
         componentRestrictions: {
           country: ["us", "ca", "ind"],
         },
-        types: ["(cities)"],
+        types: this.isSearchType ? ["address"] : ["(cities)"],
       },
       addressInput: ''
     };
@@ -95,7 +98,9 @@ export default {
             vicinity: city,
           };
 
-          this.$emit("added-address", placeData);
+          this.currentPlace = placeData;
+          this.addMarker();
+          // this.$emit("added-address", placeData);
           // Do something with the place object, e.g. update the place_changed data format.
         }
       });
@@ -105,6 +110,7 @@ export default {
       this.currentPlace = place;
       this.addMarker();
     },
+
     addMarker() {
       if (this.currentPlace) {
         const marker = {
