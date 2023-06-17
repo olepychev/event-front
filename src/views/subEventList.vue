@@ -2205,22 +2205,26 @@ export default {
 
   methods: {
     getGuestCount() {
-      axios
-        .get(
-          "http://localhost:" +
-            this.port +
-            "/guests/subevents/count/" +
-            this.selected +
-            "/SUBEVENT"
-        )
-        .then((res) => {
-          // console.log(this.preFilledEventData);
-          this.guestCount = res.data;
-          console.log(this.guestCount);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if(this.selected == null) this.guestCount = 0;
+      else {
+        axios
+          .get(
+            "http://localhost:" +
+              this.port +
+              "/guests/subevents/count/" +
+              this.selected +
+              "/SUBEVENT"
+          )
+          .then((res) => {
+            // console.log(this.preFilledEventData);
+            this.guestCount = res.data;
+            console.log(this.guestCount);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+      
     },
     openDetails(subEventId) {
       this.selected = subEventId;
