@@ -913,6 +913,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Your Partner's name"
+                      v-model="eventData.partnerName"
                     />
                   </div>
                 </div>
@@ -1569,6 +1570,7 @@ export default {
       },
       eventData: {
         userName: "",
+        partnerName: "",
         emailAddress: "",
         emailPartnerAddress: "",
         title: "",
@@ -1973,7 +1975,8 @@ export default {
         title: this.eventData.title,
         multiEvent: "Y",
         emailAddress: this.eventData.emailAddress,
-        emailPartnerAddress: this.eventData.emailPartnerAddress,
+        partnerEmail: this.eventData.emailPartnerAddress,
+
         eventType: this.eventData.type,
         eventSubType: this.eventData.subType,
         budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
@@ -1998,6 +2001,7 @@ export default {
             window.toastr.error("Failed to add new Event");
           }
         }).catch((err) => {
+          console.log('aaaaaaaaaaaa', err.response.data)
           window.toastr.error("Failed to add new Event");
         })
     },
@@ -2064,8 +2068,9 @@ export default {
       this.mainEventId = 0;
       this.eventData = {
         userName: "",
+        partnerName: "",
         emailAddress: "",
-        emailPartnerAddress: "",
+        partnerEmail: "",
         title: "",
         Time: {
           start: new Date(),

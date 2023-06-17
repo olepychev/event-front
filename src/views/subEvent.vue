@@ -319,6 +319,7 @@
                         style="width: 100%"
                         @added-address="updateAddress"
                         :isMap="true"
+                        @input-address="onAddressChange"
                       />
                     </div>
 
@@ -522,30 +523,10 @@ export default {
   },
 
   methods: {
-    // getSubeventType() {
-    //   axios
-    //     .get("http://localhost:" + this.port + "/events/" + this.mainEventId)
-    //     .then((res) => {
-    //       this.eventType = res.data.eventSubType;
-    //       console.log(this.eventType);
-    //     });
-    // },
-    // getSubEventTypes() {
-    //   axios
-    //     .get("http://localhost:" + this.port + "/events/subtypes")
-    //     .then((res) => {
-    //       this.subEventTypes = [];
-    //       console.log(res.data);
-    //       for (let item of res.data) {
-    //         console.log(item.parentType, this.eventType);
-    //         if (item.parentType === this.eventType) {
-    //           this.subEventTypes.push(item);
-    //           console.log(item);
-    //         }
-    //       }
-    //       this.eventData.subType = this.subEventTypes[0].type;
-    //     });
-    // },
+    onAddressChange(current) {
+      this.eventData.address.address = '';
+    },
+
     getSubeventsHeaderData(mainEventId) {
       axios
         .get(
@@ -676,23 +657,9 @@ export default {
               else {
                 window.toastr.error("Failed to edit");
               }
-              // this.$router.push({
-              //   name: "/planner_add_subevent",
-
-              //   query: {
-              //     mainEventId: this.mainEventId,
-              //     subEventId: this.selected,
-              //   },
-              // });
-              // window.toastr.success("New Event Successfully Added");
-              // this.$router.push({
-              //   name: "/subevent_list",
-              //   query: {
-              //     mainEventId: res.data,
-              //   },
-              // });
+              
             }).catch((err) => {
-              window.toastr.error(e.response.data.message);
+              window.toastr.error("Failed to Edit");
             });
         } else {
           axios
