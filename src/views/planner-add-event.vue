@@ -199,6 +199,7 @@
                               data-toggle="modal"
                               data-target="#exampleModal"
                               class="btn gradient"
+                              @click="resetAllData()"
                             >
                               Get Started with wedding manager
                             </a>
@@ -722,7 +723,7 @@
               <form class="vue-form modal-content start-here" id="ProfileStep1" v-show="tabIndex == 0" @submit.prevent="GoToStep(1)">
                 <fieldset>
                 <div class="planroll-nav">
-                  <a href="#" class="prev">Back</a>
+                  <a href="#" class="prev" style="visibility: hidden;">Back</a>
                   <span>1 / 6</span>
                   <a href="#" class="next" @click="GoToStep(1)" style="visibility: hidden"
                     >Next</a
@@ -781,7 +782,9 @@
                             @input="TitleChange"
                             required
                           />
+                        
                         </div>
+                        
                       </div>
                     </div>
                     <ul
@@ -1181,6 +1184,7 @@
                         @added-address="updateAddress"
                       />
                     </div>
+
                   </div>
                   <div style="display: none" class="form-group text-center">
                     <div class="custom-control custom-radio radio-lg d-inline">
@@ -1246,7 +1250,7 @@
                       @keydown="GuestsKeyDown"
                       min="0"
                     />
-                    <div v-if="parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000" style="text-align: left;">
+                    <div v-if="parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000" class="mytooltip">
                       The maximum number of guests is 100 ,000 
                     </div>
                   </div>
@@ -1269,8 +1273,7 @@
                         min="0"
                       />
                     </div>
-
-                    <div v-if="parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000" style="text-align: left;">
+                    <div v-if="parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000" class="mytooltip">
                       The maximum buget is 1 ,000 ,000 ,000
                     </div>
                   </div>
@@ -1575,6 +1578,7 @@ export default {
           latitude: "",
           longitude: "",
         },
+        textAddress: "",
       },
       mainEventId: 0,
       mainEventName: "",
@@ -2018,8 +2022,8 @@ export default {
       let value = e.target.value;
       if (value.length > 150) this.eventData.title = value.slice(0, 150);
     },
+
     updateAddress(currentPlace) {
-      console.log(currentPlace);
       this.eventData.address.address = currentPlace.name;
       this.eventData.address.city = currentPlace.vicinity;
       this.eventData.address.state = currentPlace.address_components.find(
@@ -2035,6 +2039,34 @@ export default {
       this.eventData.address.latitude = currentPlace.geometry.location.lat();
     },
 
+    resetAllData() {
+      this.tabIndex = 0;
+      this.mainEventId = 0;
+      this.eventData = {
+        userName: "",
+        emailAddress: "",
+        emailPartnerAddress: "",
+        title: "",
+        Time: {
+          start: new Date(),
+          end: new Date(),
+        },
+        type: "",
+        subType: "",
+        budget: "",
+        estimatedGuests: "",
+        description: "",
+        address: {
+          address: "",
+          city: "",
+          state: "",
+          country: "",
+          postalCode: "",
+          latitude: "",
+          longitude: "",
+        },
+      };
+    },
   },
 };
 </script>
@@ -2073,4 +2105,10 @@ h3 {
   display: block;
 }
 
+.v-tooltip .tooltip-inner {
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  padding: 8px;
+}
 </style>

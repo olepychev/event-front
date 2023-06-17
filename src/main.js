@@ -6,10 +6,14 @@ import VueToastr2 from "vue-toastr-2";
 import "vue-toastr-2/dist/vue-toastr-2.min.css";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as VueGoogleMaps from "vue2-google-maps";
+import VueDirectiveTooltip from 'vue-directive-tooltip';
+import VueTooltip from 'v-tooltip';
 
 window.toastr = require("toastr");
 
 Vue.use(VueToastr2);
+Vue.use(VueTooltip);
+Vue.use(VueDirectiveTooltip);
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyDGQ93SShkmSS8sUN71cVO433709GjC1BI",

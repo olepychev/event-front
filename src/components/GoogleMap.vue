@@ -55,6 +55,7 @@ export default {
         },
         types: ["(cities)"],
       },
+      addressInput: ''
     };
   },
 
@@ -63,9 +64,8 @@ export default {
   },
 
   methods: {
+    
     onClick(event) {
-      // console.log('The user clicked at:', event.latLng);
-      // perform any actions you need to here
 
       let geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: event.latLng }, (results, status) => {
