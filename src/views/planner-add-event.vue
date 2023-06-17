@@ -1162,7 +1162,7 @@
                     >Prev</a
                   >
                   <span>4 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)"
+                  <a href="#" class="next" @click="GoToStep(1)" style="visibility: hidden"
                     >Next</a
                   >
                 </div>
@@ -1562,7 +1562,7 @@ export default {
       console.log('text', this.eventData.textAddress)
       console.log('address', this.eventData.address.address)
       console.log('result', this.eventData.address.address == '' && this.eventData.textAddress != '')
-      return this.eventData.address.address == '' && this.eventData.textAddress != ''
+      return this.eventData.address.address == ''
     }
   },
   data() {
