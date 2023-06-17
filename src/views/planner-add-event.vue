@@ -1975,6 +1975,8 @@ export default {
         title: this.eventData.title,
         multiEvent: "Y",
         emailAddress: this.eventData.emailAddress,
+        userName: this.eventData.userName,
+        partnerName: this.eventData.partnerName,
         partnerEmail: this.eventData.emailPartnerAddress,
 
         eventType: this.eventData.type,
