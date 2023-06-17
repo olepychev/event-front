@@ -2041,8 +2041,6 @@ export default {
     onAddressChange(current) {
       this.eventData.address.address = '';
       this.eventData.textAddress = current;
-      console.log('@@@@@@@', this.eventData.address);
-      console.log('#######', this.eventData.textAddress);
     },
 
     updateAddress(currentPlace) {
@@ -2061,8 +2059,6 @@ export default {
       this.eventData.address.longitude = currentPlace.geometry.location.lng();
       this.eventData.address.latitude = currentPlace.geometry.location.lat();
 
-      console.log('@@@@@@@1111111', this.eventData.address);
-      console.log('#######1111111', this.eventData.textAddress);
     },
 
     resetAllData() {
