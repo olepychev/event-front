@@ -1559,9 +1559,6 @@ export default {
 
   computed: {
     isAddress() {
-      console.log('text', this.eventData.textAddress)
-      console.log('address', this.eventData.address.address)
-      console.log('result', this.eventData.address.address == '' && this.eventData.textAddress != '')
       return this.eventData.address.address == ''
     }
   },
@@ -2062,6 +2059,7 @@ export default {
     },
 
     resetAllData() {
+      
       this.tabIndex = 0;
       this.mainEventId = 0;
       this.eventData = {
@@ -2073,7 +2071,7 @@ export default {
           start: new Date(),
           end: new Date(),
         },
-        type: "",
+        type: this.eventTypes[0].type,
         subType: "",
         budget: "",
         estimatedGuests: "",
@@ -2089,6 +2087,8 @@ export default {
         },
         textAddress: ""
       };
+
+      this.getSubEventTypes(this.eventTypes[0].type)
     },
   },
 };
