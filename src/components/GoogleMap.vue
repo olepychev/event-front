@@ -7,6 +7,7 @@
           @place_changed="setPlace"
           :options="autocompleteOptions"
           style="width: 400px; font-size: 20px"
+          @input="onInput"
         >
         </gmap-autocomplete>
         <!-- <button @click="addMarker" type="button" v-if="isMap">Add</button> -->
@@ -65,6 +66,10 @@ export default {
 
   methods: {
     
+    onInput(event) {
+      this.$emit("input-address", event.target.value);
+    },
+
     onClick(event) {
 
       let geocoder = new google.maps.Geocoder();

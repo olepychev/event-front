@@ -1182,7 +1182,12 @@
                       <google-map
                         style="width: 100%"
                         @added-address="updateAddress"
+                        @input-address="onAddressChange"
                       />
+                      <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
+                      <div v-if="isAddress" class="mytooltip">
+                        Choose the correct address. 
+                      </div>
                     </div>
 
                   </div>
@@ -1207,6 +1212,7 @@
                     data-toggle="tooltip"
                     @click="GoToStep(1)"
                     data-placement="top"
+                    :disabled="isAddress"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
@@ -1549,6 +1555,15 @@ export default {
     Footer,
     vueDropzone,
     GoogleMap,
+  },
+
+  computed: {
+    isAddress() {
+      console.log('text', this.eventData.textAddress)
+      console.log('address', this.eventData.address.address)
+      console.log('result', this.eventData.address.address == '' && this.eventData.textAddress != '')
+      return this.eventData.address.address == '' && this.eventData.textAddress != ''
+    }
   },
   data() {
     return {
@@ -2023,7 +2038,15 @@ export default {
       if (value.length > 150) this.eventData.title = value.slice(0, 150);
     },
 
+    onAddressChange(current) {
+      this.eventData.address.address = '';
+      this.eventData.textAddress = current;
+      console.log('@@@@@@@', this.eventData.address);
+      console.log('#######', this.eventData.textAddress);
+    },
+
     updateAddress(currentPlace) {
+      
       this.eventData.address.address = currentPlace.name;
       this.eventData.address.city = currentPlace.vicinity;
       this.eventData.address.state = currentPlace.address_components.find(
@@ -2037,6 +2060,9 @@ export default {
       )?.long_name;
       this.eventData.address.longitude = currentPlace.geometry.location.lng();
       this.eventData.address.latitude = currentPlace.geometry.location.lat();
+
+      console.log('@@@@@@@1111111', this.eventData.address);
+      console.log('#######1111111', this.eventData.textAddress);
     },
 
     resetAllData() {
@@ -2065,6 +2091,7 @@ export default {
           latitude: "",
           longitude: "",
         },
+        textAddress: ""
       };
     },
   },
@@ -2110,5 +2137,11 @@ h3 {
   color: #fff;
   border-radius: 4px;
   padding: 8px;
+}
+
+.mytooltip {
+  text-align: left;
+  margin: unset !important;
+  color: red;
 }
 </style>
