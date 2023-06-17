@@ -1225,7 +1225,7 @@
                     >Back</a
                   >
                   <span>5 / 6</span>
-                  <a href="#" class="next" @click="GoToStep(1)"
+                  <a href="#" class="next" @click="GoToStep(1)" :style="parseInt(eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000 || parseInt(eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000 ? 'visibility: hidden' : 'visibility: visible'"
                     >Next</a
                   >
                 </div>
