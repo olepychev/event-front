@@ -251,7 +251,7 @@
                                     <li>
                                       Attending Guests<span>{{
                                         guestCount.guestCountDto?.attending
-                                      }}{{ this.mainEventId }}</span>
+                                      }}</span>
                                     </li>
                                     <li>
                                       Invited Guests<span>{{
@@ -2266,7 +2266,7 @@ export default {
       this.$router.push({
         name: "/planner_add_subevent",
 
-        query: {
+        params: {
           mainEventId: this.mainEventId,
           subEventId: this.selected,
         },

@@ -505,11 +505,11 @@ export default {
 
   created() {
     this.port = location.port;
-    this.mainEventId = this.$route.query.mainEventId
-      ? this.$route.query.mainEventId
+    this.mainEventId = this.$route.params.mainEventId
+      ? this.$route.params.mainEventId
       : 0;
-    this.subEventId = this.$route.query.subEventId
-      ? this.$route.query.subEventId
+    this.subEventId = this.$route.params.subEventId
+      ? this.$route.params.subEventId
       : null;
     this.selected = this.subEventId;
     console.log(this.subEventId);
@@ -623,18 +623,6 @@ export default {
     },
 
     onSubmit() {
-      if (this.eventData.title === "") {
-        window.toastr.error("Please add title of event");
-      } else {
-        console.log("data:", this.eventData);
-        console.log(this.preFilledEventData);
-        console.log(this.eventData.Time.start.toISOString());
-        console.log(
-          moment(
-            this.eventData.Time.start.toISOString(),
-            "YYYY-MM-DDTHH:mm:ss.sssZ"
-          ).format("YYYY-MM-DD HH:mm")
-        );
         const startFormattedTime = this.formattedDateTime(
           this.eventData.Time.start
         );
@@ -685,6 +673,9 @@ export default {
               if (res.statusText === "OK") {
                 window.toastr.success("Event Successfully Edited");
               }
+              else {
+                window.toastr.error("Failed to edit");
+              }
               // this.$router.push({
               //   name: "/planner_add_subevent",
 
@@ -700,6 +691,8 @@ export default {
               //     mainEventId: res.data,
               //   },
               // });
+            }).catch((err) => {
+              window.toastr.error(e.response.data.message);
             });
         } else {
           axios
@@ -709,13 +702,15 @@ export default {
                 window.toastr.success("New Event Successfully Added");
                 this.$forceUpdate();
               }
+              else {
+                window.toastr.error("Failed to Create");
+              }
             })
             .catch((e) => {
               window.toastr.error(e.response.data.message);
               console.log(e.response.data);
             });
         }
-      }
     },
     openDetailsPage() {
       this.$router.push({
