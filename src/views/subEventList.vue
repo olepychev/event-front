@@ -9,10 +9,7 @@
         <!-- Section Banner -->
         <div
           class="dlab-bnr-inr text-center dlab-bnr-inr-sm overlay-black-dark"
-          style="
-            background-image: url(images/main-slider/slide1.jpg);
-            background-size: cover;
-          "
+          style="background-image: url(images/main-slider/slide1.jpg); background-size: cover;"
           id="app-banner"
         >
           <div class="container">
@@ -254,7 +251,7 @@
                                     <li>
                                       Attending Guests<span>{{
                                         guestCount.guestCountDto?.attending
-                                      }}</span>
+                                      }}{{ this.mainEventId }}</span>
                                     </li>
                                     <li>
                                       Invited Guests<span>{{
@@ -2151,24 +2148,9 @@ window.$ = require("jquery");
 window.JQuery = require("jquery");
 
 import axios from "axios";
+import Vue from "vue";
 import { format } from "path";
 export default {
-  beforeRouteEnter(to, from, next) {
-    if (to.query.param1 === 'mainEventId') {
-      delete to.query.param1
-      next({ ...to, replace: true })
-    } else {
-      next()
-    }
-  },
-  beforeRouteUpdate(to, from, next) {
-    if (to.query.param1 === 'mainEventId') {
-      delete to.query.param1
-      next({ ...to, replace: true })
-    } else {
-      next()
-    }
-  },
   name: "SubEventList",
   components: {
     Header,
@@ -2209,14 +2191,13 @@ export default {
     };
   },
   created() {
+    
     this.port = location.port;
-    this.mainEventId = this.$route.query.mainEventId
-      ? this.$route.query.mainEventId
-      : 415;  // TODO
-     this.selected = this.$route.query.subEventId
+    this.mainEventId = this.$route.params.mainEventId
+    this.selected = this.$route.query.subEventId
       ? this.$route.query.subEventId
       : null;
-    console.log(this.selected);
+    // console.log(this.selected);
     this.getData(this.mainEventId);
     this.formatDate();
     this.getGuestCount(this.mainEventId);

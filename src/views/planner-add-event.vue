@@ -719,7 +719,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="modal-dialog" role="document">
-              <form class="vue-form modal-content start-here" id="ProfileStep1" v-show="tabIndex == 0" @submit.prevent="() => GoToStep(1)">
+              <form class="vue-form modal-content start-here" id="ProfileStep1" v-show="tabIndex == 0" @submit.prevent="GoToStep(1)">
                 <fieldset>
                 <div class="planroll-nav">
                   <a href="#" class="prev">Back</a>
@@ -1795,7 +1795,7 @@ export default {
       $('.close').click();
       this.$router.push({
         name: "/sub/dashboard",
-        query: {
+        params: {
           mainEventId: this.mainEventId,
         },
       });
@@ -1973,6 +1973,7 @@ export default {
       axios
         .post("http://localhost:" + this.port + "/events", requestData)
         .then((res) => {
+          console.log(res)
           if (res.statusText === "Created") {
             this.mainEventId = res.data
             window.toastr.success("New Event Successfully Added");
