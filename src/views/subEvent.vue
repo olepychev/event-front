@@ -339,9 +339,15 @@
                           type="text"
                           class="form-control"
                           id="address"
+                          @input="(e) => isInValidAddress(e.target.value)"
+                          :class="{'is-invalid': isInvalidAdd}"
                           v-model="eventData.address.address"
                           required
                         />
+
+                        <div v-if="isInvalidAdd" class="mytooltip">
+                          The address must be valid
+                        </div>
                       </div>
                       <div class="col-md-6">
                         <label class="label" for="address"
@@ -350,7 +356,6 @@
                         <input
                           type="text"
                           class="form-control"
-                          id="address"
                           v-model="eventData.address.address2"
                         />
                       </div>
@@ -451,6 +456,9 @@ import moment from "moment";
 import Vue from "vue";
 import VCalendar from "v-calendar";
 import { setTransitionHooks } from "@vue/runtime-core";
+
+import { gmapApi } from 'vue2-google-maps'
+
 Vue.use(VCalendar);
 
 window.toastr = require("toastr");
@@ -511,6 +519,7 @@ export default {
       subeventsHeaderData: {},
       subEventTypes: [],
       eventType: "",
+      isInvalidAdd: false,
     };
   },
 
@@ -534,7 +543,7 @@ export default {
 
   methods: {
     onAddressChange(current) {
-      this.eventData.address.address = '';
+      // console.log(current)
     },
 
     getSubeventsHeaderData(mainEventId) {
@@ -551,8 +560,25 @@ export default {
           console.log(this.noData);
         });
     },
+    
+    async  isInValidAddress(placeName) {
+      if(window.google == undefined) return false;
+      const geocoder = new window.google.maps.Geocoder();
+
+      let isAddress = false;
+      const results = await geocoder.geocode({ address: placeName }).then(res => {
+        isAddress = false;
+        console.log(isAddress, placeName)
+      }).catch(err => {
+        isAddress = true;
+        console.log(isAddress, placeName)
+      });
+      this.isInvalidAdd = isAddress;
+    },
+
     updateAddress(currentPlace) {
       this.eventData.address.address = currentPlace.name;
+      this.isInValidAddress(currentPlace.name);
       this.eventData.address.city = currentPlace.vicinity;
       this.eventData.address.state = currentPlace.address_components.find(
         (element) => element.types[0] === "administrative_area_level_1"
@@ -613,16 +639,21 @@ export default {
         });
     },
 
-    isInValid() {
+    isInValidGuestsBuget() {
       return parseInt(this.eventData.budget.replaceAll(' ', '').replaceAll(',', '')) > 1000000000 || parseInt(this.eventData.estimatedGuests.replaceAll(' ', '').replaceAll(',', '')) > 100000 
     },
 
     onSubmit() {
 
-    if(this.isInValid() == true) {
-      $('.is-invalid').focus();
+    if(this.isInValidGuestsBuget() == true) {
+      $('.is-invalid:not(#address)').focus();
       return;
     };
+    if(this.isInvalidAdd) {
+      $('#address').focus();
+      return;
+    }
+
     const startFormattedTime = this.formattedDateTime(
       this.eventData.Time.start
     );
@@ -678,7 +709,7 @@ export default {
           }
           
         }).catch((err) => {
-          window.toastr.error("Failed to Edit");
+          window.toastr.error("Failed to edit");
         });
     } else {
       axios
@@ -949,5 +980,7 @@ h3 {
   text-align: left;
   margin: unset !important;
   color: red;
+  padding-left: 10px;
 }
+
 </style>

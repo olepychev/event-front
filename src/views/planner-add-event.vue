@@ -1186,8 +1186,8 @@
                         @input-address="onAddressChange"
                       />
                       <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
-                      <div v-if="isAddress" class="mytooltip">
-                        Choose the correct address. 
+                      <div v-if="isInvalidAdd" class="mytooltip">
+                        Address must be valid.
                       </div>
                     </div>
 
@@ -1213,7 +1213,7 @@
                     data-toggle="tooltip"
                     @click="GoToStep(1)"
                     data-placement="top"
-                    :disabled="isAddress"
+                    :disabled="isInvalidAdd"
                     title="Congrats! Even your names look great together."
                   >
                     Next Step
@@ -1558,11 +1558,6 @@ export default {
     GoogleMap,
   },
 
-  computed: {
-    isAddress() {
-      return this.eventData.address.address == ''
-    }
-  },
   data() {
     return {
       TimeFormat: {
@@ -1634,6 +1629,7 @@ export default {
       parameters: [],
       name: "",
       port: null,
+      isInvalidAdd: true,
     };
   },
   created() {
@@ -2023,6 +2019,23 @@ export default {
         "DD MMMM YYYY"
       );
     },
+
+    async isInValidAddress(placeName) {
+      if(window.google == undefined) return false;
+      const geocoder = new window.google.maps.Geocoder();
+
+      let isAddress = false;
+      const results = await geocoder.geocode({ address: placeName }).then(res => {
+        isAddress = false;
+        console.log(isAddress, placeName)
+      }).catch(err => {
+        isAddress = true;
+        console.log(isAddress, placeName)
+      });
+      this.isInvalidAdd = isAddress;
+      console.log(isAddress, this.isInvalidAdd)
+    },
+
     getSubEventTypes(eventType) {
       axios
         .get("http://localhost:" + this.port + "/events/subtypes")
@@ -2042,13 +2055,13 @@ export default {
     },
 
     onAddressChange(current) {
-      this.eventData.address.address = '';
-      this.eventData.textAddress = current;
+      this.isInValidAddress(current)
     },
 
     updateAddress(currentPlace) {
       
       this.eventData.address.address = currentPlace.name;
+      this.isInValidAddress(currentPlace.name)
       this.eventData.address.city = currentPlace.vicinity;
       this.eventData.address.state = currentPlace.address_components.find(
         (element) => element.types[0] === "administrative_area_level_1"
@@ -2094,7 +2107,7 @@ export default {
         },
         textAddress: ""
       };
-
+      this.isInvalidAdd = true;
       this.getSubEventTypes(this.eventTypes[0].type)
     },
   },
@@ -2146,5 +2159,6 @@ h3 {
   text-align: left;
   margin: unset !important;
   color: red;
+  padding-left: 10px;
 }
 </style>
