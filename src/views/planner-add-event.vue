@@ -1634,39 +1634,7 @@ export default {
   },
   created() {
     this.port = location.port;
-    // jQuery("#exampleModal").css(
-    //   "margin-top",
-    //   Math.max(0, (jQuery(window).height() - dialog.height()) / 2)
-    // );
-    // this.GoToStep("ProfileStep1");
-
-    // jQuery(".modal-content").hide();
-    // jQuery("#ProfileStep1").show();
     this.getEventTypes();
-    // this.ready();
-    // var modal = jQuery("#exampleModal"),
-    //   dialog = modal.find(".modal-dialog");
-    // modal.css("display", "block");
-    // dialog.css(
-    //   "margin-top",
-    //   Math.max(0, (jQuery(window).height() - dialog.height()) / 2)
-    // );
-    // jQuery(".modal-content").hide();
-    // jQuery("#ProfileStep1").show();
-    // $("#exampleModal").modal("show");
-    // var modal = jQuery("#exampleModal"),
-    //   dialog = modal.find(".modal-dialog");
-    // console.log(modal);
-    // modal.css("display", "block");
-    // dialog.css(
-    //   "margin-top",
-    //   Math.max(0, (jQuery(window).height() - dialog.height()) / 2)
-    // );
-    // console.log($("#exampleModal").modal("show"));
-    // $("#exampleModal").modal("show");
-    // jQuery(".modal-content").hide();
-    // jQuery("ProfileStep1").show();
-    // console.log(jQuery("#ProfileStep1"));
   },
   mounted() {},
   methods: {
@@ -1699,109 +1667,10 @@ export default {
           $("#smartwizard").smartWizard("reset");
           $("#myForm").find("input, textarea").val("");
         });
-
-      // Smart Wizard
-      // $("#smartwizard").smartWizard({
-      //   selected: 0,
-      //   theme: "dots",
-      //   transitionEffect: "fade",
-      //   toolbarSettings: {
-      //     toolbarPosition: "bottom",
-      //     toolbarExtraButtons: [btnFinish, btnCancel],
-      //   },
-      //   anchorSettings: {
-      //     markDoneStep: true, // add done css
-      //     markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
-      //     removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
-      //     enableAnchorOnDoneStep: true, // Enable/Disable the done steps navigation
-      //   },
-      // });
-
-      // $("#smartwizard").on(
-      //   "leaveStep",
-      //   function (e, anchorObject, stepNumber, stepDirection) {
-      //     var elmForm = $("#form-step-" + stepNumber);
-      //     // stepDirection === 'forward' :- this condition allows to do the form validation
-      //     // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
-      //     if (stepDirection === "forward" && elmForm) {
-      //       elmForm.validator("validate");
-      //       var elmErr = elmForm.children(".has-error");
-      //       if (elmErr && elmErr.length > 0) {
-      //         // Form validation failed
-      //         return false;
-      //       }
-      //     }
-      //     return true;
-      //   }
-      // );
-
-      // $("#smartwizard").on(
-      //   "showStep",
-      //   function (e, anchorObject, stepNumber, stepDirection) {
-      //     // Enable finish button only on last step
-      //     if (stepNumber == 3) {
-      //       $(".btn-finish").removeClass("disabled");
-      //     } else {
-      //       $(".btn-finish").addClass("disabled");
-      //     }
-      //   }
-      // );
     },
     allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
     GoToFinish() {
-
-      // const startFormattedTime = this.formattedDateForSubmit(
-      //   this.eventData.Time.start
-      // );
-      // const endFormattedTime = this.formattedDateForSubmit(
-      //   this.eventData.Time.end
-      // );
-
-      // let locationData = {
-      //   address: this.eventData.address.address,
-      //   city: this.eventData.address.city,
-      //   state: this.eventData.address.state,
-      //   country: this.eventData.address.country,
-      //   postalCode: this.eventData.address.postalCode,
-      //   longitude: this.eventData.address.longitude,
-      //   latitude: this.eventData.address.latitude,
-      // };
-
-      // let requestData = {
-      //   title: this.eventData.title,
-      //   multiEvent: "Y",
-      //   emailAddress: this.eventData.emailAddress,
-      //   emailPartnerAddress: this.eventData.emailPartnerAddress,
-      //   eventType: this.eventData.type,
-      //   eventSubType: this.eventData.subType,
-      //   budget: Number(this.eventData.budget.replace(/[, " "]/g, "")),
-      //   estimatedGuests: Number(
-      //     this.eventData.estimatedGuests.replace(/[, " "]/g, "")
-      //   ),
-      //   fromDate: startFormattedTime,
-      //   toDate: endFormattedTime,
-      //   shortDescription: this.eventData.description,
-      //   location: locationData,
-      // };
-      // console.log(requestData);
-
       this.tabIndex = 0;
-      // $(".close").click();
-      // axios
-      //   .post("http://localhost:" + this.port + "/events", requestData)
-      //   .then((res) => {
-      //     if (res.statusText === "Created") {
-      //       window.toastr.success("New Event Successfully Added");
-      //       this.$router.push({
-      //         name: "/subevent_list",
-      //         query: {
-      //           mainEventId: res.data,
-      //         },
-      //       });
-      //     } else {
-      //       window.toastr.error("Failed to add new Event");
-      //     }
-      //   });
     },
 
     GoToDashboard() {
