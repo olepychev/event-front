@@ -1999,15 +1999,11 @@ export default {
             window.toastr.error("Failed to add new Event");
           }
         }).catch((err) => {
-          console.log('aaaaaaaaaaaa', err.response.data)
           window.toastr.error("Failed to add new Event");
         })
     },
     GoToStep(pos) {
       this.tabIndex += pos;
-      // jQuery(".modal-content").hide();
-      // jQuery("#" + id).show();
-      // console.log("Gotostep");
     },
     formattedDateForSubmit(date) {
       return moment(date.toLocaleString("en-GB"), "DD/MM/YYYY HH:mm:ss").format(
