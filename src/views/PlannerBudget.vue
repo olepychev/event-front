@@ -905,7 +905,7 @@ export default {
     },
     openDetailsPage() {
       this.$router.push({
-        name: "/subevent_list",
+        name: "/sub_dashboard",
 
         query: {
           mainEventId: this.mainEventId,

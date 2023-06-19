@@ -627,7 +627,7 @@ export default {
           if (res.statusText === "Created") {
             window.toastr.success("New Event Successfully Added");
             this.$router.push({
-              name: "/subevent_list",
+              name: "/sub_dashboard",
               query: {
                 mainEventId: res.data,
               },

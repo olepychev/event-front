@@ -50,8 +50,8 @@ const routes = [
     component: () => import("../views/subEvent"),
   },
   {
-    path: "/sub/dashboard",
-    name: "/sub/dashboard",
+    path: "/sub_dashboard",
+    name: "/sub_dashboard",
     component: () => import("../views/subEventList"),
   },
   {

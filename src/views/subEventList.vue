@@ -2193,10 +2193,13 @@ export default {
   created() {
     
     this.port = location.port;
-    this.mainEventId = this.$route.params.mainEventId
-    this.selected = this.$route.query.subEventId
-      ? this.$route.query.subEventId
-      : null;
+    if(this.$route.query.mainEventId == undefined || this.$route.query.mainEventId == null)
+      this.mainEventId = this.$route.params.mainEventId
+    else this.mainEventId = this.$route.query.mainEventId
+
+    if(this.$route.query.subEventId == undefined || this.$route.query.subEventId == null)
+      this.selected = this.$route.params.subEventId
+    else this.selected = this.$route.query.subEventId;
     // console.log(this.selected);
     this.getData(this.mainEventId);
     this.formatDate();

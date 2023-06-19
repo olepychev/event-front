@@ -525,6 +525,11 @@ export default {
 
   created() {
     this.port = location.port;
+
+    // this.mainEventId = this.$route.query.mainEventId
+    //   ? this.$route.query.mainEventId
+    //   : 0;
+
     this.mainEventId = this.$route.params.mainEventId
       ? this.$route.params.mainEventId
       : 0;
@@ -731,7 +736,7 @@ export default {
     },
     openDetailsPage() {
       this.$router.push({
-        name: "/subevent_list",
+        name: "/sub_dashboard",
 
         query: {
           mainEventId: this.mainEventId,

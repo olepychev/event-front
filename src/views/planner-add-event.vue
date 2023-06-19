@@ -1677,7 +1677,7 @@ export default {
       this.tabIndex = 0;
       $('.close').click();
       this.$router.push({
-        name: "/sub/dashboard",
+        name: "/sub_dashboard",
         params: {
           mainEventId: this.mainEventId,
         },
