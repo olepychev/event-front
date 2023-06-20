@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-if="!isHiddenAutoComplete">
       <h2>Search and add a city</h2>
       <label>
         <gmap-autocomplete
@@ -43,15 +43,17 @@ export default {
   props: {
     isMap: Boolean,
     isSearchType: Boolean,
+    isHiddenAutoComplete: Boolean,
+    defaultAddress: Object,
   },
 
   data() {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
-      center: { lat: 45.508, lng: -73.587 },
+      center: this.defaultAddress,
       markers: [{
-          position: { lat: 45.508, lng: -73.587 }, // San Francisco
+          position: this.defaultAddress, // San Francisco
           draggable: true // make the marker draggable
         }],
       places: [],
@@ -63,7 +65,6 @@ export default {
         },
         types: this.isSearchType ? ["address"] : ["(cities)"],
       },
-      addressInput: ''
     };
   },
 

@@ -910,12 +910,20 @@
                         </h5>
                         <div class="collapse" id="map">
                           <div class="card card-body m-b30">
-                            <iframe
+                            <!-- <iframe
                               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.3825624477!2d75.65046970649679!3d26.88544791796718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C+Rajasthan!5e0!3m2!1sen!2sin!4v1500819483219"
                               class="align-self-stretch"
                               style="border: 0; width: 100%; min-height: 350px"
                               allowfullscreen
-                            ></iframe>
+                            ></iframe> -->
+                            <google-map
+                              style="width: 100%"
+                              @added-address="updateAddress"
+                              @input-address="onAddressChange"
+                              :isMap="true"
+                              :isHiddenAutoComplete="true"
+                              :defaultAddress="{'lat': this.subeventDetails.location?.latitude, 'lng': this.subeventDetails.location?.longitude}"
+                            />
                           </div>
                         </div>
                         <div class="location-details">
@@ -2146,6 +2154,7 @@ import Footer from "@/views/layouts/Footer.vue";
 import moment from "moment";
 window.$ = require("jquery");
 window.JQuery = require("jquery");
+import GoogleMap from "@/components/GoogleMap";
 
 import axios from "axios";
 import Vue from "vue";
@@ -2155,6 +2164,7 @@ export default {
   components: {
     Header,
     Footer,
+    GoogleMap,
   },
   data() {
     return {
