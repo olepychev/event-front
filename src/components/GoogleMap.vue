@@ -20,7 +20,6 @@
       :zoom="15"
       style="width: 100%; height: 400px;"
       :style="isMap ? 'display: block': 'display: none'"
-      @click="onClick"
     >
       <gmap-marker
         :key="index"
@@ -28,6 +27,8 @@
         v-for="(m, index) in markers"
         :position="m.position"
         @click="center = m.position"
+        @dragend="onMarkerDragEnd"
+        :draggable="true"
       ></gmap-marker>
     </gmap-map>
   </div>
@@ -49,7 +50,10 @@ export default {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
       center: { lat: 45.508, lng: -73.587 },
-      markers: [],
+      markers: [{
+          position: { lat: 45.508, lng: -73.587 }, // San Francisco
+          draggable: true // make the marker draggable
+        }],
       places: [],
       currentPlace: null,
       containerIntialised: false,
@@ -73,7 +77,7 @@ export default {
       this.$emit("input-address", event.target.value);
     },
 
-    onClick(event) {
+    onMarkerDragEnd(event) {
 
       let geocoder = new google.maps.Geocoder();
       geocoder.geocode({ location: event.latLng }, (results, status) => {
@@ -99,8 +103,8 @@ export default {
           };
 
           this.currentPlace = placeData;
-          this.addMarker();
-          // this.$emit("added-address", placeData);
+          // this.addMarker();
+          this.$emit("added-address", placeData);
           // Do something with the place object, e.g. update the place_changed data format.
         }
       });
