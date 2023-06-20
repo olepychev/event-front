@@ -1892,13 +1892,10 @@ export default {
       let isAddress = false;
       const results = await geocoder.geocode({ address: placeName }).then(res => {
         isAddress = false;
-        console.log(isAddress, placeName)
       }).catch(err => {
         isAddress = true;
-        console.log(isAddress, placeName)
       });
       this.isInvalidAdd = isAddress;
-      console.log(isAddress, this.isInvalidAdd)
     },
 
     getSubEventTypes(eventType) {

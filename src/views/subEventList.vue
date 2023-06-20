@@ -2221,10 +2221,8 @@ export default {
           .then((res) => {
             // console.log(this.preFilledEventData);
             this.guestCount = res.data;
-            console.log(this.guestCount);
           })
           .catch((e) => {
-            console.log(e);
           });
       }
       
