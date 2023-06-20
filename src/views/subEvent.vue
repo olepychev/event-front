@@ -330,6 +330,7 @@
                         @input-address="onAddressChange"
                         :defaultAddress="{'lat': parseFloat(this.subeventDetails.location?.latitude), 'lng': parseFloat(this.subeventDetails.location?.longitude)}"
                         :isSearchType="true"
+                        :key="mapKey"
                       />
                     </div>
 
@@ -458,7 +459,6 @@ import Vue from "vue";
 import VCalendar from "v-calendar";
 import { setTransitionHooks } from "@vue/runtime-core";
 
-import { gmapApi } from 'vue2-google-maps'
 
 Vue.use(VCalendar);
 
@@ -481,7 +481,7 @@ export default {
       },
       mainEventId: 0,
       subEventId: 0,
-      subeventDetails: [],
+      subeventDetails: {},
       preFilledEventData: [],
       eventData: {
         title: "",
@@ -522,6 +522,7 @@ export default {
       subEventTypes: [],
       eventType: "",
       isInvalidAdd: false,
+      mapKey: 0,
     };
   },
 
@@ -573,7 +574,6 @@ export default {
         })
         .catch(() => {
           this.noData = true;
-          console.log(this.noData);
         });
     },
 
@@ -584,6 +584,8 @@ export default {
         .then((res) => {
           // console.log(this.preFilledEventData);
           this.subeventDetails = res.data;
+          this.eventData.address = this.subeventDetails.location;
+          this.mapKey++;
       });
     },
     
