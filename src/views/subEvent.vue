@@ -530,14 +530,15 @@ export default {
     //   ? this.$route.query.mainEventId
     //   : 0;
 
-    if(this.$route.query.mainEventId == undefined || this.$route.query.mainEventId == null)
+    if(this.$route.query.mainEventId == undefined || this.$route.query.mainEventId == null) {
       this.mainEventId = this.$route.params.mainEventId
-    else this.mainEventId = this.$route.query.mainEventId
-
-    if(this.$route.query.subEventId == undefined || this.$route.query.subEventId == null)
       this.selected = this.$route.params.subEventId
-    else this.selected = this.$route.query.subEventId;
-
+    }
+    else {
+      this.mainEventId = this.$route.query.mainEventId;
+      this.selected = this.$route.query.subEventId;
+    }
+    
     // this.mainEventId = this.$route.params.mainEventId
     //   ? this.$route.params.mainEventId
     //   : 0;
