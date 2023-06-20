@@ -918,11 +918,9 @@
                             ></iframe> -->
                             <google-map
                               style="width: 100%"
-                              @added-address="updateAddress"
-                              @input-address="onAddressChange"
                               :isMap="true"
                               :isHiddenAutoComplete="true"
-                              :defaultAddress="{'lat': this.subeventDetails.location.latitude, 'lng': this.subeventDetails.location.longitude}"
+                              :defaultAddress="{'lat': parseFloat('40.8686675'), 'lng': parseFloat('-82.3182178')}"
                               :key="mapKey"
                             />
                           </div>
