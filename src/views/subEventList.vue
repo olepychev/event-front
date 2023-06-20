@@ -2271,7 +2271,7 @@ export default {
       this.$router.push({
         name: "/planner_add_subevent",
 
-        params: {
+        query: {
           mainEventId: this.mainEventId,
           subEventId: this.selected,
         },
@@ -2281,7 +2281,7 @@ export default {
       this.$router.push({
         name: "/planner_add_subevent",
 
-        params: {
+        query: {
           mainEventId: this.mainEventId,
         },
       });

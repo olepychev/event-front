@@ -530,14 +530,14 @@ export default {
     //   ? this.$route.query.mainEventId
     //   : 0;
 
-    if(this.$route.query.mainEventId == undefined || this.$route.query.mainEventId == null) {
-      this.mainEventId = this.$route.params.mainEventId
-      this.selected = this.$route.params.subEventId
-    }
-    else {
+    // if(this.$route.query.mainEventId == undefined || this.$route.query.mainEventId == null) {
+    //   this.mainEventId = this.$route.params.mainEventId
+    //   this.selected = this.$route.params.subEventId
+    // }
+    // else {
       this.mainEventId = this.$route.query.mainEventId;
       this.selected = this.$route.query.subEventId;
-    }
+    // }
     
     // this.mainEventId = this.$route.params.mainEventId
     //   ? this.$route.params.mainEventId
