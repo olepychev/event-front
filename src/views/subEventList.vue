@@ -920,7 +920,7 @@
                               style="width: 100%"
                               :isMap="true"
                               :isHiddenAutoComplete="true"
-                              :defaultAddress="{'lat': this.subeventDetails.location.latitude, 'lng': this.subeventDetails.location.longitude}"
+                              :defaultAddress="{'lat': parseFloat(this.subeventDetails.location?.latitude), 'lng': parseFloat(this.subeventDetails.location?.longitude)}"
                               :key="mapKey"
                             />
                           </div>

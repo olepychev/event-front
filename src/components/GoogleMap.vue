@@ -51,7 +51,7 @@ export default {
     return {
       // default to Montreal to keep it simple
       // change this to whatever makes sense
-      center: this.defaultAddress,
+      center: {lat: 0, lng: 0},
       markers: [{
           position: this.defaultAddress, // San Francisco
           draggable: true // make the marker draggable
@@ -71,6 +71,7 @@ export default {
   mounted() {
     if(this.defaultAddress == null)
       this.geolocate();
+    else this.center = this.defaultAddress;
   },
 
   methods: {
