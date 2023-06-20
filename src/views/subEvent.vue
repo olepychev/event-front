@@ -328,6 +328,7 @@
                         @added-address="updateAddress"
                         :isMap="true"
                         @input-address="onAddressChange"
+                        :defaultAddress="{'lat': parseFloat(this.subeventDetails.location?.latitude), 'lng': parseFloat(this.subeventDetails.location?.longitude)}"
                         :isSearchType="true"
                       />
                     </div>
@@ -480,6 +481,7 @@ export default {
       },
       mainEventId: 0,
       subEventId: 0,
+      subeventDetails: [],
       preFilledEventData: [],
       eventData: {
         title: "",
@@ -567,12 +569,22 @@ export default {
         )
         .then((res) => {
           this.subeventsHeaderData = res.data;
-          console.log(this.subeventsHeaderData);
+          this.openDetails(this.selected);
         })
         .catch(() => {
           this.noData = true;
           console.log(this.noData);
         });
+    },
+
+    openDetails(subEventId) {
+      this.selected = subEventId;
+      axios
+        .get("http://localhost:" + this.port + "/events/sub/" + subEventId)
+        .then((res) => {
+          // console.log(this.preFilledEventData);
+          this.subeventDetails = res.data;
+      });
     },
     
     async  isInValidAddress(placeName) {

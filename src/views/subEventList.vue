@@ -2247,7 +2247,7 @@ export default {
           // console.log(this.preFilledEventData);
           this.subeventDetails = res.data;
           this.mapKey++;
-        });
+      });
     },
     getData(mainEventId) {
       axios
