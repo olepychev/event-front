@@ -922,7 +922,8 @@
                               @input-address="onAddressChange"
                               :isMap="true"
                               :isHiddenAutoComplete="true"
-                              :defaultAddress="{'lat': this.subeventDetails.location?.latitude, 'lng': this.subeventDetails.location?.longitude}"
+                              :defaultAddress="{'lat': this.subeventDetails.location.latitude, 'lng': this.subeventDetails.location.longitude}"
+                              :key="mapKey"
                             />
                           </div>
                         </div>
@@ -2198,6 +2199,7 @@ export default {
       subeventData: {},
       subeventDetails: {},
       guestCount: {},
+      mapKey: 0,
     };
   },
   created() {
@@ -2246,7 +2248,7 @@ export default {
         .then((res) => {
           // console.log(this.preFilledEventData);
           this.subeventDetails = res.data;
-          console.log(this.subeventDetails);
+          this.mapKey++;
         });
     },
     getData(mainEventId) {
