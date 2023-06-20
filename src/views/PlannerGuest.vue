@@ -106,7 +106,6 @@
                 data-wow-duration="2s"
                 data-wow-delay="0.1s"
                 data-toggle="modal" data-target="#confirmDialog"
-                @click="setSelectedEvent(subevent.eventId)"
               >
                 <div
                   :class="
