@@ -69,7 +69,8 @@ export default {
   },
 
   mounted() {
-    this.geolocate();
+    if(this.defaultAddress == null)
+      this.geolocate();
   },
 
   methods: {
