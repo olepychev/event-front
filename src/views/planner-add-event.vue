@@ -1943,7 +1943,7 @@ export default {
 
     resetAllData() {
       
-      this.tabIndex = 3;
+      this.tabIndex = 0;
       this.mainEventId = 0;
       this.eventData = {
         userName: "",
