@@ -1184,6 +1184,7 @@
                         style="width: 100%"
                         @added-address="updateAddress"
                         @input-address="onAddressChange"
+                        :key="mapKey"
                       />
                       <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
                       <div v-if="isInvalidAdd" class="mytooltip">
@@ -1630,6 +1631,7 @@ export default {
       name: "",
       port: null,
       isInvalidAdd: true,
+      mapKey: 0
     };
   },
   created() {
@@ -1941,7 +1943,7 @@ export default {
 
     resetAllData() {
       
-      this.tabIndex = 0;
+      this.tabIndex = 3;
       this.mainEventId = 0;
       this.eventData = {
         userName: "",
@@ -1970,6 +1972,7 @@ export default {
         textAddress: ""
       };
       this.isInvalidAdd = true;
+      this.mapKey++;
       this.getSubEventTypes(this.eventTypes[0].type)
     },
   },
