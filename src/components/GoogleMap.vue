@@ -115,7 +115,6 @@ export default {
     // receives a place object via the autocomplete component
     setPlace(place) {
       this.currentPlace = place;
-      console.log('@@@@@@@@@@', place)
       this.addMarker();
     },
 
