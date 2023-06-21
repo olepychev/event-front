@@ -453,7 +453,7 @@ import Header from "@/views/layouts/Header.vue";
 import Footer from "@/views/layouts/Footer.vue";
 import axios from "axios";
 import vueDropzone from "vue2-dropzone";
-import GoogleMap from "@/components/GoogleMap";
+import GoogleMap from "@/components/GoogleMapFullAddress";
 import moment from "moment";
 import Vue from "vue";
 import VCalendar from "v-calendar";
