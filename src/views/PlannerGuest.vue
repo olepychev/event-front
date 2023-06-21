@@ -105,6 +105,7 @@
                 v-for="subevent in subeventData"
                 data-wow-duration="2s"
                 data-wow-delay="0.1s"
+                data-toggle="modal" data-target="#confirmDialog"
                 @click="setSelectedEvent(subevent.eventId)"
               >
                 <div
@@ -150,6 +151,7 @@
                     :href="backURL"
                     >Go Back</a
                   >
+
                 </div>
               </div>
             </div>
@@ -879,6 +881,23 @@
           </div>
         </div>
 
+        <div class="modal fade" id="confirmDialog" role="dialog">
+          <div class="modal-dialog">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header" style="justify-content: center;">
+                <h4 style="color: white; text-align: center;">Save Changes</h4>
+                <button type="button" style="background-color: #EFBB20; position: absolute; right: 10px; top:0px; color: white; border: 0px; font-size: 40px;" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-footer" style="justify-content: space-around;">
+                <button type="button" class="btn btn-primary" style="width: 150px;" data-dismiss="modal" @click="saveChanges">Save</button>
+                <button type="button" class="btn btn-default" style="width: 150px;" data-dismiss="modal" @click="openGuestListPage">Discard</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
         <!-- contact area end -->
       </div>
       <!-- Content END-->
@@ -1003,6 +1022,9 @@ export default {
     this.getData();
   },
   methods: {
+    showDialog() {
+
+    },
     getSubeventHeaderData() {
       axios
         .get(
@@ -1123,6 +1145,14 @@ export default {
     changeEvent() {
       console.log("here");
     },
+
+    saveChanges() {
+      if(this.newIf)
+        this.addNewGuestAndList();
+      else
+        this.editGuestAndList();
+    },
+
     addNewGuest() {
       this.locationType = window
         .$("#locationTypeSelect")
@@ -1161,6 +1191,51 @@ export default {
         .post("http://localhost:" + this.port + "/guests", this.guestData)
         .then(() => {
           window.toastr.success("Successfully Added!");
+        })
+        .catch(() => {
+          window.toastr.error("Add Failed!");
+        });
+    },
+
+    addNewGuestAndList() {
+      this.locationType = window
+        .$("#locationTypeSelect")
+        .children("label.active")
+        .children("input")
+        .val();
+
+      this.guestData = {
+        appUser: {
+          username: this.$refs.new_email.value,
+          email: this.$refs.new_email.value,
+          firstName: this.$refs.new_first_name.value,
+          lastName: this.$refs.new_last_name.value,
+          phone: this.$refs.new_phone_number.value,
+          userType: "GUEST",
+          accountType: "NEW",
+          addressId: this.$refs.new_address_id.value,
+          giftAmount: this.$refs.new_gift_received.value,
+          cashAmount: this.$refs.new_cash_received.value,
+          address: {
+            locationType: "GUEST",
+            address: this.$refs.new_address.value,
+            city: this.$refs.new_city.value,
+            state: this.$refs.new_state.value,
+            country: this.$refs.new_country.value,
+            postalCode: this.$refs.new_postal_code.value,
+            latitude: null,
+            longitude: null,
+          },
+          activeStatus: "ACTIVE",
+        },
+        invites: this.invites,
+      };
+      console.log("invites: ", this.invites);
+      axios
+        .post("http://localhost:" + this.port + "/guests", this.guestData)
+        .then(() => {
+          window.toastr.success("Successfully Added!");
+          this.openGuestListPage();
         })
         .catch(() => {
           window.toastr.error("Add Failed!");
@@ -1217,6 +1292,38 @@ export default {
         )
         .then(() => {
           window.toastr.success("Successfully Updated!");
+          return false;
+        })
+        .catch(() => {
+          window.toastr.error("Update Failed!");
+        });
+    },
+    editGuestAndList() {
+      this.locationType = window
+        .$("#locationTypeSelect_edit")
+        .children("label.active")
+        .children("input")
+        .val();
+        
+      this.invites.forEach((invite) => {
+        if (invite.invited) {
+          invite.inviteStatus = "INVITED";
+        }
+      });
+      this.guestData.invites = this.invites;
+      console.log("guestData; ", this.guestData);
+      axios
+        .put(
+          "http://localhost:" +
+            this.port +
+            "/guests/" +
+            this.guestData.appUser.id,
+          this.guestData
+        )
+        .then(() => {
+          window.toastr.success("Successfully Updated!");
+
+          this.openGuestListPage();
           return false;
         })
         .catch(() => {
@@ -1290,6 +1397,7 @@ export default {
       });
     },
     openGuestListPage() {
+      console.log('aaaaaaaaaaaaaaaa')
       this.$router.push({
         name: "/planner_guest_list",
 
