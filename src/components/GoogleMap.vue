@@ -97,16 +97,30 @@ export default {
             }
           }
 
-          let placeData = {
-            formatted_address: place.formatted_address,
-            address_components: place.address_components,
-            geometry: place.geometry,
-            name: address,
-            vicinity: city,
-          };
-
+          let placeData;
+          if(this.isSearchType) {
+            let streetNumber = place.address_components.find(ac => ac.types.includes('street_number'))?.long_name;
+            let route = place.address_components.find(ac => ac.types.includes('route'))?.long_name;
+            
+            placeData = {
+              formatted_address: place.formatted_address,
+              address_components: place.address_components,
+              geometry: place.geometry,
+              name: streetNumber == undefined ? route : streetNumber + ' ' + route,
+              vicinity: city,
+            };
+          }
+          else {
+            placeData = {
+              formatted_address: place.formatted_address,
+              address_components: place.address_components,
+              geometry: place.geometry,
+              name: address,
+              vicinity: city,
+            };
+          }
+          
           this.currentPlace = placeData;
-          // this.addMarker();
           this.$emit("added-address", placeData);
           // Do something with the place object, e.g. update the place_changed data format.
         }
@@ -127,7 +141,21 @@ export default {
         this.markers.push({ position: marker });
         this.places.push(this.currentPlace);
         this.center = marker;
-        this.$emit("added-address", this.currentPlace);
+        if(this.isSearchType) {
+          let streetNumber = this.currentPlace.address_components.find(ac => ac.types.includes('street_number'))?.long_name;
+          let route = this.currentPlace.address_components.find(ac => ac.types.includes('route'))?.long_name;
+          let placeData = {
+            formatted_address: this.currentPlace.formatted_address,
+            address_components: this.currentPlace.address_components,
+            geometry: this.currentPlace.geometry,
+            name: streetNumber == undefined ? route : streetNumber + ' ' + route,
+            vicinity: this.currentPlace.vicinity
+          };
+          this.$emit("added-address", placeData);
+        }
+        else {
+          this.$emit("added-address", this.currentPlace);
+        }
         this.currentPlace = null;
       }
     },
