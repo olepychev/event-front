@@ -409,7 +409,7 @@
           assignedTo2: '',
           assignedToDetails: '',
           details: '',
-          deferredUntil: '',
+          deferredUntil: null,
           edit: false,
           wrong: false,
           status: '',
@@ -454,7 +454,7 @@
             assignedTo1: this.activity.assignedTo1,
             assignedTo2: this.activity.assignedTo2,
             details: this.activity.details,
-            deferredUntil: this.activity.deferredUntil,
+            deferredUntil: this.getDate(this.activity.deferredUntil),
             completedOn: this.activity.completedOn,
             assignedToDetails: this.activity.assignedToDetails,
             completed: false,
@@ -466,15 +466,16 @@
             eventId: this.eventId,
             mainEventId: this.mainEventId,
             status: "PENDING",
-            taskDate: this.activity.taskDate,
+            taskDate: this.getDate(this.activity.taskDate),
             taskType: this.activity.taskType,
             title: this.activity.title,
             assignedTo1: this.activity.assignedTo1,
             assignedTo2: this.activity.assignedTo2,
             assignedToDetails: this.activity.assignedToDetails,
             details: this.activity.details,
-            deferredUntil: this.activity.deferredUntil,
-            completedOn: this.activity.completedOn
+            deferredUntil: this.getDate(this.activity.deferredUntil),
+            completedOn: this.getDate(this.activity.completedOn),
+            completed: false,
           }
 
           axios.post('http://localhost:8080/todos', data).then((res) => {
@@ -494,24 +495,43 @@
       },
       
       updateActivity() {
-        this.dialogVisible = false;
 
         const data = {
           eventId: this.eventId,
           mainEventId: this.mainEventId,
           status: this.selectedItem.status,
-          taskDate: this.selectedItem.taskDate,
+          taskDate: this.getDate(this.selectedItem.taskDate),
           taskType: this.selectedItem.taskType,
           title: this.selectedItem.title,
           assignedTo1: this.selectedItem.assignedTo1,
           assignedTo2: this.selectedItem.assignedTo2,
           assignedToDetails: this.selectedItem.assignedToDetails,
           details: this.selectedItem.details,
-          completedOn: this.selectedItem.completedOn,
+          deferredUntil: this.getDate(this.selectedItem.deferredUntil),
+          completedOn: this.getDate(this.selectedItem.completedOn),
+          completed: this.selectedItem.completed
         };
 
-        axios.put('http://localhost:8080/todos/' + this.selectedItem.id).then((res) => {
+        axios.put('http://localhost:8080/todos/' + this.selectedItem.id, data).then((res) => {
           // this.activities = res.data
+          this.activities = this.activities.map(val => {
+            if(val.id == this.selectedItem.id) {
+              val.status = this.selectedItem.status;
+              val.taskDate = this.getDate(this.selectedItem.taskDate);
+              val.taskType = this.selectedItem.taskType;
+              val.title = this.selectedItem.title;
+              val.assignedTo1 = this.selectedItem.assignedTo1;
+              val.assignedTo2 = this.selectedItem.assignedTo2;
+              val.assignedToDetails = this.selectedItem.assignedToDetails,
+              val.details = this.selectedItem.details,
+              val.deferredUntil = this.getDate(this.selectedItem.deferredUntil),
+              val.completedOn = this.getDate(this.selectedItem.completedOn),
+              val.completed = this.selectedItem.completed
+            }
+            return val;
+          });
+          
+          this.dialogVisible = false;
         }).catch((err) => {
           console.log(err)
         })
@@ -522,7 +542,8 @@
       },
       editActivity(item) {
         this.dialogVisible = true;
-        this.selectedItem = item;
+        // this.selectedItem = item;
+        Object.assign(this.selectedItem, item);
       },
 
       removeActivity(item) {
@@ -542,13 +563,11 @@
       completeActivity(item) {
         this.activities = this.activities.map(val => {
           if(val.id == item.id) {
-            val.completed = !val.completed;
-            item.completedOn = val.completed ? new Date() : null;
-            item.status = val.completed ? 'COMPLETE' : 'PENDING';
+                            
             const data = {
               eventId: this.eventId,
               mainEventId: this.mainEventId,
-              status: item.status,
+              status: !val.completed ? 'COMPLETE' : 'PENDING',
               taskDate: item.taskDate,
               taskType: item.taskType,
               title: item.title,
@@ -556,11 +575,14 @@
               assignedTo2: item.assignedTo2,
               assignedToDetails: item.assignedToDetails,
               details: item.details,
-              completedOn: item.completedOn,
+              completed: !val.completed,
+              completedOn: !val.completed ? this.getDate(new Date()) : null,
             };
 
-            axios.put('http://localhost:8080/todos/' + item.id).then((res) => {
-              // this.activities = res.data
+            axios.put('http://localhost:8080/todos/' + item.id, data).then((res) => {
+              val.completed = !val.completed;
+              item.completedOn = val.completed ? this.getDate(new Date()) : null;
+              item.status = val.completed ? 'COMPLETE' : 'PENDING';
             }).catch((err) => {
               console.log(err)
             })
@@ -599,7 +621,7 @@
       },
 
       getDate (item) {
-        return moment(item).format('DD/MM/YYYY')
+        return item ? moment(item).format('YYYY-MM-DD') : item;
       }
     }
   }
