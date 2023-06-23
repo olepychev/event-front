@@ -48,7 +48,7 @@
               <div class="content-box">
                 <div class="planner-budget-bx" style="width: 100% !important">
                   <div class="planner-category">
-                    <h3 class="category-title">Venue & Suppliers</h3>
+                    <h3 class="category-title">Todo</h3>
                   </div>
                   <ul>
 										<li class="main-budget-head">
@@ -56,7 +56,6 @@
 												
                         <div class="budget-head">
 													<h4 class="title">Title</h4>
-										<!--			<a data-toggle="collapse" href="#budget" role="button" aria-expanded="false" aria-controls="budget">£10,067 <i class="fa fa-pencil" aria-hidden="true"></i></a> -->
 													<a href="javascript:void(0);">Details</a>
 												</div>
                         <div class="budget-head">
@@ -65,7 +64,7 @@
 												</div>
                         <div class="budget-estimate">
 													<h4 class="title">Due On</h4>
-													<a href="javascript:void(0);" class="search-link">Deferred Until</a>
+													<a href="javascript:void(0);" class="search-link">Completion Date</a>
 												</div>
 												<div class="budget-estimate"> 
 													<h4 class="title">Task Type</h4>
@@ -99,26 +98,21 @@
                         </div>
                         <div class="budget-estimate">
                           <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
-                          <a href="javascript:void(0);" class="search-link">{{ getDate(scope.deferredUntil) }}</a>
+                          <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completionDate) }}</a>
                         </div>
                         <h6 class="budget-estimate">{{ scope.taskType }}</h6>
                         <h6 class="budget-actual">{{ scope.status }}</h6>
 
                         <div class="edit-icon">
-                          <a class="edit" data-toggle="collapse" href="#edit-notes1" role="button" aria-expanded="false"
-                            aria-controls="edit-notes1">
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                          </a>
-                          <a class="btn-link" data-toggle="collapse" href="#edit-suppliers1" role="button"
-                            aria-expanded="false" aria-controls="edit-suppliers1">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                          </a>
-
                           <el-button type="primary" icon="el-icon-edit" circle @click="editActivity(scope)" size="small">
                           </el-button>
 
                           <el-button type="success" icon="el-icon-check" @click="completeActivity(scope)" circle
-                            size="small">
+                            size="small" v-if="!scope.completed">
+                          </el-button>
+
+                          <el-button type="info" icon="el-icon-close" @click="completeActivity(scope)" circle
+                            size="small" v-if="scope.completed">
                           </el-button>
 
                           <el-button type="danger" icon="el-icon-delete" @click="removeActivity(scope)" circle
@@ -128,60 +122,62 @@
 
                       </div>
                       <div class="edit-notes" v-if="scope.edit">
-                        <div style="display: flex;">
-                          <div class="row" style="width: -webkit-fill-available; padding-right:20px; row-gap: 20px">
-                            <el-col class="col-md-3">
-                              <el-input placeholder="Title" v-model="selectedItem.title" size="medium">
-                              </el-input>
-                            </el-col>
+                        <el-form :model="selectedItem" ref="saveForm" :rules="formRules">
+                          <div style="display: flex;">
+                            <div class="row" style="width: -webkit-fill-available; padding-right:20px; row-gap: 20px">
+                              <el-form-item class="col-md-3" prop="title">
+                                <el-input placeholder="Title" v-model="selectedItem.title" size="medium">
+                                </el-input>
+                              </el-form-item>
 
-                            <el-col class="col-md-3">
-                              <el-date-picker v-model="selectedItem.taskDate" type="date" :picker-options="pickerOptions"
-                                placeholder="TaskDate">
-                              </el-date-picker>
-                            </el-col>
+                              <el-form-item class="col-md-3" prop="taskDate">
+                                <el-date-picker v-model="selectedItem.taskDate" type="date" :picker-options="pickerOptions"
+                                  placeholder="TaskDate">
+                                </el-date-picker>
+                              </el-form-item>
 
-                            <el-col class="col-md-3">
-                              <el-select v-model="selectedItem.taskType" :multiple="false" placeholder="TaskType">
-                                <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
-                                  :value="item.value"></el-option>
-                              </el-select>
-                            </el-col>
+                              <el-form-item class="col-md-3" prop="taskType">
+                                <el-select v-model="selectedItem.taskType" :multiple="false" placeholder="TaskType">
+                                  <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
+                                    :value="item.value"></el-option>
+                                </el-select>
+                              </el-form-item>
 
 
-                            <el-col class="col-md-3">
-                              <el-input placeholder="AssignedTo1" v-model="selectedItem.assignedTo1" size="medium">
-                              </el-input>
-                            </el-col>
+                              <el-form-item class="col-md-3" prop="assignedTo1">
+                                <el-input placeholder="AssignedTo1" v-model="selectedItem.assignedTo1" size="medium">
+                                </el-input>
+                              </el-form-item>
 
-                            <el-col class="col-md-3">
-                              <el-input placeholder="AssignedTo2" v-model="selectedItem.assignedTo2" size="medium">
-                              </el-input>
-                            </el-col>
+                              <el-form-item class="col-md-3" prop="assignedTo2">
+                                <el-input placeholder="AssignedTo2" v-model="selectedItem.assignedTo2" size="medium">
+                                </el-input>
+                              </el-form-item>
 
-                            <el-col class="col-md-3">
-                              <el-input placeholder="AssignedToDetails" v-model="selectedItem.assignedToDetails"
-                                size="medium">
-                              </el-input>
-                            </el-col>
+                              <el-form-item class="col-md-3" prop="assignedToDetails">
+                                <el-input placeholder="AssignedToDetails" v-model="selectedItem.assignedToDetails"
+                                  size="medium">
+                                </el-input>
+                              </el-form-item>
 
-                            <el-col class="col-md-3">
-                              <el-input placeholder="Details" v-model="selectedItem.details" size="medium">
-                              </el-input>
-                            </el-col>
+                              <el-form-item class="col-md-3" prop="details">
+                                <el-input placeholder="Details" v-model="selectedItem.details" size="medium">
+                                </el-input>
+                              </el-form-item>
 
-                            <el-col class="col-md-3">
-                              <el-date-picker v-model="selectedItem.deferredUntil" type="date"
-                                :picker-options="pickerOptions" placeholder="DeferredUntil">
-                              </el-date-picker>
-                            </el-col>
+                              <el-form-item class="col-md-3">
+                                <el-date-picker v-model="selectedItem.completionDate" type="date"
+                                  :picker-options="pickerOptions" placeholder="CompletionDate">
+                                </el-date-picker>
+                              </el-form-item>
 
+                            </div>
+
+                            <div class="input-group-append" style="width: 100px; height: 40px;">
+                              <button class="btn green" type="button" @click="updateActivity(false)">Save</button>
+                            </div>
                           </div>
-
-                          <div class="input-group-append" style="width: 100px; height: 40px;">
-                            <button class="btn green" type="button" @click="updateActivity()">Save</button>
-                          </div>
-                        </div>
+                        </el-form>
                       </div>
                     </li>
 
@@ -222,29 +218,29 @@
           </el-form-item>
 
 
-          <el-form-item class="col-md-3">
+          <el-form-item class="col-md-3" prop="assignedTo1">
             <el-input placeholder="AssignedTo1" v-model="activity.assignedTo1" size="medium">
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3">
+          <el-form-item class="col-md-3" prop="assignedTo2">
             <el-input placeholder="AssignedTo2" v-model="activity.assignedTo2" size="medium">
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3">
+          <el-form-item class="col-md-3" prop="assignedToDetails">
             <el-input placeholder="AssignedToDetails" v-model="activity.assignedToDetails" size="medium">
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3">
+          <el-form-item class="col-md-3" prop="details">
             <el-input placeholder="Details" v-model="activity.details" size="medium">
             </el-input>
           </el-form-item>
 
           <el-form-item class="col-md-3">
-            <el-date-picker v-model="activity.deferredUntil" type="date" :picker-options="pickerOptions"
-              placeholder="DeferredUntil">
+            <el-date-picker v-model="activity.completionDate" type="date" :picker-options="pickerOptions"
+              placeholder="CompletionDate">
             </el-date-picker>
           </el-form-item>
 
@@ -260,6 +256,21 @@
           </el-button>
         </el-row>
       </el-form>
+
+    </el-dialog>
+
+    <el-dialog :visible.sync="editConfirmVisible">
+      <h3>Save changes</h3>
+      
+      <el-row style="margin-top: 30px;">
+        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="saveEdit()">
+          Save
+        </el-button>
+
+        <el-button type="danger" icon="el-icon-circle-plus-outline" @click="discardEdit()">
+          Discard
+        </el-button>
+      </el-row>
 
     </el-dialog>
 
@@ -286,10 +297,12 @@ export default {
         assignedTo1: '',
         assignedTo2: '',
         details: '',
-        deferredUntil: null,
+        completionDate: null,
         completedOn: null,
         assignedToDetails: '',
         wrong: false,
+        mainEventId: null,
+        eventId: null,
       },
       errorMessage: '',
       selectOptions: [
@@ -311,14 +324,14 @@ export default {
         assignedTo2: '',
         assignedToDetails: '',
         details: '',
-        deferredUntil: null,
+        completionDate: null,
         edit: false,
         wrong: false,
         status: '',
+        mainEventId: null,
+        eventId: null,
       },
       activities: [],
-      eventId: 101,
-      mainEventId: 100,
       formRules: {
         title: [
           { required: true, message: "Name is required", trigger: "blur" },
@@ -329,23 +342,33 @@ export default {
         ],
         taskType: [
           { required: true, message: "TaskType is required", trigger: "change" },
+        ],
+        assignedToDetails: [
+          { min: 0, max: 100, message: "AssignedToDetails length should be less than 100 characters", trigger: "blur" }
+        ],
+        details: [
+          { min: 0, max: 100, message: "Details length should be less than 100 characters", trigger: "blur" }
+        ],
+        assignedToDetails: [
+          { min: 0, max: 100, message: "AssignedToDetails length should be less than 100 characters", trigger: "blur" }
+        ],
+        assignedTo1: [
+          { min: 0, max: 20, message: "AssignedTo1 length should be less than 20 characters", trigger: "blur" }
+        ],
+        assignedTo2: [
+          { min: 0, max: 20, message: "AssignedTo2 length should be less than 20 characters", trigger: "blur" }
         ]
       },
+      editId: null,
+      selectedEditId: null,
+      editConfirmVisible: false,
+      mainEventId: null,
+      eventId: null,
     }
   },
-  computed: {
-    isWrongActivity() {
-      return this.activity.wrong
-    },
-    completed() {
-      return this.activities.filter((val) => val.completed === true).length;
-    },
-    total() {
-      return this.activities.length;
-    },
-    isEmpty() {
-      return this.activities.length === 0;
-    }
+  created() {
+    this.mainEventId = this.$route.query.mainEventId;
+    this.eventId = this.$route.query.eventId;
   },
   mounted() {
     this.getActivities();
@@ -353,14 +376,26 @@ export default {
   methods: {
 
     getActivities() {
-      axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
-        this.activities = res.data.map((val) => {
-          val.edit = false;
-          return val;
+      if(this.eventId != undefined) {
+        axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
+          this.activities = res.data.map((val) => {
+            val.edit = false;
+            return val;
+          })
+        }).catch((err) => {
+          console.log(err)
         })
-      }).catch((err) => {
-        console.log(err)
-      })
+      }
+      else {
+        axios.get('http://localhost:8080/todos/events/' + this.mainEventId).then((res) => {
+          this.activities = res.data.map((val) => {
+            val.edit = false;
+            return val;
+          })
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
     },
     showAddDialog() {
       this.activity = {
@@ -370,7 +405,7 @@ export default {
         assignedTo1: '',
         assignedTo2: '',
         details: '',
-        deferredUntil: null,
+        completionDate: null,
         completedOn: null,
         assignedToDetails: '',
         wrong: false,
@@ -387,7 +422,7 @@ export default {
           assignedTo1: this.activity.assignedTo1,
           assignedTo2: this.activity.assignedTo2,
           details: this.activity.details,
-          deferredUntil: this.getDate(this.activity.deferredUntil),
+          completionDate: this.getDate(this.activity.completionDate),
           completedOn: this.activity.completedOn,
           assignedToDetails: this.activity.assignedToDetails,
           completed: false,
@@ -406,7 +441,7 @@ export default {
           assignedTo2: this.activity.assignedTo2,
           assignedToDetails: this.activity.assignedToDetails,
           details: this.activity.details,
-          deferredUntil: this.getDate(this.activity.deferredUntil),
+          completionDate: this.getDate(this.activity.completionDate),
           completedOn: this.getDate(this.activity.completedOn),
           completed: false,
         }
@@ -426,54 +461,103 @@ export default {
 
     },
 
-    updateActivity() {
-      const data = {
-        eventId: this.eventId,
-        mainEventId: this.mainEventId,
-        status: this.selectedItem.status,
-        taskDate: this.getDate(this.selectedItem.taskDate),
-        taskType: this.selectedItem.taskType,
-        title: this.selectedItem.title,
-        assignedTo1: this.selectedItem.assignedTo1,
-        assignedTo2: this.selectedItem.assignedTo2,
-        assignedToDetails: this.selectedItem.assignedToDetails,
-        details: this.selectedItem.details,
-        deferredUntil: this.getDate(this.selectedItem.deferredUntil),
-        completedOn: this.getDate(this.selectedItem.completedOn),
-        completed: this.selectedItem.completed
-      };
-
-      axios.put('http://localhost:8080/todos/' + this.selectedItem.id, data).then((res) => {
-        this.activities = this.activities.map(val => {
-          if (val.id == this.selectedItem.id) {
-            val.status = this.selectedItem.status;
-            val.taskDate = this.getDate(this.selectedItem.taskDate);
-            val.taskType = this.selectedItem.taskType;
-            val.title = this.selectedItem.title;
-            val.assignedTo1 = this.selectedItem.assignedTo1;
-            val.assignedTo2 = this.selectedItem.assignedTo2;
-            val.assignedToDetails = this.selectedItem.assignedToDetails,
-              val.details = this.selectedItem.details,
-              val.deferredUntil = this.getDate(this.selectedItem.deferredUntil),
-              val.completedOn = this.getDate(this.selectedItem.completedOn),
-              val.completed = this.selectedItem.completed
-            val.edit = false;
+    async updateActivity(flag) {
+      try{
+        await this.$refs.saveForm[0].validate();
+        const data = {
+          eventId: this.selectedItem.eventId,
+          mainEventId: this.selectedItem.mainEventId,
+          status: this.selectedItem.status,
+          taskDate: this.getDate(this.selectedItem.taskDate),
+          taskType: this.selectedItem.taskType,
+          title: this.selectedItem.title,
+          assignedTo1: this.selectedItem.assignedTo1,
+          assignedTo2: this.selectedItem.assignedTo2,
+          assignedToDetails: this.selectedItem.assignedToDetails,
+          details: this.selectedItem.details,
+          completionDate: this.getDate(this.selectedItem.completionDate),
+          completedOn: this.getDate(this.selectedItem.completedOn),
+          completed: this.selectedItem.completed
+        };
+  
+        axios.put('http://localhost:8080/todos/' + this.selectedItem.id, data).then((res) => {
+          this.activities = this.activities.map(val => {
+            if (val.id == this.selectedItem.id) {
+              val.status = this.selectedItem.status;
+              val.taskDate = this.getDate(this.selectedItem.taskDate);
+              val.taskType = this.selectedItem.taskType;
+              val.title = this.selectedItem.title;
+              val.assignedTo1 = this.selectedItem.assignedTo1;
+              val.assignedTo2 = this.selectedItem.assignedTo2;
+              val.assignedToDetails = this.selectedItem.assignedToDetails;
+              val.details = this.selectedItem.details;
+              val.completionDate = this.getDate(this.selectedItem.completionDate);
+              val.completedOn = this.getDate(this.selectedItem.completedOn);
+              val.completed = this.selectedItem.completed;
+              val.eventId = this.selectedItem.eventId;
+              val.mainEventId = this.selectedItem.mainEventId;
+              val.edit = false;
+            }
+            return val;
+          });
+  
+          this.dialogVisible = false;
+          if(flag) {
+            this.activites = this.activities.map(val => {
+              if(val.id == this.selectedEditId) {
+                val.edit = !val.edit;
+                this.editId = val.id;
+                Object.assign(this.selectedItem, val);
+              }
+              return val;
+            })      
+            this.editConfirmVisible = false;
+          } else {
+            this.editId = null;
           }
-          return val;
-        });
-
-        this.dialogVisible = false;
-      }).catch((err) => {
-        console.log(err)
-      })
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+      catch (error) {
+        console.log("Validation Error: ", error);
+      }
     },
 
     closeDialog() {
       this.dialogVisible = false;
     },
+    discardEdit() {
+      let eId = this.editId;
+      this.activites = this.activities.map(val => {
+        if(val.id == this.selectedEditId) {
+          val.edit = !val.edit;
+          this.editId = val.id;
+          Object.assign(this.selectedItem, val);
+        }
+        else if(val.id == eId) {
+          val.edit = !val.edit;
+        }
+        return val;
+      })      
+      this.editConfirmVisible = false;
+    },
+
+    async saveEdit() {
+      this.updateActivity(true);
+    },
     editActivity(item) {
-      item.edit = !item.edit;
-      Object.assign(this.selectedItem, item);
+      this.selectedEditId = item.edit ? null: item.id;
+      // console.log(this.selectedEditId, this.editId, item.id)
+      if(!item.edit && this.editId != null && this.editId != item.id) {
+        this.editConfirmVisible = true;
+      }
+      else 
+      {
+        item.edit = !item.edit;
+        this.editId = item.edit ? item.id : null;
+        Object.assign(this.selectedItem, item);
+      }
     },
 
     removeActivity(item) {
@@ -566,7 +650,7 @@ div.cell {
 
 .el-dialog {
   border-radius: 8px !important;
-  height: 350px;
+  /* height: 350px; */
 }
 
 .el-date-editor.el-input {
