@@ -1,253 +1,249 @@
 <template>
-  <div class="main">
-    <h1>ToDo APP</h1>
+  <!DOCTYPE html>
+  <html lang="en">
 
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <meta name="robots" content="" />
+    <meta name="description" content="Wedding Manager" />
+    <meta property="og:title" content="Wedding Manager" />
+    <meta property="og:description" content="Wedding Manager" />
+    <meta property="og:image" content="" />
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+
+    <!-- PAGE TITLE HERE -->
+    <title>Wedding Manager</title>
+
+    <!-- MOBILE SPECIFIC -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--[if lt IE 9]>
+	<script src="js/html5shiv.min.js"></script>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" type="text/css" href="css/plugins.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/templete.css">
+    <link rel="stylesheet" type="text/css" href="css/responsive.min.css">
+    <link class="skin" rel="stylesheet" type="text/css" href="css/skin/skin-1.css">
+
+  </head>
+
+  <body id="bg">
+    <div class="page-wraper">
     <div class="section-full content-inner bg-gray">
-            <div class="" style="padding: 0px 30px;">
-							<div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12">
-									<div class="planner-box m-b30">
-										<div class="content-box">
-											<div class="planner-budget-bx" style="width: 100% !important">
-												<ul>
-													<li class="main-budget-head">
-														<div class="budget-bx">
-															<div class="budget-estimate">
-																<h4 class="title">Title</h4>
-															</div>
-															<div class="budget-estimate"> 
-																<h4 class="title">Task Date</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">Task Type</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">AssignedTo1</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">AssignedTo2</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">AssignedTo<br/>Details</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">Details</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">DeferredUntil</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">CompletedOn</h4>
-															</div>
-                              <div class="budget-estimate"> 
-																<h4 class="title">Status</h4>
-															</div>
-															<div class="budget-estimate">
-																<h4 class="title">Actions</h4>
-															</div>
-														</div>
-													</li>
-
-													<li v-for="scope in activities">
-														<div class="budget-bx">
-                              <h6 class="budget-estimate">{{scope.title}}</h6>
-															<div class="budget-estimate d-flex justify-content-center">
-																<i class="el-icon-time d-flex" style="align-items: center; margin-bottom: 0px!important;" v-if="scope.taskDate"></i>
-																<h6 style="margin-bottom: 0px; margin-left: 5px;">{{getDate(scope.taskDate)}}</h6>
-															</div>
-                              <h6 class="budget-estimate">{{scope.taskType}}</h6>
-                              <h6 class="budget-estimate">{{scope.assignedTo1}}</h6>
-                              <h6 class="budget-estimate">{{scope.assignedTo2}}</h6>
-                              <h6 class="budget-estimate">{{scope.assignedToDetails}}</h6>
-                              <h6 class="budget-estimate">{{scope.details}}</h6>
-                              <div class="budget-estimate d-flex justify-content-center">
-																<i class="el-icon-time d-flex" style="align-items: center; margin-bottom: 0px!important;" v-if="scope.deferredUntil"></i>
-																<h6 style="margin-bottom: 0px; margin-left: 5px;">{{getDate(scope.deferredUntil)}}</h6>
-															</div>
-                              <div class="budget-estimate d-flex justify-content-center">
-																<i class="el-icon-time d-flex" style="align-items: center; margin-bottom: 0px!important;" v-if="scope.completedOn"></i>
-																<h6 style="margin-bottom: 0px; margin-left: 5px;">{{getDate(scope.completedOn)}}</h6>
-															</div>
-                              <h6 class="budget-estimate">{{scope.status}}</h6>
-															<div class="budget-estimate">
-                                <el-button type="primary"
-                                  icon="el-icon-edit"
-                                  circle
-                                  @click="editActivity(scope)" 
-                                  size="small">
-                                </el-button>
-
-                                <el-button type="success"
-                                  icon="el-icon-check"
-                                  @click="completeActivity(scope)" 
-                                  circle
-                                  size="small">
-                                </el-button>
-
-                                <el-button type="danger"
-                                  icon="el-icon-delete"
-                                  @click="removeActivity(scope)" 
-                                  circle
-                                  size="small">
-                                </el-button>
-															</div>
-														</div>
-														<div class="edit-notes" v-if="scope.edit">
-															<div style="display: flex;">
-                                <div class="row" style="width: -webkit-fill-available; padding-right:20px; row-gap: 20px">
-                                  <el-col class="col-md-3">
-                                    <el-input 
-                                      placeholder="Title"
-                                      v-model="selectedItem.title" 
-                                      size="medium">
-                                    </el-input>
-                                  </el-col>
-
-                                  <el-col class="col-md-3">
-                                    <el-date-picker
-                                      v-model="selectedItem.taskDate"
-                                      type="date"
-                                      :picker-options="pickerOptions"
-                                      placeholder="TaskDate">
-                                    </el-date-picker>
-                                  </el-col>
-
-                                  <el-col class="col-md-3">
-                                    <el-select v-model="selectedItem.taskType" :multiple="false" placeholder="TaskType">
-                                      <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-                                    </el-select>
-                                  </el-col>
-
-
-                                  <el-col class="col-md-3">
-                                    <el-input 
-                                      placeholder="AssignedTo1"
-                                      v-model="selectedItem.assignedTo1" 
-                                      size="medium">
-                                    </el-input>
-                                  </el-col>
-
-                                  <el-col class="col-md-3">
-                                    <el-input 
-                                      placeholder="AssignedTo2"
-                                      v-model="selectedItem.assignedTo2" 
-                                      size="medium">
-                                    </el-input>
-                                  </el-col>
-
-                                  <el-col class="col-md-3">
-                                    <el-input 
-                                      placeholder="AssignedToDetails"
-                                      v-model="selectedItem.assignedToDetails" 
-                                      size="medium">
-                                    </el-input>
-                                  </el-col>
-                                  
-                                  <el-col class="col-md-3">
-                                    <el-input 
-                                      placeholder="Details"
-                                      v-model="selectedItem.details" 
-                                      size="medium">
-                                    </el-input>
-                                  </el-col>
-
-                                  <el-col class="col-md-3">
-                                    <el-date-picker
-                                      v-model="selectedItem.deferredUntil"
-                                      type="date"
-                                      :picker-options="pickerOptions"
-                                      placeholder="DeferredUntil">
-                                    </el-date-picker>
-                                  </el-col>
-
-                                </div>
-
-                                <div class="input-group-append" style="width: 100px; height: 40px;">
-                                  <button class="btn green" type="button" @click="updateActivity()">Save</button>
-                                </div>
-															</div>
-														</div>
-													</li>
-													
-													<li>
-														<div class="budget-bx">
-															<button class="btn add-budget-list-item gradient" @click="showAddDialog()">+ Add new item</button>
-														</div>
-													</li>
-												</ul>
+      <div class="" style="padding: 0px 30px;">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="planner-box m-b30">
+              <div class="content-box">
+                <div class="planner-budget-bx" style="width: 100% !important">
+                  <div class="planner-category">
+                    <h3 class="category-title">Venue & Suppliers</h3>
+                  </div>
+                  <ul>
+										<li class="main-budget-head">
+											<div class="budget-bx">
+												
+                        <div class="budget-head">
+													<h4 class="title">Title</h4>
+										<!--			<a data-toggle="collapse" href="#budget" role="button" aria-expanded="false" aria-controls="budget">£10,067 <i class="fa fa-pencil" aria-hidden="true"></i></a> -->
+													<a href="javascript:void(0);">Details</a>
+												</div>
+                        <div class="budget-head">
+													<h4 class="title">Assigned To</h4>
+													<a href="javascript:void(0);">Assignment Details</a>
+												</div>
+                        <div class="budget-estimate">
+													<h4 class="title">Due On</h4>
+													<a href="javascript:void(0);" class="search-link">Deferred Until</a>
+												</div>
+												<div class="budget-estimate"> 
+													<h4 class="title">Task Type</h4>
+												</div>
+												<div class="budget-actual">
+													<h4 class="title">Status</h4>
+												</div>
+												<div class="edit-icon"></div>
 											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-				</div>
-			</div>
+											<div class="edit-notes collapse" id="budget">
+												<form>
+													<div class="input-group mb-1">
+														<input type="text" class="form-control" placeholder="£10,067">
+														<div class="input-group-append">
+															<button class="btn gradient" type="button">Save</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</li>
+
+                    <li v-for="scope in activities">
+                      <div class="budget-bx">
+                        <div class="budget-head">
+                          <h4 class="title">{{ scope.title }}</h4>
+                          <a href="javascript:void(0);" class="search-link">{{ scope.details }}</a>
+                        </div>
+                        <div class="budget-head">
+                          <h4 class="title">{{ scope.assignedTo1 }} / {{ scope.assignedTo2 }}</h4>
+                          <a href="javascript:void(0);" class="search-link">{{ scope.assignedToDetails }}</a>
+                        </div>
+                        <div class="budget-estimate">
+                          <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
+                          <a href="javascript:void(0);" class="search-link">{{ getDate(scope.deferredUntil) }}</a>
+                        </div>
+                        <h6 class="budget-estimate">{{ scope.taskType }}</h6>
+                        <h6 class="budget-actual">{{ scope.status }}</h6>
+
+                        <div class="edit-icon">
+                          <a class="edit" data-toggle="collapse" href="#edit-notes1" role="button" aria-expanded="false"
+                            aria-controls="edit-notes1">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          </a>
+                          <a class="btn-link" data-toggle="collapse" href="#edit-suppliers1" role="button"
+                            aria-expanded="false" aria-controls="edit-suppliers1">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                          </a>
+
+                          <el-button type="primary" icon="el-icon-edit" circle @click="editActivity(scope)" size="small">
+                          </el-button>
+
+                          <el-button type="success" icon="el-icon-check" @click="completeActivity(scope)" circle
+                            size="small">
+                          </el-button>
+
+                          <el-button type="danger" icon="el-icon-delete" @click="removeActivity(scope)" circle
+                            size="small">
+                          </el-button>
+                        </div>
+
+                      </div>
+                      <div class="edit-notes" v-if="scope.edit">
+                        <div style="display: flex;">
+                          <div class="row" style="width: -webkit-fill-available; padding-right:20px; row-gap: 20px">
+                            <el-col class="col-md-3">
+                              <el-input placeholder="Title" v-model="selectedItem.title" size="medium">
+                              </el-input>
+                            </el-col>
+
+                            <el-col class="col-md-3">
+                              <el-date-picker v-model="selectedItem.taskDate" type="date" :picker-options="pickerOptions"
+                                placeholder="TaskDate">
+                              </el-date-picker>
+                            </el-col>
+
+                            <el-col class="col-md-3">
+                              <el-select v-model="selectedItem.taskType" :multiple="false" placeholder="TaskType">
+                                <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
+                                  :value="item.value"></el-option>
+                              </el-select>
+                            </el-col>
+
+
+                            <el-col class="col-md-3">
+                              <el-input placeholder="AssignedTo1" v-model="selectedItem.assignedTo1" size="medium">
+                              </el-input>
+                            </el-col>
+
+                            <el-col class="col-md-3">
+                              <el-input placeholder="AssignedTo2" v-model="selectedItem.assignedTo2" size="medium">
+                              </el-input>
+                            </el-col>
+
+                            <el-col class="col-md-3">
+                              <el-input placeholder="AssignedToDetails" v-model="selectedItem.assignedToDetails"
+                                size="medium">
+                              </el-input>
+                            </el-col>
+
+                            <el-col class="col-md-3">
+                              <el-input placeholder="Details" v-model="selectedItem.details" size="medium">
+                              </el-input>
+                            </el-col>
+
+                            <el-col class="col-md-3">
+                              <el-date-picker v-model="selectedItem.deferredUntil" type="date"
+                                :picker-options="pickerOptions" placeholder="DeferredUntil">
+                              </el-date-picker>
+                            </el-col>
+
+                          </div>
+
+                          <div class="input-group-append" style="width: 100px; height: 40px;">
+                            <button class="btn green" type="button" @click="updateActivity()">Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="budget-bx">
+                        <button class="btn add-budget-list-item gradient" @click="showAddDialog()">+ Add new item</button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <el-dialog :visible.sync="dialogVisible">
       <h3>Add a new item</h3>
       <el-form :model="activity" ref="form" :rules="formRules">
         <div class="row">
           <el-form-item class="col-md-3" prop="title">
-            <el-input 
-              placeholder="Title"
-              v-model="activity.title" 
-              size="medium">
+            <el-input placeholder="Title" v-model="activity.title" size="medium">
             </el-input>
           </el-form-item>
 
           <el-form-item class="col-md-3" prop="taskDate">
-            <el-date-picker
-              v-model="activity.taskDate"
-              type="date"
-              :picker-options="pickerOptions"
+            <el-date-picker v-model="activity.taskDate" type="date" :picker-options="pickerOptions"
               placeholder="TaskDate">
             </el-date-picker>
           </el-form-item>
 
           <el-form-item class="col-md-3" prop="taskType">
             <el-select v-model="activity.taskType" :multiple="false" placeholder="TaskType">
-              <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+              <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
+                :value="item.value"></el-option>
             </el-select>
           </el-form-item>
 
 
           <el-form-item class="col-md-3">
-            <el-input 
-              placeholder="AssignedTo1"
-              v-model="activity.assignedTo1" 
-              size="medium">
+            <el-input placeholder="AssignedTo1" v-model="activity.assignedTo1" size="medium">
             </el-input>
           </el-form-item>
 
           <el-form-item class="col-md-3">
-            <el-input 
-              placeholder="AssignedTo2"
-              v-model="activity.assignedTo2" 
-              size="medium">
+            <el-input placeholder="AssignedTo2" v-model="activity.assignedTo2" size="medium">
             </el-input>
           </el-form-item>
 
           <el-form-item class="col-md-3">
-            <el-input 
-              placeholder="AssignedToDetails"
-              v-model="activity.assignedToDetails" 
-              size="medium">
-            </el-input>
-          </el-form-item>
-          
-          <el-form-item class="col-md-3">
-            <el-input 
-              placeholder="Details"
-              v-model="activity.details" 
-              size="medium">
+            <el-input placeholder="AssignedToDetails" v-model="activity.assignedToDetails" size="medium">
             </el-input>
           </el-form-item>
 
           <el-form-item class="col-md-3">
-            <el-date-picker
-              v-model="activity.deferredUntil"
-              type="date"
-              :picker-options="pickerOptions"
+            <el-input placeholder="Details" v-model="activity.details" size="medium">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item class="col-md-3">
+            <el-date-picker v-model="activity.deferredUntil" type="date" :picker-options="pickerOptions"
               placeholder="DeferredUntil">
             </el-date-picker>
           </el-form-item>
@@ -255,285 +251,283 @@
         </div>
 
         <el-row style="margin-top: 30px;">
-          <el-button 
-            type="primary"
-            icon="el-icon-circle-plus-outline"
-            @click="addActivityMethod()">
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addActivityMethod()">
             Add
           </el-button>
 
-            <el-button 
-              type="danger"
-              icon="el-icon-circle-plus-outline"
-              @click="showAddDialog()">
-              Cancel
-            </el-button>
+          <el-button type="danger" icon="el-icon-circle-plus-outline" @click="showAddDialog()">
+            Cancel
+          </el-button>
         </el-row>
       </el-form>
 
     </el-dialog>
-  </div>
+
+    </div>
+  </body>
+
+  </html>
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex'
-  import moment from 'moment'
-  import uuid from 'uuid/v4'
-  import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
+import uuid from 'uuid/v4'
+import axios from 'axios'
 
-  export default {
-    name: 'Activity',
-    data() {
-      return {
-        activity: {
-          title: '',
-          taskDate: null,
-          taskType: '',
-          assignedTo1: '',
-          assignedTo2: '',
-          details: '',
-          deferredUntil: null,
-          completedOn: null,
-          assignedToDetails: '',
-          wrong: false,
-        },
-        errorMessage: '',
-        selectOptions: [
-          { label: 'Quote', value: 'Quote' },
-          { label: 'Call', value: 'Call' },
-          { label: 'Appointment', value: 'Appointment' }
-        ],
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() < Date.now() - 8.64e7;
-          }
-        },
-        dialogVisible: false,
-        selectedItem: {
-          title: '',
-          taskDate: '',
-          taskType: '',
-          assignedTo1: '',
-          assignedTo2: '',
-          assignedToDetails: '',
-          details: '',
-          deferredUntil: null,
-          edit: false,
-          wrong: false,
-          status: '',
-        },
-        activities: [],
-        eventId: 101,
-        mainEventId: 100,
-        formRules: {
-          title: [
-            { required: true, message: "Name is required", trigger: "blur" },
-            // { min: 3, max: 30, message: "Name length should be between 3 and 30 characters", trigger: "blur" }
-          ],
-          taskDate: [
-            { required: true, message: "TaskDate is required", trigger: "blur" },
-          ],
-          taskType: [
-            { required: true, message: "TaskType is required", trigger: "change" },
-          ]
-        },
-      }
-    },
-    computed: {
-      isWrongActivity() {
-        return this.activity.wrong
+export default {
+  name: 'Activity',
+  data() {
+    return {
+      activity: {
+        title: '',
+        taskDate: null,
+        taskType: '',
+        assignedTo1: '',
+        assignedTo2: '',
+        details: '',
+        deferredUntil: null,
+        completedOn: null,
+        assignedToDetails: '',
+        wrong: false,
       },
-      completed() {
-        return this.activities.filter((val) => val.completed === true).length;
-      },
-      total() {
-        return this.activities.length;
-      },
-      isEmpty() {
-        return this.activities.length === 0;
-      }
-    },
-    mounted() {
-      this.getActivities();
-    },
-    methods: {
-
-      getActivities() {
-        axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
-          this.activities = res.data.map((val) => {
-            val.edit = false;
-            return val;
-          })
-        }).catch((err) => {
-          console.log(err)
-        })
-      },
-      showAddDialog() {
-        this.activity = {
-          title: '',
-          taskDate: null,
-          taskType: '',
-          assignedTo1: '',
-          assignedTo2: '',
-          details: '',
-          deferredUntil: null,
-          completedOn: null,
-          assignedToDetails: '',
-          wrong: false,
-        };
-        this.dialogVisible = !this.dialogVisible;
-      },
-      async  addActivityMethod() {
-        try {
-          await this.$refs.form.validate();
-          const activity = {
-            title: this.activity.title,
-            taskDate: this.activity.taskDate,
-            taskType: this.activity.taskType,
-            assignedTo1: this.activity.assignedTo1,
-            assignedTo2: this.activity.assignedTo2,
-            details: this.activity.details,
-            deferredUntil: this.getDate(this.activity.deferredUntil),
-            completedOn: this.activity.completedOn,
-            assignedToDetails: this.activity.assignedToDetails,
-            completed: false,
-            edit: false,
-            status: "PENDING",
-          };
-
-          const data = {
-            eventId: this.eventId,
-            mainEventId: this.mainEventId,
-            status: "PENDING",
-            taskDate: this.getDate(this.activity.taskDate),
-            taskType: this.activity.taskType,
-            title: this.activity.title,
-            assignedTo1: this.activity.assignedTo1,
-            assignedTo2: this.activity.assignedTo2,
-            assignedToDetails: this.activity.assignedToDetails,
-            details: this.activity.details,
-            deferredUntil: this.getDate(this.activity.deferredUntil),
-            completedOn: this.getDate(this.activity.completedOn),
-            completed: false,
-          }
-
-          axios.post('http://localhost:8080/todos', data).then((res) => {
-            activity.id = res.data;
-            this.activities.push(activity);
-            this.activity.wrong = false;
-            this.$refs.form.resetFields();
-            this.dialogVisible = false;
-          }).catch((err) => {
-            console.log(err)
-          })
-        } catch (error) {
-          console.log("Validation Error: ", error);
+      errorMessage: '',
+      selectOptions: [
+        { label: 'Quote', value: 'Quote' },
+        { label: 'Call', value: 'Call' },
+        { label: 'Appointment', value: 'Appointment' }
+      ],
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7;
         }
-
       },
-      
-      updateActivity() {
+      dialogVisible: false,
+      selectedItem: {
+        title: '',
+        taskDate: '',
+        taskType: '',
+        assignedTo1: '',
+        assignedTo2: '',
+        assignedToDetails: '',
+        details: '',
+        deferredUntil: null,
+        edit: false,
+        wrong: false,
+        status: '',
+      },
+      activities: [],
+      eventId: 101,
+      mainEventId: 100,
+      formRules: {
+        title: [
+          { required: true, message: "Name is required", trigger: "blur" },
+          // { min: 3, max: 30, message: "Name length should be between 3 and 30 characters", trigger: "blur" }
+        ],
+        taskDate: [
+          { required: true, message: "TaskDate is required", trigger: "blur" },
+        ],
+        taskType: [
+          { required: true, message: "TaskType is required", trigger: "change" },
+        ]
+      },
+    }
+  },
+  computed: {
+    isWrongActivity() {
+      return this.activity.wrong
+    },
+    completed() {
+      return this.activities.filter((val) => val.completed === true).length;
+    },
+    total() {
+      return this.activities.length;
+    },
+    isEmpty() {
+      return this.activities.length === 0;
+    }
+  },
+  mounted() {
+    this.getActivities();
+  },
+  methods: {
+
+    getActivities() {
+      axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
+        this.activities = res.data.map((val) => {
+          val.edit = false;
+          return val;
+        })
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    showAddDialog() {
+      this.activity = {
+        title: '',
+        taskDate: null,
+        taskType: '',
+        assignedTo1: '',
+        assignedTo2: '',
+        details: '',
+        deferredUntil: null,
+        completedOn: null,
+        assignedToDetails: '',
+        wrong: false,
+      };
+      this.dialogVisible = !this.dialogVisible;
+    },
+    async addActivityMethod() {
+      try {
+        await this.$refs.form.validate();
+        const activity = {
+          title: this.activity.title,
+          taskDate: this.activity.taskDate,
+          taskType: this.activity.taskType,
+          assignedTo1: this.activity.assignedTo1,
+          assignedTo2: this.activity.assignedTo2,
+          details: this.activity.details,
+          deferredUntil: this.getDate(this.activity.deferredUntil),
+          completedOn: this.activity.completedOn,
+          assignedToDetails: this.activity.assignedToDetails,
+          completed: false,
+          edit: false,
+          status: "PENDING",
+        };
+
         const data = {
           eventId: this.eventId,
           mainEventId: this.mainEventId,
-          status: this.selectedItem.status,
-          taskDate: this.getDate(this.selectedItem.taskDate),
-          taskType: this.selectedItem.taskType,
-          title: this.selectedItem.title,
-          assignedTo1: this.selectedItem.assignedTo1,
-          assignedTo2: this.selectedItem.assignedTo2,
-          assignedToDetails: this.selectedItem.assignedToDetails,
-          details: this.selectedItem.details,
-          deferredUntil: this.getDate(this.selectedItem.deferredUntil),
-          completedOn: this.getDate(this.selectedItem.completedOn),
-          completed: this.selectedItem.completed
-        };
+          status: "PENDING",
+          taskDate: this.getDate(this.activity.taskDate),
+          taskType: this.activity.taskType,
+          title: this.activity.title,
+          assignedTo1: this.activity.assignedTo1,
+          assignedTo2: this.activity.assignedTo2,
+          assignedToDetails: this.activity.assignedToDetails,
+          details: this.activity.details,
+          deferredUntil: this.getDate(this.activity.deferredUntil),
+          completedOn: this.getDate(this.activity.completedOn),
+          completed: false,
+        }
 
-        axios.put('http://localhost:8080/todos/' + this.selectedItem.id, data).then((res) => {
-          this.activities = this.activities.map(val => {
-            if(val.id == this.selectedItem.id) {
-              val.status = this.selectedItem.status;
-              val.taskDate = this.getDate(this.selectedItem.taskDate);
-              val.taskType = this.selectedItem.taskType;
-              val.title = this.selectedItem.title;
-              val.assignedTo1 = this.selectedItem.assignedTo1;
-              val.assignedTo2 = this.selectedItem.assignedTo2;
-              val.assignedToDetails = this.selectedItem.assignedToDetails,
-              val.details = this.selectedItem.details,
-              val.deferredUntil = this.getDate(this.selectedItem.deferredUntil),
-              val.completedOn = this.getDate(this.selectedItem.completedOn),
-              val.completed = this.selectedItem.completed
-              val.edit = false;
-            }
-            return val;
-          });
-          
+        axios.post('http://localhost:8080/todos', data).then((res) => {
+          activity.id = res.data;
+          this.activities.push(activity);
+          this.activity.wrong = false;
+          this.$refs.form.resetFields();
           this.dialogVisible = false;
         }).catch((err) => {
           console.log(err)
         })
-      },
+      } catch (error) {
+        console.log("Validation Error: ", error);
+      }
 
-      closeDialog() {
-        this.dialogVisible = false;
-      },
-      editActivity(item) {
-        item.edit = !item.edit;
-        Object.assign(this.selectedItem, item);
-      },
+    },
 
-      removeActivity(item) {
-        axios.delete('http://localhost:8080/todos/'+item.id).then((res) => {
-          this.activities = this.activities.filter((val) => val.id !== item.id);
-        }).catch((err) => {
-          console.log(err)
-        })
-      },
+    updateActivity() {
+      const data = {
+        eventId: this.eventId,
+        mainEventId: this.mainEventId,
+        status: this.selectedItem.status,
+        taskDate: this.getDate(this.selectedItem.taskDate),
+        taskType: this.selectedItem.taskType,
+        title: this.selectedItem.title,
+        assignedTo1: this.selectedItem.assignedTo1,
+        assignedTo2: this.selectedItem.assignedTo2,
+        assignedToDetails: this.selectedItem.assignedToDetails,
+        details: this.selectedItem.details,
+        deferredUntil: this.getDate(this.selectedItem.deferredUntil),
+        completedOn: this.getDate(this.selectedItem.completedOn),
+        completed: this.selectedItem.completed
+      };
 
-      completeActivity(item) {
+      axios.put('http://localhost:8080/todos/' + this.selectedItem.id, data).then((res) => {
         this.activities = this.activities.map(val => {
-          if(val.id == item.id) {
-                            
-            const data = {
-              eventId: this.eventId,
-              mainEventId: this.mainEventId,
-              status: !val.completed ? 'COMPLETE' : 'PENDING',
-              taskDate: item.taskDate,
-              taskType: item.taskType,
-              title: item.title,
-              assignedTo1: item.assignedTo1,
-              assignedTo2: item.assignedTo2,
-              assignedToDetails: item.assignedToDetails,
-              details: item.details,
-              completed: !val.completed,
-              completedOn: !val.completed ? this.getDate(new Date()) : null,
-            };
-
-            axios.put('http://localhost:8080/todos/' + item.id, data).then((res) => {
-              val.completed = !val.completed;
-              item.completedOn = val.completed ? this.getDate(new Date()) : null;
-              item.status = val.completed ? 'COMPLETE' : 'PENDING';
-            }).catch((err) => {
-              console.log(err)
-            })
+          if (val.id == this.selectedItem.id) {
+            val.status = this.selectedItem.status;
+            val.taskDate = this.getDate(this.selectedItem.taskDate);
+            val.taskType = this.selectedItem.taskType;
+            val.title = this.selectedItem.title;
+            val.assignedTo1 = this.selectedItem.assignedTo1;
+            val.assignedTo2 = this.selectedItem.assignedTo2;
+            val.assignedToDetails = this.selectedItem.assignedToDetails,
+              val.details = this.selectedItem.details,
+              val.deferredUntil = this.getDate(this.selectedItem.deferredUntil),
+              val.completedOn = this.getDate(this.selectedItem.completedOn),
+              val.completed = this.selectedItem.completed
+            val.edit = false;
           }
           return val;
-        })
-      },
+        });
 
-      tableRowColor({row, rowIndex}) {
-        if (row.completed === true) {
-          return 'success-row';
-        } else {
-          return 'warning-row'
+        this.dialogVisible = false;
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+
+    closeDialog() {
+      this.dialogVisible = false;
+    },
+    editActivity(item) {
+      item.edit = !item.edit;
+      Object.assign(this.selectedItem, item);
+    },
+
+    removeActivity(item) {
+      axios.delete('http://localhost:8080/todos/' + item.id).then((res) => {
+        this.activities = this.activities.filter((val) => val.id !== item.id);
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+
+    completeActivity(item) {
+      this.activities = this.activities.map(val => {
+        if (val.id == item.id) {
+
+          const data = {
+            eventId: this.eventId,
+            mainEventId: this.mainEventId,
+            status: !val.completed ? 'COMPLETE' : 'PENDING',
+            taskDate: item.taskDate,
+            taskType: item.taskType,
+            title: item.title,
+            assignedTo1: item.assignedTo1,
+            assignedTo2: item.assignedTo2,
+            assignedToDetails: item.assignedToDetails,
+            details: item.details,
+            completed: !val.completed,
+            completedOn: !val.completed ? this.getDate(new Date()) : null,
+          };
+
+          axios.put('http://localhost:8080/todos/' + item.id, data).then((res) => {
+            val.completed = !val.completed;
+            item.completedOn = val.completed ? this.getDate(new Date()) : null;
+            item.status = val.completed ? 'COMPLETE' : 'PENDING';
+          }).catch((err) => {
+            console.log(err)
+          })
         }
-      },
+        return val;
+      })
+    },
 
-      getDate (item) {
-        return item ? moment(item).format('YYYY-MM-DD') : item;
+    tableRowColor({ row, rowIndex }) {
+      if (row.completed === true) {
+        return 'success-row';
+      } else {
+        return 'warning-row'
       }
+    },
+
+    getDate(item) {
+      return item ? moment(item).format('YYYY-MM-DD') : item;
     }
   }
+}
 </script>
 
 <style>
