@@ -360,8 +360,10 @@
 
       getActivities() {
         axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
-          this.activities = res.data
-          this.activities = []
+          this.activities = res.data.map((val) => {
+            val.edit = false;
+            return val;
+          })
         }).catch((err) => {
           console.log(err)
         })
