@@ -1,367 +1,275 @@
 <template>
   <div class="main">
     <h1>ToDo APP</h1>
-    <div v-if="isEmpty">
-      <el-alert
-        title="There are not activities at this moment"
-        type="info"
-        :center="true"
-        show-icon
-        :closable="false">
-      </el-alert>
-      </div>
-      <div v-else>
-        <el-table
-          :data="activities"
-          :row-class-name="tableRowColor">
 
-            <el-table-column
-              prop="title"
-              label="Title">
-            </el-table-column>
+    <div class="section-full content-inner bg-gray">
+            <div class="" style="padding: 0px 30px;">
+							<div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12">
+									<div class="planner-box m-b30">
+										<div class="content-box">
+											<div class="planner-budget-bx" style="width: 100% !important">
+												<ul>
+													<li class="main-budget-head">
+														<div class="budget-bx">
+															<div class="budget-estimate">
+																<h4 class="title">Title</h4>
+															</div>
+															<div class="budget-estimate"> 
+																<h4 class="title">Task Date</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">Task Type</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">AssignedTo1</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">AssignedTo2</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">AssignedTo<br/>Details</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">Details</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">DeferredUntil</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">CompletedOn</h4>
+															</div>
+                              <div class="budget-estimate"> 
+																<h4 class="title">Status</h4>
+															</div>
+															<div class="budget-estimate">
+																<h4 class="title">Actions</h4>
+															</div>
+														</div>
+													</li>
 
-            <el-table-column
-              label="TaskDate">
-              <template slot-scope="scope" v-if="scope.row.taskDate != ''">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{getDate(scope.row.taskDate)}}</span>
-              </template>
-            </el-table-column>
+													<li v-for="scope in activities">
+														<div class="budget-bx">
+                              <h6 class="budget-estimate">{{scope.title}}</h6>
+															<div class="budget-estimate d-flex justify-content-center">
+																<i class="el-icon-time d-flex" style="align-items: center; margin-bottom: 0px!important;" v-if="scope.taskDate"></i>
+																<h6 style="margin-bottom: 0px; margin-left: 5px;">{{getDate(scope.taskDate)}}</h6>
+															</div>
+                              <h6 class="budget-estimate">{{scope.taskType}}</h6>
+                              <h6 class="budget-estimate">{{scope.assignedTo1}}</h6>
+                              <h6 class="budget-estimate">{{scope.assignedTo2}}</h6>
+                              <h6 class="budget-estimate">{{scope.assignedToDetails}}</h6>
+                              <h6 class="budget-estimate">{{scope.details}}</h6>
+                              <div class="budget-estimate d-flex justify-content-center">
+																<i class="el-icon-time d-flex" style="align-items: center; margin-bottom: 0px!important;" v-if="scope.deferredUntil"></i>
+																<h6 style="margin-bottom: 0px; margin-left: 5px;">{{getDate(scope.deferredUntil)}}</h6>
+															</div>
+                              <div class="budget-estimate d-flex justify-content-center">
+																<i class="el-icon-time d-flex" style="align-items: center; margin-bottom: 0px!important;" v-if="scope.completedOn"></i>
+																<h6 style="margin-bottom: 0px; margin-left: 5px;">{{getDate(scope.completedOn)}}</h6>
+															</div>
+                              <h6 class="budget-estimate">{{scope.status}}</h6>
+															<div class="budget-estimate">
+                                <el-button type="primary"
+                                  icon="el-icon-edit"
+                                  circle
+                                  @click="editActivity(scope)" 
+                                  size="small">
+                                </el-button>
 
-            <el-table-column
-              prop="taskType"
-              label="TaskType">
-            </el-table-column>
+                                <el-button type="success"
+                                  icon="el-icon-check"
+                                  @click="completeActivity(scope)" 
+                                  circle
+                                  size="small">
+                                </el-button>
 
-            <el-table-column
-              prop="assignedTo1"
-              label="AssignedTo1">
-            </el-table-column>
+                                <el-button type="danger"
+                                  icon="el-icon-delete"
+                                  @click="removeActivity(scope)" 
+                                  circle
+                                  size="small">
+                                </el-button>
+															</div>
+														</div>
+														<div class="edit-notes" v-if="scope.edit">
+															<div style="display: flex;">
+                                <div class="row" style="width: -webkit-fill-available; padding-right:20px; row-gap: 20px">
+                                  <el-col class="col-md-3">
+                                    <el-input 
+                                      placeholder="Title"
+                                      v-model="selectedItem.title" 
+                                      size="medium">
+                                    </el-input>
+                                  </el-col>
 
-            <el-table-column
-              prop="assignedTo2"
-              label="AssignedTo2">
-            </el-table-column>
+                                  <el-col class="col-md-3">
+                                    <el-date-picker
+                                      v-model="selectedItem.taskDate"
+                                      type="date"
+                                      :picker-options="pickerOptions"
+                                      placeholder="TaskDate">
+                                    </el-date-picker>
+                                  </el-col>
 
-            <el-table-column
-              prop="assignedToDetails"
-              label="AssignedToDetails">
-            </el-table-column>
+                                  <el-col class="col-md-3">
+                                    <el-select v-model="selectedItem.taskType" :multiple="false" placeholder="TaskType">
+                                      <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label" :value="item.value"></el-option>
+                                    </el-select>
+                                  </el-col>
 
-            <el-table-column
-              prop="details"
-              label="Details">
-            </el-table-column>
 
-            <el-table-column
-              label="DeferredUntil">
-              <template slot-scope="scope" v-if="scope.row.deferredUntil != null">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{getDate(scope.row.deferredUntil)}}</span>
-              </template>
-            </el-table-column>
+                                  <el-col class="col-md-3">
+                                    <el-input 
+                                      placeholder="AssignedTo1"
+                                      v-model="selectedItem.assignedTo1" 
+                                      size="medium">
+                                    </el-input>
+                                  </el-col>
 
-            <el-table-column
-              label="CompletedOn">
-              <template slot-scope="scope" v-if="scope.row.completedOn != null">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{getDate(scope.row.completedOn)}}</span>
-              </template>
-            </el-table-column>
+                                  <el-col class="col-md-3">
+                                    <el-input 
+                                      placeholder="AssignedTo2"
+                                      v-model="selectedItem.assignedTo2" 
+                                      size="medium">
+                                    </el-input>
+                                  </el-col>
 
-            <el-table-column
-              prop="status"
-              label="Status">
-            </el-table-column>
+                                  <el-col class="col-md-3">
+                                    <el-input 
+                                      placeholder="AssignedToDetails"
+                                      v-model="selectedItem.assignedToDetails" 
+                                      size="medium">
+                                    </el-input>
+                                  </el-col>
+                                  
+                                  <el-col class="col-md-3">
+                                    <el-input 
+                                      placeholder="Details"
+                                      v-model="selectedItem.details" 
+                                      size="medium">
+                                    </el-input>
+                                  </el-col>
 
-            <el-table-column
-            label="Actions">
-              <template slot-scope="scope">
-                <el-button type="primary"
-                  icon="el-icon-edit"
-                  @click="editActivity(scope.row)" 
-                  circle
-                  size="small">
-                </el-button>
+                                  <el-col class="col-md-3">
+                                    <el-date-picker
+                                      v-model="selectedItem.deferredUntil"
+                                      type="date"
+                                      :picker-options="pickerOptions"
+                                      placeholder="DeferredUntil">
+                                    </el-date-picker>
+                                  </el-col>
 
-                <el-button type="danger"
-                  icon="el-icon-delete"
-                  @click="removeActivity(scope.row)" 
-                  circle
-                  size="small">
-                </el-button>
+                                </div>
 
-                <el-button
-                  type="success"
-                  icon="el-icon-check"
-                  circle @click="completeActivity(scope.row)"
-                  size="small">
-                </el-button>
-              </template>
-            </el-table-column>
-
-        </el-table>
-      </div>
-
-      <div>
-        <el-row type="flex" justify="center" class="counterSection">
-          <el-col :span="4">
-            Completed :
-          </el-col>
-          <el-col :span="2">
-            {{completed}}
-          </el-col>
-          <el-col :span="3">
-            Total :
-          </el-col>
-          <el-col :span="2">
-            {{total}}
-          </el-col>
-        </el-row>
-      </div>
-    <div v-if="isWrongActivity" class="wrongNotification">
-      <el-alert
-        :title="errorMessage"
-        type="error"
-        :center="true"
-        show-icon
-        :closable="false">
-      </el-alert>
-    </div>
-
-    <!-- ///////////////////// Insert //////////////////////////////// -->
-    
-    <div>
-      <el-row>
-        <el-col :span="3">
-          Title:
-        </el-col>
-
-        <el-col :span="4">
-          <el-input 
-            placeholder="Please input the Title"
-            v-model="activity.title" 
-            size="medium">
-          </el-input>
-        </el-col>
-        <el-col :span="3">
-          TaskDate:
-        </el-col>
-        <el-col :span="4">
-          <el-date-picker
-            v-model="activity.taskDate"
-            type="date"
-            :picker-options="pickerOptions"
-            placeholder="Pick a day">
-          </el-date-picker>
-        </el-col>
-
-        <el-col :span="3">
-          TaskType:
-        </el-col>
-        <el-col :span="4">
-          <el-select v-model="activity.taskType" :multiple="false">
-            <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label" :value="item.value"></el-option>
-          </el-select>
-        </el-col>
-
-      </el-row>
-
-      <el-row>
-        <el-col :span="3">
-          AssignedTo1:
-        </el-col>
-
-        <el-col :span="4">
-          <el-input 
-            placeholder="Please input the assignedTo1"
-            v-model="activity.assignedTo1" 
-            size="medium">
-          </el-input>
-        </el-col>
-        <el-col :span="3">
-          AssignedTo2:
-        </el-col>
-        <el-col :span="4">
-          <el-input 
-            placeholder="Please input the assignedTo2"
-            v-model="activity.assignedTo2" 
-            size="medium">
-          </el-input>
-        </el-col>
-
-        <el-col :span="3">
-          AssignedToDetails:
-        </el-col>
-
-        <el-col :span="4">
-          <el-input 
-            placeholder="Please input the assignedToDetails"
-            v-model="activity.assignedToDetails" 
-            size="medium">
-          </el-input>
-        </el-col>
-      </el-row>
-
-      <el-row>
-
-        <el-col :span="3">
-          Details:
-        </el-col>
-        <el-col :span="4">
-          <el-input 
-            placeholder="Please input the details"
-            v-model="activity.details" 
-            size="medium">
-          </el-input>
-        </el-col>
-
-        <el-col :span="3">
-          DeferredUntil:
-        </el-col>
-
-        <el-col :span="4">
-          <el-date-picker
-            v-model="activity.deferredUntil"
-            type="date"
-            :picker-options="pickerOptions"
-            placeholder="Pick a day">
-          </el-date-picker>
-        </el-col>
-        
-      </el-row>
-
-      <el-row>
-      <el-button 
-        type="primary"
-        icon="el-icon-circle-plus-outline"
-        circle
-        @click="addActivityMethod()">
-      </el-button>
-      </el-row>
-    </div>
+                                <div class="input-group-append" style="width: 100px; height: 40px;">
+                                  <button class="btn green" type="button" @click="updateActivity()">Save</button>
+                                </div>
+															</div>
+														</div>
+													</li>
+													
+													<li>
+														<div class="budget-bx">
+															<button class="btn add-budget-list-item gradient" @click="showAddDialog()">+ Add new item</button>
+														</div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+				</div>
+			</div>
 
     <el-dialog :visible.sync="dialogVisible">
-      <div>
-        <el-row>
-          <el-col :span="3">
-            Title:
-          </el-col>
-
-          <el-col :span="4">
+      <h3>Add a new item</h3>
+      <el-form :model="activity" ref="form" :rules="formRules">
+        <div class="row">
+          <el-form-item class="col-md-3" prop="title">
             <el-input 
-              placeholder="Please input the Title"
-              v-model="selectedItem.title" 
+              placeholder="Title"
+              v-model="activity.title" 
               size="medium">
             </el-input>
-          </el-col>
-          <el-col :span="3">
-            TaskDate:
-          </el-col>
-          <el-col :span="4">
+          </el-form-item>
+
+          <el-form-item class="col-md-3" prop="taskDate">
             <el-date-picker
-              v-model="selectedItem.taskDate"
+              v-model="activity.taskDate"
               type="date"
               :picker-options="pickerOptions"
-              placeholder="Pick a day">
+              placeholder="TaskDate">
             </el-date-picker>
-          </el-col>
-        
-        </el-row>
-        
-        <el-row>
-          <el-col :span="3">
-            TaskType:
-          </el-col>
-          <el-col :span="4">
-            <el-select v-model="selectedItem.taskType" :multiple="false">
+          </el-form-item>
+
+          <el-form-item class="col-md-3" prop="taskType">
+            <el-select v-model="activity.taskType" :multiple="false" placeholder="TaskType">
               <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label" :value="item.value"></el-option>
             </el-select>
-          </el-col>
+          </el-form-item>
 
-          <el-col :span="3">
-            AssignedTo1:
-          </el-col>
 
-          <el-col :span="4">
+          <el-form-item class="col-md-3">
             <el-input 
-              placeholder="Please input the assignedTo1"
-              v-model="selectedItem.assignedTo1" 
+              placeholder="AssignedTo1"
+              v-model="activity.assignedTo1" 
               size="medium">
             </el-input>
-          </el-col>
+          </el-form-item>
 
-        </el-row>
-
-        <el-row>
-          <el-col :span="3">
-            AssignedTo2:
-          </el-col>
-          <el-col :span="4">
+          <el-form-item class="col-md-3">
             <el-input 
-              placeholder="Please input the assignedTo2"
-              v-model="selectedItem.assignedTo2" 
+              placeholder="AssignedTo2"
+              v-model="activity.assignedTo2" 
               size="medium">
             </el-input>
-          </el-col>
+          </el-form-item>
 
-          <el-col :span="3">
-            AssignedToDetails:
-          </el-col>
-
-          <el-col :span="4">
+          <el-form-item class="col-md-3">
             <el-input 
-              placeholder="Please input the assignedToDetails"
-              v-model="selectedItem.assignedToDetails" 
+              placeholder="AssignedToDetails"
+              v-model="activity.assignedToDetails" 
               size="medium">
             </el-input>
-          </el-col>
-
-        </el-row>
-
-        <el-row>
-          <el-col :span="3">
-            Details:
-          </el-col>
-          <el-col :span="4">
+          </el-form-item>
+          
+          <el-form-item class="col-md-3">
             <el-input 
-              placeholder="Please input the details"
-              v-model="selectedItem.details" 
+              placeholder="Details"
+              v-model="activity.details" 
               size="medium">
             </el-input>
-          </el-col>
+          </el-form-item>
 
-          <el-col :span="3">
-            DeferredUntil:
-          </el-col>
-
-          <el-col :span="4">
+          <el-form-item class="col-md-3">
             <el-date-picker
-              v-model="selectedItem.deferredUntil"
+              v-model="activity.deferredUntil"
               type="date"
               :picker-options="pickerOptions"
-              placeholder="Pick a day">
+              placeholder="DeferredUntil">
             </el-date-picker>
-          </el-col>
+          </el-form-item>
 
-        </el-row>
+        </div>
 
-        <el-row>
+        <el-row style="margin-top: 30px;">
           <el-button 
             type="primary"
             icon="el-icon-circle-plus-outline"
-            @click="updateActivity()">
-            Save
+            @click="addActivityMethod()">
+            Add
           </el-button>
 
             <el-button 
               type="danger"
               icon="el-icon-circle-plus-outline"
-              @click="closeActivity()">
+              @click="showAddDialog()">
               Cancel
             </el-button>
         </el-row>
-      </div>
+      </el-form>
 
     </el-dialog>
   </div>
@@ -417,6 +325,18 @@
         activities: [],
         eventId: 101,
         mainEventId: 100,
+        formRules: {
+          title: [
+            { required: true, message: "Name is required", trigger: "blur" },
+            // { min: 3, max: 30, message: "Name length should be between 3 and 30 characters", trigger: "blur" }
+          ],
+          taskDate: [
+            { required: true, message: "TaskDate is required", trigger: "blur" },
+          ],
+          taskType: [
+            { required: true, message: "TaskType is required", trigger: "change" },
+          ]
+        },
       }
     },
     computed: {
@@ -441,12 +361,29 @@
       getActivities() {
         axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
           this.activities = res.data
+          this.activities = []
         }).catch((err) => {
           console.log(err)
         })
       },
-      addActivityMethod() {
-        if (this.validateData() === true) {
+      showAddDialog() {
+        this.activity = {
+          title: '',
+          taskDate: null,
+          taskType: '',
+          assignedTo1: '',
+          assignedTo2: '',
+          details: '',
+          deferredUntil: null,
+          completedOn: null,
+          assignedToDetails: '',
+          wrong: false,
+        };
+        this.dialogVisible = !this.dialogVisible;
+      },
+      async  addActivityMethod() {
+        try {
+          await this.$refs.form.validate();
           const activity = {
             title: this.activity.title,
             taskDate: this.activity.taskDate,
@@ -459,7 +396,7 @@
             assignedToDetails: this.activity.assignedToDetails,
             completed: false,
             edit: false,
-            id: null
+            status: "PENDING",
           };
 
           const data = {
@@ -482,20 +419,18 @@
             activity.id = res.data;
             this.activities.push(activity);
             this.activity.wrong = false;
-
+            this.$refs.form.resetFields();
+            this.dialogVisible = false;
           }).catch((err) => {
             console.log(err)
           })
-          
-          
-        } else {
-          this.activity.wrong = true;
-          this.setMessageError();
+        } catch (error) {
+          console.log("Validation Error: ", error);
         }
+
       },
       
       updateActivity() {
-
         const data = {
           eventId: this.eventId,
           mainEventId: this.mainEventId,
@@ -513,7 +448,6 @@
         };
 
         axios.put('http://localhost:8080/todos/' + this.selectedItem.id, data).then((res) => {
-          // this.activities = res.data
           this.activities = this.activities.map(val => {
             if(val.id == this.selectedItem.id) {
               val.status = this.selectedItem.status;
@@ -527,6 +461,7 @@
               val.deferredUntil = this.getDate(this.selectedItem.deferredUntil),
               val.completedOn = this.getDate(this.selectedItem.completedOn),
               val.completed = this.selectedItem.completed
+              val.edit = false;
             }
             return val;
           });
@@ -537,23 +472,16 @@
         })
       },
 
-      closeActivity() {
+      closeDialog() {
         this.dialogVisible = false;
       },
       editActivity(item) {
-        this.dialogVisible = true;
-        // this.selectedItem = item;
+        item.edit = !item.edit;
         Object.assign(this.selectedItem, item);
       },
 
       removeActivity(item) {
-        axios.delete('http://localhost:8080/todos/'+item.id, {
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Accept-Encoding': 'gzip, deflate, br',
-          }
-        }).then((res) => {
+        axios.delete('http://localhost:8080/todos/'+item.id).then((res) => {
           this.activities = this.activities.filter((val) => val.id !== item.id);
         }).catch((err) => {
           console.log(err)
@@ -598,27 +526,6 @@
           return 'warning-row'
         }
       },
-      validateData() {
-        if (this.activity.title !== '' && this.activity.taskDate !== null && this.activity.taskType != '') {
-          return true;
-        } else {
-          return false;
-        }
-      },
-
-      setMessageError() {
-        // if (this.title === '' && this.taskDate === '') {
-        //   this.errorMessage = 'The activity && the date are empty';
-        // } else {
-          if (this.activity.title === '') {
-            this.errorMessage = 'The activity is empty';
-          } else if(this.activity.taskDate == null) {
-            this.errorMessage = 'The taskDate is empty';
-          } else if(this.activity.taskType == '') {
-            this.errorMessage = 'The taskType is empty';
-          }
-        // }
-      },
 
       getDate (item) {
         return item ? moment(item).format('YYYY-MM-DD') : item;
@@ -654,5 +561,31 @@ div.cell {
 
 .el-table .success-row {
   background: #f0f9eb;
+}
+
+.budget-estimate {
+  word-wrap: break-word;
+  width: 9% !important;
+}
+
+.el-dialog {
+  border-radius: 8px !important;
+  height: 350px;
+}
+
+.el-date-editor.el-input {
+  width: 100% !important;
+}
+
+.el-input__inner {
+  height: 40px !important;
+}
+
+.el-dialog__body .row {
+  row-gap: 20px;
+}
+
+.el-select {
+  width: 100%;
 }
 </style>

@@ -1,0 +1,10 @@
+ul.dropdown-menu>li{
+    margin-bottom: 0;
+    border: none;
+}
+select.bs-select-hidden, select.selectpicker {
+    display: block!important;
+}
+div.bootstrap-select{
+    display: none!important;
+}

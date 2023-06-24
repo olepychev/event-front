@@ -18,7 +18,7 @@ export default new Vuex.Store({
       localStorage.setItem('activities', JSON.stringify(state.activities));
     },
 
-    changeActivityCompleted(state, activity) {
+    changeActivityState(state, activity) {
       state.activities.map((val)=> {
         if (val.id === activity.id ) {
           const aux = !val.completed;
@@ -27,21 +27,6 @@ export default new Vuex.Store({
 
         return val;
       });
-
-      localStorage.setItem('activities',JSON.stringify(state.activities));
-    },
-
-    changeActivityEdit(state, activity) {
-      state.activities.map((val)=> {
-        if (val.id === activity.id ) {
-          const aux = !val.edit;
-          val.edit = aux;
-        }
-
-        return val;
-      });
-
-      console.log(state.activities)
 
       localStorage.setItem('activities',JSON.stringify(state.activities));
     }
@@ -54,11 +39,8 @@ export default new Vuex.Store({
       commit('deleteActivity', activity)
 
     },
-    changeStateCompleted({commit}, {activity}){
-      commit('changeActivityCompleted', activity)
-    },
-    changeStateEdit({commit}, {activity}){
-      commit('changeActivityEdit', activity)
+    changeActivityState({commit}, {activity}){
+      commit('changeActivityState', activity)
     }
   },
   getters: {
