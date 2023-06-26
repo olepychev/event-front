@@ -93,12 +93,12 @@
                           <a href="javascript:void(0);" class="search-link">{{ scope.details }}</a>
                         </div>
                         <div class="budget-head">
-                          <h4 class="title">{{ scope.assignedTo1 }} / {{ scope.assignedTo2 }}</h4>
+                          <h4 class="title">{{ scope.assignedTo1 }}{{scope.assignedTo2 !='' ? ' / ' : ''}}{{ scope.assignedTo2 }}</h4>
                           <a href="javascript:void(0);" class="search-link">{{ scope.assignedToDetails }}</a>
                         </div>
                         <div class="budget-estimate">
                           <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
-                          <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completionDate) }}</a>
+                          <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completedOn) }}</a>
                         </div>
                         <h6 class="budget-estimate">{{ scope.taskType }}</h6>
                         <h6 class="budget-actual">{{ scope.status }}</h6>
@@ -165,11 +165,11 @@
                                 </el-input>
                               </el-form-item>
 
-                              <el-form-item class="col-md-3">
+                              <!-- <el-form-item class="col-md-3">
                                 <el-date-picker v-model="selectedItem.completionDate" type="date"
                                   :picker-options="pickerOptions" placeholder="CompletionDate">
                                 </el-date-picker>
-                              </el-form-item>
+                              </el-form-item> -->
 
                             </div>
 
@@ -238,11 +238,11 @@
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3">
+          <!-- <el-form-item class="col-md-3">
             <el-date-picker v-model="activity.completionDate" type="date" :picker-options="pickerOptions"
               placeholder="CompletionDate">
             </el-date-picker>
-          </el-form-item>
+          </el-form-item> -->
 
         </div>
 
@@ -297,7 +297,7 @@ export default {
         assignedTo1: '',
         assignedTo2: '',
         details: '',
-        completionDate: null,
+        // completionDate: null,
         completedOn: null,
         assignedToDetails: '',
         wrong: false,
@@ -324,7 +324,7 @@ export default {
         assignedTo2: '',
         assignedToDetails: '',
         details: '',
-        completionDate: null,
+        // completionDate: null,
         edit: false,
         wrong: false,
         status: '',
@@ -405,7 +405,7 @@ export default {
         assignedTo1: '',
         assignedTo2: '',
         details: '',
-        completionDate: null,
+        // completionDate: null,
         completedOn: null,
         assignedToDetails: '',
         wrong: false,
@@ -422,7 +422,7 @@ export default {
           assignedTo1: this.activity.assignedTo1,
           assignedTo2: this.activity.assignedTo2,
           details: this.activity.details,
-          completionDate: this.getDate(this.activity.completionDate),
+          // completionDate: this.getDate(this.activity.completionDate),
           completedOn: this.activity.completedOn,
           assignedToDetails: this.activity.assignedToDetails,
           completed: false,
@@ -441,7 +441,7 @@ export default {
           assignedTo2: this.activity.assignedTo2,
           assignedToDetails: this.activity.assignedToDetails,
           details: this.activity.details,
-          completionDate: this.getDate(this.activity.completionDate),
+          // completionDate: this.getDate(this.activity.completionDate),
           completedOn: this.getDate(this.activity.completedOn),
           completed: false,
         }
@@ -475,7 +475,7 @@ export default {
           assignedTo2: this.selectedItem.assignedTo2,
           assignedToDetails: this.selectedItem.assignedToDetails,
           details: this.selectedItem.details,
-          completionDate: this.getDate(this.selectedItem.completionDate),
+          // completionDate: this.getDate(this.selectedItem.completionDate),
           completedOn: this.getDate(this.selectedItem.completedOn),
           completed: this.selectedItem.completed
         };
@@ -491,7 +491,7 @@ export default {
               val.assignedTo2 = this.selectedItem.assignedTo2;
               val.assignedToDetails = this.selectedItem.assignedToDetails;
               val.details = this.selectedItem.details;
-              val.completionDate = this.getDate(this.selectedItem.completionDate);
+              // val.completionDate = this.getDate(this.selectedItem.completionDate);
               val.completedOn = this.getDate(this.selectedItem.completedOn);
               val.completed = this.selectedItem.completed;
               val.eventId = this.selectedItem.eventId;
