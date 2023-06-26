@@ -108,7 +108,6 @@
                                   </div>
                                   <div class="budget-head">
                                     <h4 class="title">Assigned To</h4>
-                                    <a href="javascript:void(0);">Assignment Details</a>
                                   </div>
                                   <div class="budget-date">
                                     <h4 class="title">Due On</h4>
@@ -142,7 +141,6 @@
                                   </div>
                                   <div class="budget-head">
                                     <h4 class="title">{{ scope.assignedTo1 }}{{scope.assignedTo2 !='' ? ' / ' : ''}}{{ scope.assignedTo2 }}</h4>
-                                    <a href="javascript:void(0);" class="search-link">{{ scope.assignedToDetails }}</a>
                                   </div>
                                   <div class="budget-date">
                                     <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
@@ -174,18 +172,18 @@
                                   <el-form :model="selectedItem" ref="saveForm" :rules="formRules">
                                     <div style="display: flex;">
                                       <div class="row" style="width: -webkit-fill-available; padding-right:20px; row-gap: 20px">
-                                        <el-form-item class="col-md-3" prop="title">
+                                        <el-form-item class="col-md-4" prop="title">
                                           <el-input placeholder="Title" v-model="selectedItem.title" size="medium">
                                           </el-input>
                                         </el-form-item>
 
-                                        <el-form-item class="col-md-3" prop="taskDate">
+                                        <el-form-item class="col-md-4" prop="taskDate">
                                           <el-date-picker v-model="selectedItem.taskDate" type="date" :picker-options="pickerOptions"
                                             placeholder="TaskDate">
                                           </el-date-picker>
                                         </el-form-item>
 
-                                        <el-form-item class="col-md-3" prop="taskType">
+                                        <el-form-item class="col-md-4" prop="taskType">
                                           <el-select v-model="selectedItem.taskType" :multiple="false" placeholder="TaskType">
                                             <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
                                               :value="item.value"></el-option>
@@ -193,23 +191,18 @@
                                         </el-form-item>
 
 
-                                        <el-form-item class="col-md-3" prop="assignedTo1">
+                                        <el-form-item class="col-md-4" prop="assignedTo1">
                                           <el-input placeholder="AssignedTo1" v-model="selectedItem.assignedTo1" size="medium">
                                           </el-input>
                                         </el-form-item>
 
-                                        <el-form-item class="col-md-3" prop="assignedTo2">
+                                        <el-form-item class="col-md-4" prop="assignedTo2">
                                           <el-input placeholder="AssignedTo2" v-model="selectedItem.assignedTo2" size="medium">
                                           </el-input>
                                         </el-form-item>
 
-                                        <el-form-item class="col-md-3" prop="assignedToDetails">
-                                          <el-input placeholder="AssignedToDetails" v-model="selectedItem.assignedToDetails"
-                                            size="medium">
-                                          </el-input>
-                                        </el-form-item>
 
-                                        <el-form-item class="col-md-3" prop="details">
+                                        <el-form-item class="col-md-4" prop="details">
                                           <el-input placeholder="Details" v-model="selectedItem.details" size="medium">
                                           </el-input>
                                         </el-form-item>
@@ -260,15 +253,7 @@
                     <li>
                       <a href="#" @click="openAddSubeventPage">Add Event</a>
                     </li>
-                    <!-- <li><a href="terms.html">Terms</a></li>
-                    <li>
-                      <a href="wedding-planning-tools.html"
-                        >Wedding Manager Tools</a
-                      >
-                    </li>
-                    <li>
-                      <a href="wedding-gift-lists.html">Wedding Gift Lists</a>
-                    </li> -->
+
                   </ul>
                 </div>
               </div>
@@ -291,13 +276,13 @@
                 </el-input>
               </el-form-item>
 
-              <el-form-item class="col-md-4" prop="taskDate">
+              <el-form-item class="col-md-6" prop="taskDate">
                 <el-date-picker v-model="activity.taskDate" type="date" :picker-options="pickerOptions"
                   placeholder="TaskDate">
                 </el-date-picker>
               </el-form-item>
 
-              <el-form-item class="col-md-4" prop="taskType">
+              <el-form-item class="col-md-6" prop="taskType">
                 <el-select v-model="activity.taskType" :multiple="false" placeholder="TaskType">
                   <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
                     :value="item.value"></el-option>
@@ -305,26 +290,15 @@
               </el-form-item>
 
 
-              <el-form-item class="col-md-4" prop="assignedTo1">
+              <el-form-item class="col-md-6" prop="assignedTo1">
                 <el-input placeholder="AssignedTo1" v-model="activity.assignedTo1" size="medium">
                 </el-input>
               </el-form-item>
 
-              <el-form-item class="col-md-4" prop="assignedTo2">
+              <el-form-item class="col-md-6" prop="assignedTo2">
                 <el-input placeholder="AssignedTo2" v-model="activity.assignedTo2" size="medium">
                 </el-input>
               </el-form-item>
-
-              <el-form-item class="col-md-8" prop="assignedToDetails">
-                <el-input placeholder="AssignedToDetails" v-model="activity.assignedToDetails" size="medium">
-                </el-input>
-              </el-form-item>
-
-              <!-- <el-form-item class="col-md-3">
-                <el-date-picker v-model="activity.completionDate" type="date" :picker-options="pickerOptions"
-                  placeholder="CompletionDate">
-                </el-date-picker>
-              </el-form-item> -->
 
             </div>
 
@@ -392,7 +366,6 @@ export default {
         details: '',
         // completionDate: null,
         completedOn: null,
-        assignedToDetails: '',
         wrong: false,
         mainEventId: null,
         eventId: null,
@@ -415,7 +388,6 @@ export default {
         taskType: '',
         assignedTo1: '',
         assignedTo2: '',
-        assignedToDetails: '',
         details: '',
         // completionDate: null,
         edit: false,
@@ -436,15 +408,11 @@ export default {
         taskType: [
           { required: true, message: "TaskType is required", trigger: "change" },
         ],
-        assignedToDetails: [
-          { min: 0, max: 100, message: "AssignedToDetails length should be less than 100 characters", trigger: "blur" }
-        ],
+
         details: [
           { min: 0, max: 100, message: "Details length should be less than 100 characters", trigger: "blur" }
         ],
-        assignedToDetails: [
-          { min: 0, max: 100, message: "AssignedToDetails length should be less than 100 characters", trigger: "blur" }
-        ],
+
         assignedTo1: [
           { min: 0, max: 20, message: "AssignedTo1 length should be less than 20 characters", trigger: "blur" }
         ],
@@ -502,7 +470,6 @@ export default {
         details: '',
         // completionDate: null,
         completedOn: null,
-        assignedToDetails: '',
         wrong: false,
       };
       this.$refs.form && this.$refs.form.resetFields();
@@ -520,7 +487,6 @@ export default {
           details: this.activity.details,
           // completionDate: this.getDate(this.activity.completionDate),
           completedOn: this.activity.completedOn,
-          assignedToDetails: this.activity.assignedToDetails,
           completed: false,
           edit: false,
           status: "PENDING",
@@ -535,7 +501,6 @@ export default {
           title: this.activity.title,
           assignedTo1: this.activity.assignedTo1,
           assignedTo2: this.activity.assignedTo2,
-          assignedToDetails: this.activity.assignedToDetails,
           details: this.activity.details,
           // completionDate: this.getDate(this.activity.completionDate),
           completedOn: this.getDate(this.activity.completedOn),
@@ -569,7 +534,6 @@ export default {
           title: this.selectedItem.title,
           assignedTo1: this.selectedItem.assignedTo1,
           assignedTo2: this.selectedItem.assignedTo2,
-          assignedToDetails: this.selectedItem.assignedToDetails,
           details: this.selectedItem.details,
           // completionDate: this.getDate(this.selectedItem.completionDate),
           completedOn: this.getDate(this.selectedItem.completedOn),
@@ -585,7 +549,6 @@ export default {
               val.title = this.selectedItem.title;
               val.assignedTo1 = this.selectedItem.assignedTo1;
               val.assignedTo2 = this.selectedItem.assignedTo2;
-              val.assignedToDetails = this.selectedItem.assignedToDetails;
               val.details = this.selectedItem.details;
               // val.completionDate = this.getDate(this.selectedItem.completionDate);
               val.completedOn = this.getDate(this.selectedItem.completedOn);
@@ -677,7 +640,6 @@ export default {
             title: item.title,
             assignedTo1: item.assignedTo1,
             assignedTo2: item.assignedTo2,
-            assignedToDetails: item.assignedToDetails,
             details: item.details,
             completed: !val.completed,
             completedOn: !val.completed ? this.getDate(new Date()) : null,
