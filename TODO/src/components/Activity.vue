@@ -100,9 +100,12 @@
                           <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
                           <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completedOn) }}</a>
                         </div>
-                        <h6 class="budget-estimate">{{ scope.taskType }}</h6>
+                        <div class="budget-estimate">
+                          <h6>{{ scope.taskType }}</h6>
+                        </div>
+                        
                         <h6 class="budget-actual">{{ scope.status }}</h6>
-
+                        
                         <div class="edit-icon">
                           <el-button type="primary" icon="el-icon-edit" circle @click="editActivity(scope)" size="small">
                           </el-button>
