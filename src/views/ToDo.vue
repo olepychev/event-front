@@ -450,7 +450,6 @@ export default {
     this.port = location.port;
     this.eventId = this.$route.query.eventId;
     this.selected = this.eventId;
-    console.log('@@@@@@@@@', this.selected)
     if (this.mainEventId) {
       this.getSubeventsHeaderData(this.mainEventId);
     }
