@@ -62,7 +62,7 @@
 													<h4 class="title">Assigned To</h4>
 													<a href="javascript:void(0);">Assignment Details</a>
 												</div>
-                        <div class="budget-estimate">
+                        <div class="budget-estimate" style="width: 20% !important;">
 													<h4 class="title">Due On</h4>
 													<a href="javascript:void(0);" class="search-link">Completed On</a>
 												</div>
@@ -200,6 +200,7 @@
       <el-form :model="activity" ref="form" :rules="formRules" style="margin-top: 30px;">
         <div class="row">
           <el-form-item class="col-md-6" prop="title">
+            <label>Title</label>
             <el-input placeholder="Title" v-model="activity.title" size="medium">
             </el-input>
           </el-form-item>
