@@ -10,6 +10,15 @@ module.exports = {
         target: "http://164.92.67.121:9929",
         secure: false,
       },
+      
+      '/todos': {
+        target: 'http://164.92.67.121:9928',
+        secure: false,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
+
       "/events": {
         target: "http://164.92.67.121:9921",
         secure: false,
@@ -29,13 +38,7 @@ module.exports = {
         changeOrigin: true,
       },
       
-      '/todos': {
-        target: 'http://164.92.67.121:9928',
-        secure: false,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      },
+      
     },
   },
   publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
