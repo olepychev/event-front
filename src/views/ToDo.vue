@@ -370,6 +370,7 @@
 <script>
 import Header from "@/views/layouts/Header.vue";
 import Footer from "@/views/layouts/Footer.vue";
+import moment from 'moment'
 window.$ = require("jquery");
 window.JQuery = require("jquery");
 
