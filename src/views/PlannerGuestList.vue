@@ -332,6 +332,7 @@
                       <a href="#">Guest List</a>
                     </li>
                     <li><a href="#" @click="openBudgetPage">Budget</a></li>
+                    <li><a @click="openToDoPage">ToDo</a></li>
                     <li>
                       <a href="#" @click="openAddSubeventPage">Add Event</a>
                     </li>
@@ -454,6 +455,16 @@ export default {
 
         query: {
           mainEventId: this.mainEventId,
+        },
+      });
+    },
+    openGuestListPage() {
+      this.$router.push({
+        name: "/planner_guest_list",
+
+        query: {
+          mainEventId: this.mainEventId,
+          eventId: this.selected,
         },
       });
     },

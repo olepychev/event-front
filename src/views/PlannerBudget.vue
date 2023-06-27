@@ -521,6 +521,7 @@
                     </li>
                     <li class="active"><a href="#">Budget</a></li>
                     <li>
+                    <li><a @click="openToDoPage">ToDo</a></li>
                       <a href="#" @click="openAddSubeventPage">Add Event</a>
                     </li>
                     <!-- <li><a href="terms.html">Terms</a></li>
@@ -931,6 +932,15 @@ export default {
         query: {
           mainEventId: this.mainEventId,
           subEventId: this.selected,
+        },
+      });
+    },
+    openToDoPage() {
+      this.$router.push({
+        name: "/planner_budget",
+
+        query: {
+          mainEventId: this.mainEventId,
         },
       });
     },

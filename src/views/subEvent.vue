@@ -417,6 +417,7 @@
                       <a href="#" @click="openGuestListPage">Guest List</a>
                     </li>
                     <li><a href="#" @click="openBudgetPage">Budget</a></li>
+                    <li><a @click="openToDoPage">ToDo</a></li>
                     <li :class="!subEventId ? 'active' : ''">
                       <a href="#">Add Event</a>
                     </li>
@@ -777,6 +778,15 @@ export default {
       });
     },
     openBudgetPage() {
+      this.$router.push({
+        name: "/planner_budget",
+
+        query: {
+          mainEventId: this.mainEventId,
+        },
+      });
+    },
+    openToDoPage() {
       this.$router.push({
         name: "/planner_budget",
 
