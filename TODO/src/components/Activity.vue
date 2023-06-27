@@ -58,7 +58,7 @@
 													<h4 class="title">Title</h4>
 													<a href="javascript:void(0);">Details</a>
 												</div>
-                        <div class="budget-assigned">
+                        <div class="budget-head">
 													<h4 class="title">Assigned To</h4>
 													<a href="javascript:void(0);">Assignment Details</a>
 												</div>
@@ -92,7 +92,7 @@
                           <h4 class="title">{{ scope.title }}</h4>
                           <a href="javascript:void(0);" class="search-link">{{ scope.details }}</a>
                         </div>
-                        <div class="budget-assigned">
+                        <div class="budget-head">
                           <h4 class="title">{{ scope.assignedTo1 }}{{scope.assignedTo2 !='' ? ' / ' : ''}}{{ scope.assignedTo2 }}</h4>
                           <a href="javascript:void(0);" class="search-link">{{ scope.assignedToDetails }}</a>
                         </div>
@@ -650,11 +650,6 @@ div.cell {
 .budget-estimate {
   word-wrap: break-word;
   width: 9% !important;
-}
-
-.budget-assigned {
-  word-wrap: break-word;
-  width: 30% !important;
 }
 
 .budget-date {
