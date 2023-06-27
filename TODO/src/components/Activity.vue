@@ -100,10 +100,8 @@
                           <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
                           <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completedOn) }}</a>
                         </div>
-                        <div class="budget-estimate">
-                          <h6>{{ scope.taskType }}</h6>
-                        </div>
-
+                        
+                        <h6 class="budget-estimate">{{ scope.taskType }}</h6>
                         <h6 class="budget-actual">{{ scope.status }}</h6>
                         
                         <div class="edit-icon">
@@ -648,7 +646,7 @@ div.cell {
 }
 
 .budget-estimate {
-  word-wrap: break-word;
+  word-wrap: break-all;
   width: 9% !important;
 }
 
@@ -656,7 +654,6 @@ div.cell {
   word-wrap: break-word;
   width: 20% !important;
 }
-
 
 .el-dialog {
   border-radius: 8px !important;
