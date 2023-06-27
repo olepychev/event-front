@@ -83,6 +83,29 @@
         </div>
         <!-- Section Banner END -->
         <!-- Manager Tools -->
+        <div class="section-full bg-white plan-tools-bx">
+          <div class="container">
+            <ul class="plan-tools-list">
+              <li
+                v-for="subevent in subeventsHeaderData"
+                @click="getSubEventData(subevent.eventId)"
+              >
+                <div
+                  :class="
+                    selected == subevent.eventId
+                      ? 'list-box home-list active'
+                      : 'list-box home-list'
+                  "
+                >
+                  <h6 class="title">
+                    <i class="la la-home"></i>{{ subevent.title }}
+                  </h6>
+                  <p>150 days to go</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
         <!-- Planner advice End -->
         <!-- contact area -->
         <div class="section-full content-inner bg-gray">
@@ -192,26 +215,20 @@
 
 
                                         <el-form-item class="col-md-4" prop="assignedTo1">
-                                          <el-input placeholder="AssignedTo1" v-model="selectedItem.assignedTo1" size="medium">
+                                          <el-input placeholder="AssignedTo1" v-model="selectedItem.assignedTo1" size="medium" maxlength="20">
                                           </el-input>
                                         </el-form-item>
 
                                         <el-form-item class="col-md-4" prop="assignedTo2">
-                                          <el-input placeholder="AssignedTo2" v-model="selectedItem.assignedTo2" size="medium">
+                                          <el-input placeholder="AssignedTo2" v-model="selectedItem.assignedTo2" size="medium" maxlength="20">
                                           </el-input>
                                         </el-form-item>
 
 
                                         <el-form-item class="col-md-4" prop="details">
-                                          <el-input placeholder="Details" v-model="selectedItem.details" size="medium">
+                                          <el-input placeholder="Details" v-model="selectedItem.details" size="medium" maxlength="100">
                                           </el-input>
                                         </el-form-item>
-
-                                        <!-- <el-form-item class="col-md-3">
-                                          <el-date-picker v-model="selectedItem.completionDate" type="date"
-                                            :picker-options="pickerOptions" placeholder="CompletionDate">
-                                          </el-date-picker>
-                                        </el-form-item> -->
 
                                       </div>
 
@@ -272,7 +289,7 @@
               </el-form-item>
 
               <el-form-item class="col-md-6" prop="details">
-                <el-input placeholder="Details" v-model="activity.details" size="medium">
+                <el-input placeholder="Details" v-model="activity.details" size="medium" maxlength="100">
                 </el-input>
               </el-form-item>
 
@@ -291,12 +308,12 @@
 
 
               <el-form-item class="col-md-6" prop="assignedTo1">
-                <el-input placeholder="AssignedTo1" v-model="activity.assignedTo1" size="medium">
+                <el-input placeholder="AssignedTo1" v-model="activity.assignedTo1" size="medium" maxlength="20">
                 </el-input>
               </el-form-item>
 
               <el-form-item class="col-md-6" prop="assignedTo2">
-                <el-input placeholder="AssignedTo2" v-model="activity.assignedTo2" size="medium">
+                <el-input placeholder="AssignedTo2" v-model="activity.assignedTo2" size="medium" maxlength="20">
                 </el-input>
               </el-form-item>
 
@@ -389,7 +406,6 @@ export default {
         assignedTo1: '',
         assignedTo2: '',
         details: '',
-        // completionDate: null,
         edit: false,
         wrong: false,
         status: '',
@@ -400,7 +416,6 @@ export default {
       formRules: {
         title: [
           { required: true, message: "Name is required", trigger: "blur" },
-          // { min: 3, max: 30, message: "Name length should be between 3 and 30 characters", trigger: "blur" }
         ],
         taskDate: [
           { required: true, message: "TaskDate is required", trigger: "blur" },
@@ -426,21 +441,44 @@ export default {
       mainEventId: null,
       eventId: null,
       port: null,
+      subeventsHeaderData: {},
+      selected: null,
     }
   },
   created() {
     this.mainEventId = this.$route.query.mainEventId;
     this.port = location.port;
     this.eventId = this.$route.query.eventId;
+    this.selected = this.eventId;
+    console.log('@@@@@@@@@', this.selected)
+    if (this.mainEventId) {
+      this.getSubeventsHeaderData(this.mainEventId);
+    }
   },
   mounted() {
     this.getActivities();
   },
   methods: {
+    getSubEventData(subId) {
+      this.selected = subId;
+      this.getActivities();
+    },
+    getSubeventsHeaderData(mainEventId) {
+      axios
+        .get(
+          "http://localhost:" + this.port + "/events/" + mainEventId + "/sub"
+        )
+        .then((res) => {
+          this.subeventsHeaderData = res.data;
+        })
+        .catch(() => {
+          this.noData = true;
+        });
+    },
 
     getActivities() {
-      if(this.eventId != undefined) {
-        axios.get("http://localhost:" + this.port + '/todos/events/sub/' + this.eventId).then((res) => {
+      if(this.selected != null) {
+        axios.get("http://localhost:" + this.port + '/todos/events/sub/' + this.selected).then((res) => {
           this.activities = res.data.map((val) => {
             val.edit = false;
             return val;
@@ -493,7 +531,7 @@ export default {
         };
 
         const data = {
-          eventId: this.eventId,
+          eventId: this.selected,
           mainEventId: this.mainEventId,
           status: "PENDING",
           taskDate: this.getDate(this.activity.taskDate),
@@ -632,7 +670,7 @@ export default {
         if (val.id == item.id) {
 
           const data = {
-            eventId: this.eventId,
+            eventId: this.selected,
             mainEventId: this.mainEventId,
             status: !val.completed ? 'COMPLETE' : 'PENDING',
             taskDate: item.taskDate,

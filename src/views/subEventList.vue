@@ -2228,6 +2228,7 @@ export default {
 
         query: {
           mainEventId: this.mainEventId,
+          eventId: this.selected,
         },
       });
     },
