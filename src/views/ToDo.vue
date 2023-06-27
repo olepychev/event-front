@@ -456,10 +456,12 @@ export default {
       editConfirmVisible: false,
       mainEventId: null,
       eventId: null,
+      port: null,
     }
   },
   created() {
     this.mainEventId = this.$route.query.mainEventId;
+    this.port = location.port;
     this.eventId = this.$route.query.eventId;
   },
   mounted() {
@@ -469,7 +471,7 @@ export default {
 
     getActivities() {
       if(this.eventId != undefined) {
-        axios.get('http://localhost:8080/todos/events/sub/' + this.eventId).then((res) => {
+        axios.get("http://localhost:" + this.port + '/todos/events/sub/' + this.eventId).then((res) => {
           this.activities = res.data.map((val) => {
             val.edit = false;
             return val;
@@ -479,7 +481,7 @@ export default {
         })
       }
       else {
-        axios.get('http://localhost:8080/todos/events/' + this.mainEventId).then((res) => {
+        axios.get("http://localhost:" + this.port + "/todos/events/" + this.mainEventId).then((res) => {
           this.activities = res.data.map((val) => {
             val.edit = false;
             return val;
@@ -539,7 +541,7 @@ export default {
           completed: false,
         }
 
-        axios.post('http://localhost:8080/todos', data).then((res) => {
+        axios.post('http://localhost:' + this.port + '/todos', data).then((res) => {
           activity.id = res.data;
           this.activities.push(activity);
           this.activity.wrong = false;
@@ -654,7 +656,7 @@ export default {
     },
 
     removeActivity(item) {
-      axios.delete('http://localhost:8080/todos/' + item.id).then((res) => {
+      axios.delete('http://localhost:' + this.port + '/todos/' + item.id).then((res) => {
         this.activities = this.activities.filter((val) => val.id !== item.id);
       }).catch((err) => {
         console.log(err)
@@ -680,7 +682,7 @@ export default {
             completedOn: !val.completed ? this.getDate(new Date()) : null,
           };
 
-          axios.put('http://localhost:8080/todos/' + item.id, data).then((res) => {
+          axios.put('http://localhost:' + this.port + '/todos/' + item.id, data).then((res) => {
             val.completed = !val.completed;
             item.completedOn = val.completed ? this.getDate(new Date()) : null;
             item.status = val.completed ? 'COMPLETE' : 'PENDING';
