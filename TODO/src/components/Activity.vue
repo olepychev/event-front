@@ -62,7 +62,7 @@
 													<h4 class="title">Assigned To</h4>
 													<a href="javascript:void(0);">Assignment Details</a>
 												</div>
-                        <div class="budget-estimate" style="width: 20% !important;">
+                        <div class="budget-date">
 													<h4 class="title">Due On</h4>
 													<a href="javascript:void(0);" class="search-link">Completed On</a>
 												</div>
@@ -96,7 +96,7 @@
                           <h4 class="title">{{ scope.assignedTo1 }}{{scope.assignedTo2 !='' ? ' / ' : ''}}{{ scope.assignedTo2 }}</h4>
                           <a href="javascript:void(0);" class="search-link">{{ scope.assignedToDetails }}</a>
                         </div>
-                        <div class="budget-estimate">
+                        <div class="budget-date">
                           <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
                           <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completedOn) }}</a>
                         </div>
@@ -648,6 +648,12 @@ div.cell {
   word-wrap: break-word;
   width: 9% !important;
 }
+
+.budget-date {
+  word-wrap: break-word;
+  width: 20% !important;
+}
+
 
 .el-dialog {
   border-radius: 8px !important;
