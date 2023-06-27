@@ -64,7 +64,7 @@
 												</div>
                         <div class="budget-estimate">
 													<h4 class="title">Due On</h4>
-													<a href="javascript:void(0);" class="search-link">Completion Date</a>
+													<a href="javascript:void(0);" class="search-link">Completed On</a>
 												</div>
 												<div class="budget-estimate"> 
 													<h4 class="title">Task Type</h4>
@@ -196,21 +196,26 @@
     </div>
 
     <el-dialog :visible.sync="dialogVisible">
-      <h3>Add a new item</h3>
-      <el-form :model="activity" ref="form" :rules="formRules">
+      <h3 style="text-align: center;">Add a new item</h3>
+      <el-form :model="activity" ref="form" :rules="formRules" style="margin-top: 30px;">
         <div class="row">
-          <el-form-item class="col-md-3" prop="title">
+          <el-form-item class="col-md-6" prop="title">
             <el-input placeholder="Title" v-model="activity.title" size="medium">
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3" prop="taskDate">
+          <el-form-item class="col-md-6" prop="details">
+            <el-input placeholder="Details" v-model="activity.details" size="medium">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item class="col-md-4" prop="taskDate">
             <el-date-picker v-model="activity.taskDate" type="date" :picker-options="pickerOptions"
               placeholder="TaskDate">
             </el-date-picker>
           </el-form-item>
 
-          <el-form-item class="col-md-3" prop="taskType">
+          <el-form-item class="col-md-4" prop="taskType">
             <el-select v-model="activity.taskType" :multiple="false" placeholder="TaskType">
               <el-option v-for="(item, index) in selectOptions" :key="index" :label="item.label"
                 :value="item.value"></el-option>
@@ -218,23 +223,18 @@
           </el-form-item>
 
 
-          <el-form-item class="col-md-3" prop="assignedTo1">
+          <el-form-item class="col-md-4" prop="assignedTo1">
             <el-input placeholder="AssignedTo1" v-model="activity.assignedTo1" size="medium">
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3" prop="assignedTo2">
+          <el-form-item class="col-md-4" prop="assignedTo2">
             <el-input placeholder="AssignedTo2" v-model="activity.assignedTo2" size="medium">
             </el-input>
           </el-form-item>
 
-          <el-form-item class="col-md-3" prop="assignedToDetails">
+          <el-form-item class="col-md-8" prop="assignedToDetails">
             <el-input placeholder="AssignedToDetails" v-model="activity.assignedToDetails" size="medium">
-            </el-input>
-          </el-form-item>
-
-          <el-form-item class="col-md-3" prop="details">
-            <el-input placeholder="Details" v-model="activity.details" size="medium">
             </el-input>
           </el-form-item>
 
@@ -246,7 +246,7 @@
 
         </div>
 
-        <el-row style="margin-top: 30px;">
+        <el-row style="justify-content: center; margin: auto; display: flex; gap: 20px;">
           <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addActivityMethod()">
             Add
           </el-button>
