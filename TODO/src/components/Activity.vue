@@ -62,7 +62,7 @@
 													<h4 class="title">Assigned To</h4>
 													<a href="javascript:void(0);">Assignment Details</a>
 												</div>
-                        <div class="budget-date">
+                        <div class="budget-estimate">
 													<h4 class="title">Due On</h4>
 													<a href="javascript:void(0);" class="search-link">Completed On</a>
 												</div>
@@ -96,16 +96,13 @@
                           <h4 class="title">{{ scope.assignedTo1 }}{{scope.assignedTo2 !='' ? ' / ' : ''}}{{ scope.assignedTo2 }}</h4>
                           <a href="javascript:void(0);" class="search-link">{{ scope.assignedToDetails }}</a>
                         </div>
-                        <div class="budget-date">
+                        <div class="budget-estimate">
                           <h6 class="title">{{ getDate(scope.taskDate) }}</h6>
                           <a href="javascript:void(0);" class="search-link">{{ getDate(scope.completedOn) }}</a>
                         </div>
-                        <div class="budget-estimate">
-                          <h6>{{ scope.taskType }}</h6>
-                        </div>
-                        
+                        <h6 class="budget-estimate">{{ scope.taskType }}</h6>
                         <h6 class="budget-actual">{{ scope.status }}</h6>
-                        
+
                         <div class="edit-icon">
                           <el-button type="primary" icon="el-icon-edit" circle @click="editActivity(scope)" size="small">
                           </el-button>
@@ -203,7 +200,6 @@
       <el-form :model="activity" ref="form" :rules="formRules" style="margin-top: 30px;">
         <div class="row">
           <el-form-item class="col-md-6" prop="title">
-            <label>Title</label>
             <el-input placeholder="Title" v-model="activity.title" size="medium">
             </el-input>
           </el-form-item>
@@ -651,12 +647,6 @@ div.cell {
   word-wrap: break-word;
   width: 9% !important;
 }
-
-.budget-date {
-  word-wrap: break-word;
-  width: 20% !important;
-}
-
 
 .el-dialog {
   border-radius: 8px !important;
