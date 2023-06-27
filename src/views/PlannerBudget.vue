@@ -937,7 +937,7 @@ export default {
     },
     openToDoPage() {
       this.$router.push({
-        name: "/planner_budget",
+        name: "/todo",
 
         query: {
           mainEventId: this.mainEventId,

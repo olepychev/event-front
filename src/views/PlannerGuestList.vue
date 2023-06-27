@@ -458,6 +458,16 @@ export default {
         },
       });
     },
+
+    openToDoPage() {
+      this.$router.push({
+        name: "/todo",
+
+        query: {
+          mainEventId: this.mainEventId,
+        },
+      });
+    },
     openGuestListPage() {
       this.$router.push({
         name: "/planner_guest_list",

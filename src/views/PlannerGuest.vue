@@ -862,6 +862,7 @@
                     <a href="#" @click="openGuestListPage">Guest List</a>
                   </li>
                   <li><a href="privacy-policy.html">Budget</a></li>
+                  <li><a @click="openToDoPage">ToDo</a></li>
                   <li>
                     <a href="#" @click="openAddSubeventPage">Add Event</a>
                   </li>
@@ -1396,13 +1397,21 @@ export default {
       });
     },
     openGuestListPage() {
-      console.log('aaaaaaaaaaaaaaaa')
       this.$router.push({
         name: "/planner_guest_list",
 
         query: {
           mainEventId: this.mainEventId,
           eventId: this.selected,
+        },
+      });
+    },
+    openToDoPage() {
+      this.$router.push({
+        name: "/todo",
+
+        query: {
+          mainEventId: this.mainEventId,
         },
       });
     },
