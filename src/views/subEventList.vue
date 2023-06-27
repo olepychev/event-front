@@ -104,64 +104,7 @@
                   <p>150 days to go</p>
                 </div>
               </li>
-              <!-- <li
-                class="wow fadeIn"
-                data-wow-duration="2s"
-                data-wow-delay="0.2s"
-              >
-                <a href="planner-guest-list.html" class="list-box home-list">
-                  <h6 class="title"><i class="la la-user"></i>Guest List</h6>
-                  <p>4 invited</p>
-                </a>
-              </li>
-              <li
-                class="wow fadeIn"
-                data-wow-duration="2s"
-                data-wow-delay="0.3s"
-              >
-                <a
-                  href="planner-budget-select.html"
-                  class="list-box budget-list active"
-                >
-                  <h6 class="title"><i class="la la-money"></i>Budget</h6>
-                  <p>100% Remaining</p>
-                </a>
-              </li>
-              <li
-                class="wow fadeIn"
-                data-wow-duration="2s"
-                data-wow-delay="0.4s"
-              >
-                <a
-                  href="planner-checklist-select-date.html"
-                  class="list-box check-list"
-                >
-                  <h6 class="title">
-                    <i class="la la-check-square"></i>Checklist
-                  </h6>
-                  <p>19% Complete</p>
-                </a>
-              </li>
-              <li
-                class="wow fadeIn"
-                data-wow-duration="2s"
-                data-wow-delay="0.5s"
-              >
-                <a href="planner-shortlist.html" class="list-box short-list">
-                  <h6 class="title"><i class="la la-heart-o"></i>Shortlist</h6>
-                  <p>2 Saved</p>
-                </a>
-              </li>
-              <li
-                class="wow fadeIn"
-                data-wow-duration="2s"
-                data-wow-delay="0.6s"
-              >
-                <a href="planner-advice.html" class="list-box advice-list">
-                  <h6 class="title"><i class="la la-bookmark"></i>Advice</h6>
-                  <p>250 ideas</p>
-                </a>
-              </li> -->
+              
             </ul>
           </div>
         </div>
@@ -2013,6 +1956,7 @@ Hi,
                       <a @click="openGuestListPage">Guest List</a>
                     </li>
                     <li><a @click="openBudgetPage">Budget</a></li>
+                    <li><a @click="openToDoPage">ToDo</a></li>
                     <li><a @click="addSubevent">Add Event</a></li>
                     <!-- <li><a href="terms.html">Terms</a></li>
                     <li>
@@ -2269,6 +2213,16 @@ export default {
         });
     },
     openBudgetPage() {
+      this.$router.push({
+        name: "/planner_budget",
+
+        query: {
+          mainEventId: this.mainEventId,
+        },
+      });
+    },
+
+    openToDoPage() {
       this.$router.push({
         name: "/planner_budget",
 

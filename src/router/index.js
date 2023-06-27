@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import ToDo from '../views/ToDo.vue';
 
 Vue.use(VueRouter);
 
@@ -64,6 +65,11 @@ const routes = [
     name: "planner-add-event",
     component: () => import("../views/planner-add-event"),
   },
+  {
+    path: "/todo",
+    name: "todo",
+    component: ToDo,
+  }
 ];
 
 const router = new VueRouter({

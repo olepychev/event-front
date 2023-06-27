@@ -7,6 +7,11 @@ import "vue-toastr-2/dist/vue-toastr-2.min.css";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
 import * as VueGoogleMaps from "vue2-google-maps";
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en'
+Vue.use(ElementUI, { locale });
+
 window.toastr = require("toastr");
 
 Vue.use(VueToastr2);
