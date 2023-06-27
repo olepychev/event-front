@@ -646,7 +646,7 @@ div.cell {
 }
 
 .budget-estimate {
-  word-wrap: break-all;
+  word-break: break-all;
   width: 9% !important;
 }
 
