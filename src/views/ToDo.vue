@@ -110,6 +110,12 @@
 
         <TopSubEvent :mainEventId="this.mainEventId" :defaultSelect="this.eventId" @click-subevent="getSubEventData"></TopSubEvent>
 
+        <div class="guest-filter">
+          <button class="btn gray btn-sm" :class="this.filterType == 'allTodos' ? 'active': ''" @click="onFilterClick('allTodos')">All</button>
+          <button class="btn gray btn-sm" :class="this.filterType == 'pendingTodos' ? 'active': ''" @click="onFilterClick('pendingTodos')">Pending</button>
+          <button class="btn gray btn-sm" :class="this.filterType == 'completedTodos' ? 'active': ''" @click="onFilterClick('completedTodos')">Completed</button>
+          <button class="btn gray btn-sm" :class="this.filterType == 'overdueTodos' ? 'active': ''" @click="onFilterClick('overdueTodos')">Overdue</button>
+        </div>
         <!-- contact area -->
         <div class="section-full content-inner bg-gray">
           <div class="container">
@@ -448,6 +454,7 @@ export default {
       port: null,
       subeventsHeaderData: {},
       selected: null,
+      filterType: 'allTodos',
     }
   },
   created() {
@@ -460,6 +467,11 @@ export default {
     this.getActivities();
   },
   methods: {
+    onFilterClick(type) {
+      this.filterType = type;
+      this.getActivities();
+    },
+
     getSubEventData(subId) {
       this.selected = subId;
       this.getActivities();
@@ -468,7 +480,7 @@ export default {
     getActivities() {
       if(this.selected != null) {
         axios.get("http://localhost:" + this.port + '/todos/events/sub/' + this.selected).then((res) => {
-          this.activities = res.data.map((val) => {
+          this.activities = res.data[this.filterType]?.map((val) => {
             val.edit = false;
             return val;
           })
