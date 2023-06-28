@@ -100,7 +100,7 @@
         </div>
         <!-- Section Banner END -->
         <!-- Manager Tools -->
-        <div class="section-full bg-white plan-tools-bx">
+        <!-- <div class="section-full bg-white plan-tools-bx">
           <div class="container">
             <ul class="plan-tools-list">
               <li
@@ -124,8 +124,11 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
         <!-- contact area -->
+
+        <TopSubEvent :mainEventId="this.mainEventId" :defaultSelect="this.subEventId" @click-subevent="getSubEventData"></TopSubEvent>
+
         <div class="section-full content-inner bg-gray">
           <div class="container">
             <div class="row column-reverse">
@@ -458,7 +461,7 @@ import GoogleMap from "@/components/GoogleMap";
 import moment from "moment";
 import Vue from "vue";
 import VCalendar from "v-calendar";
-import { setTransitionHooks } from "@vue/runtime-core";
+import TopSubEvent from "../components/TopSubEvent.vue";
 
 
 Vue.use(VCalendar);
@@ -472,7 +475,8 @@ export default {
     Footer,
     vueDropzone,
     GoogleMap,
-  },
+    TopSubEvent
+},
   data() {
     return {
       selected: undefined,
@@ -480,8 +484,8 @@ export default {
         start: new Date(),
         end: new Date(),
       },
-      mainEventId: 0,
-      subEventId: 0,
+      mainEventId: null,
+      subEventId: null,
       subeventDetails: {},
       preFilledEventData: [],
       eventData: {
@@ -540,6 +544,7 @@ export default {
     // }
     // else {
       this.mainEventId = this.$route.query.mainEventId;
+      this.subEventId = this.$route.query.subEventId;
       this.selected = this.$route.query.subEventId;
     // }
     
@@ -551,9 +556,7 @@ export default {
     //   : null;
     // this.selected = this.subEventId;
 
-    if (this.mainEventId) {
-      this.getSubeventsHeaderData(this.mainEventId);
-    }
+
     if (this.subEventId) {
       this.getSubEventData(this.subEventId);
     }
@@ -562,20 +565,6 @@ export default {
   methods: {
     onAddressChange(current) {
       // console.log(current)
-    },
-
-    getSubeventsHeaderData(mainEventId) {
-      axios
-        .get(
-          "http://localhost:" + this.port + "/events/" + mainEventId + "/sub"
-        )
-        .then((res) => {
-          this.subeventsHeaderData = res.data;
-          this.openDetails(this.selected);
-        })
-        .catch(() => {
-          this.noData = true;
-        });
     },
 
     openDetails(subEventId) {
@@ -626,7 +615,6 @@ export default {
         .then((res) => {
           // console.log(this.preFilledEventData);
           this.preFilledEventData = res.data;
-          console.log(this.preFilledEventData.mainEventId == this.mainEventId);
           if (this.preFilledEventData.mainEventId == this.mainEventId) {
             this.eventData.title = this.preFilledEventData.title;
             this.eventData.budget = this.addCommas(
@@ -643,7 +631,6 @@ export default {
               end: new Date(this.preFilledEventData.toDate),
             };
             this.eventData.Time = time;
-            console.log(this.preFilledEventData);
             this.$refs.update.updateMarker(
               Number(this.preFilledEventData.location.latitude),
               Number(this.preFilledEventData.location.longitude)
@@ -661,7 +648,6 @@ export default {
 
             this.eventData.address = address;
 
-            console.log(this.mainEventId);
           }
         });
     },
@@ -719,7 +705,6 @@ export default {
       shortDescription: this.eventData.description,
       location: locationData,
     };
-    console.log(requestData);
     if (this.subEventId) {
       axios
         .put(
@@ -727,7 +712,6 @@ export default {
           requestData
         )
         .then((res) => {
-          console.log(res);
           if (res.statusText === "OK") {
             window.toastr.success("Event Successfully Edited");
           }
@@ -752,7 +736,6 @@ export default {
         })
         .catch((e) => {
           window.toastr.error(e.response.data.message);
-          console.log(e.response.data);
         });
       }
     },
@@ -792,6 +775,7 @@ export default {
 
         query: {
           mainEventId: this.mainEventId,
+          eventId: this.selected,
         },
       });
     },

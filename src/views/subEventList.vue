@@ -82,7 +82,7 @@
         </div>
         <!-- Section Banner END -->
         <!-- Manager Tools -->
-        <div class="section-full bg-white plan-tools-bx">
+        <!-- <div class="section-full bg-white plan-tools-bx">
           <div class="container">
             <ul class="plan-tools-list">
               <li
@@ -107,7 +107,10 @@
               
             </ul>
           </div>
-        </div>
+        </div> -->
+
+        <TopSubEvent :mainEventId="this.mainEventId" :defaultSelect="this.eventId" @click-subevent="openDetails"></TopSubEvent>
+
         <!-- Manager Tools End -->
         <!-- contact area -->
         <div class="section-full content-inner bg-gray">
@@ -2100,20 +2103,21 @@ window.JQuery = require("jquery");
 import GoogleMap from "@/components/GoogleMap";
 
 import axios from "axios";
-import Vue from "vue";
-import { format } from "path";
+import TopSubEvent from "../components/TopSubEvent.vue";
+
 export default {
   name: "SubEventList",
   components: {
     Header,
     Footer,
     GoogleMap,
+    TopSubEvent,
   },
   data() {
     return {
       selected: undefined,
       mainEventId: 415,
-      eventId: 0,
+      eventId: null,
       eventTitle: "",
       expenseType: "",
       noData: false,
@@ -2154,6 +2158,8 @@ export default {
     if(this.$route.query.subEventId == undefined || this.$route.query.subEventId == null)
       this.selected = this.$route.params.subEventId
     else this.selected = this.$route.query.subEventId;
+
+    this.eventId = this.selected;
     // console.log(this.selected);
     this.getData(this.mainEventId);
     this.formatDate();
@@ -2203,12 +2209,12 @@ export default {
           if (this.selected) {
             this.openDetails(this.selected);
           } else {
+            this.eventId = this.subeventData[0].eventId;
             this.openDetails(this.subeventData[0].eventId);
           }
         })
         .catch(() => {
           this.noData = true;
-          console.log(this.noData);
         });
     },
     openBudgetPage() {
@@ -2261,10 +2267,6 @@ export default {
       });
     },
     formatDate(date) {
-      // let date = new Date("2022-12-02 15:48");
-      // console.log(
-      //   moment(date, "YYYY-MM-DD HH:mm").format("ddd, DD MMM YY h:mm A")
-      // );
       return moment(date, "YYYY-MM-DD HH:mm").format("ddd, DD-MMM-YY h:mm A");
     },
     addCommas(nStr) {

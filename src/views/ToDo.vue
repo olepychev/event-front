@@ -83,7 +83,7 @@
         </div>
         <!-- Section Banner END -->
         <!-- Manager Tools -->
-        <div class="section-full bg-white plan-tools-bx">
+        <!-- <div class="section-full bg-white plan-tools-bx">
           <div class="container">
             <ul class="plan-tools-list">
               <li
@@ -105,8 +105,11 @@
               </li>
             </ul>
           </div>
-        </div>
+        </div> -->
         <!-- Planner advice End -->
+
+        <TopSubEvent :mainEventId="this.mainEventId" :defaultSelect="this.eventId" @click-subevent="getSubEventData"></TopSubEvent>
+
         <!-- contact area -->
         <div class="section-full content-inner bg-gray">
           <div class="container">
@@ -361,6 +364,7 @@
 <script>
 import Header from "@/views/layouts/Header.vue";
 import Footer from "@/views/layouts/Footer.vue";
+import TopSubEvent from "../components/TopSubEvent.vue";
 import moment from 'moment'
 window.$ = require("jquery");
 window.JQuery = require("jquery");
@@ -371,6 +375,7 @@ export default {
   components: {
     Header,
     Footer,
+    TopSubEvent
   },
   data() {
     return {
@@ -450,9 +455,6 @@ export default {
     this.port = location.port;
     this.eventId = this.$route.query.eventId;
     this.selected = this.eventId;
-    if (this.mainEventId) {
-      this.getSubeventsHeaderData(this.mainEventId);
-    }
   },
   mounted() {
     this.getActivities();
@@ -461,18 +463,6 @@ export default {
     getSubEventData(subId) {
       this.selected = subId;
       this.getActivities();
-    },
-    getSubeventsHeaderData(mainEventId) {
-      axios
-        .get(
-          "http://localhost:" + this.port + "/events/" + mainEventId + "/sub"
-        )
-        .then((res) => {
-          this.subeventsHeaderData = res.data;
-        })
-        .catch(() => {
-          this.noData = true;
-        });
     },
 
     getActivities() {
