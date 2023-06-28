@@ -2200,7 +2200,6 @@ export default {
         )
         .then((res) => {
           this.subeventData = res.data;
-          console.log(this.subeventData);
           if (this.selected) {
             this.openDetails(this.selected);
           } else {
