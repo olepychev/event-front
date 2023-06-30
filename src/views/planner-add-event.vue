@@ -1333,10 +1333,6 @@
                 <div class="start-here-bx wedding-reception-bx">
                   <div class="planroll-title">
                     <h5 class="title">Add Your Email Address</h5>
-                    <!-- <p>
-                      Add your partner to your Wedding Manager so you can plan
-                      your wedding together.
-                    </p> -->
                   </div>
                   <div class="form-group">
                     <input
@@ -1346,6 +1342,16 @@
                       :class="{'is-invalid': !isEmailValid}"
                       @keydown="(ev) => validateEmail(ev)"
                       placeholder="Add your email"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      v-model="eventData.emailAddress"
+                      class="form-control"
+                      placeholder="Password"
                       required
                     />
                   </div>
@@ -1361,7 +1367,47 @@
                     />
                   </div>
                 </div>
+
+
                 <div class="modal-footer text-center">
+                  <!-- <button
+                    type="submit"
+                    class="btn gradient"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Congrats! Even your names look great together."
+                  >
+                    LOGIN
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="btn facebook"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Congrats! Even your names look great together."
+                  ><i class="fa fa-facebook m-r10"></i>
+                    Log in with Facebook
+                  </button> -->
+
+                  <!-- <vue-google-signin
+                    client-id="YOUR_GOOGLE_CLIENT_ID"
+                    @success="handleGoogleLoginSuccess"
+                    @error="handleGoogleLoginError"
+                  >
+                    Login with Google
+                  </vue-google-signin> -->
+
+                  <button
+                    type="submit"
+                    class="btn google-plus"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Congrats! Even your names look great together."
+                  ><i class="fa fa-google m-r10"></i>
+                    Log in with Google
+                  </button>
+
                   <button
                     type="submit"
                     class="btn gradient"
@@ -1548,6 +1594,7 @@ import vueDropzone from "vue2-dropzone";
 
 import Vue from "vue";
 import VCalendar from "v-calendar";
+
 Vue.use(VCalendar);
 
 export default {
@@ -1561,6 +1608,11 @@ export default {
 
   data() {
     return {
+      params: {
+        client_id: 'xxxx',
+        ux_mode: 'popup',
+      },
+
       TimeFormat: {
         input: "YYYY-MM-DD hh:mm A",
       },
@@ -1673,6 +1725,13 @@ export default {
     allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
     GoToFinish() {
       this.tabIndex = 0;
+    },
+
+    onSuccess(googleUser) {
+      console.log('googleUser', googleUser);
+    },
+    onError(error) {
+      console.log('googleUser', error);
     },
 
     GoToDashboard() {
@@ -1943,7 +2002,7 @@ export default {
 
     resetAllData() {
       
-      this.tabIndex = 0;
+      this.tabIndex = 5;
       this.mainEventId = 0;
       this.eventData = {
         userName: "",
@@ -1980,6 +2039,17 @@ export default {
 </script>
 
 <style>
+
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+}
+
 select {
   padding: 12px;
   border: 1px solid #cfd9db;
