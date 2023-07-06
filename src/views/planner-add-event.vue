@@ -196,8 +196,6 @@
                           <div class="input-group-append">
                             <a
                               href="javascript:;"
-                              data-toggle="modal"
-                              data-target="#exampleModal"
                               class="btn gradient"
                               @click="resetAllData()"
                             >
@@ -1847,13 +1845,6 @@ export default {
       const endFormattedTime = this.formattedDateForSubmit(
         this.eventData.Time.end
       );
-
-      if(!localStorage.getItem('token')) {
-        this.loginKey++;
-        this.isLogin = true;
-        $("#exampleModal").modal('hide')
-        return;
-      }
       
       let locationData = {
         address: this.eventData.address.address,
@@ -1975,7 +1966,12 @@ export default {
     },
 
     resetAllData() {
-      
+      if(!localStorage.getItem('token')) {
+        this.loginKey++;
+        this.isLogin = true;
+        $("#exampleModal").modal('hide')
+        return;
+      }
       this.tabIndex = 0;
       this.mainEventId = 0;
       this.eventData = {
@@ -2007,6 +2003,7 @@ export default {
       this.isInvalidAdd = true;
       this.mapKey++;
       this.getSubEventTypes(this.eventTypes[0].type)
+      $("#exampleModal").modal('show')
     },
   },
 };
