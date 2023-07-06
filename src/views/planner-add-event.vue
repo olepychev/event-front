@@ -1346,16 +1346,6 @@
                     />
                   </div>
 
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      v-model="eventData.emailAddress"
-                      class="form-control"
-                      placeholder="Password"
-                      required
-                    />
-                  </div>
-
                   <div class="form-group" v-if="eventData.type != 'BIRTHDAY'">
                     <input
                       type="email"
@@ -1370,43 +1360,6 @@
 
 
                 <div class="modal-footer text-center">
-                  <!-- <button
-                    type="submit"
-                    class="btn gradient"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Congrats! Even your names look great together."
-                  >
-                    LOGIN
-                  </button>
-
-                  <button
-                    type="submit"
-                    class="btn facebook"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Congrats! Even your names look great together."
-                  ><i class="fa fa-facebook m-r10"></i>
-                    Log in with Facebook
-                  </button> -->
-
-                  <!-- <vue-google-signin
-                    client-id="YOUR_GOOGLE_CLIENT_ID"
-                    @success="handleGoogleLoginSuccess"
-                    @error="handleGoogleLoginError"
-                  >
-                    Login with Google
-                  </vue-google-signin> -->
-
-                  <button
-                    type="submit"
-                    class="btn google-plus"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Congrats! Even your names look great together."
-                  ><i class="fa fa-google m-r10"></i>
-                    Log in with Google
-                  </button>
 
                   <button
                     type="submit"
@@ -1574,6 +1527,8 @@
         <!-- Footer END-->
         <button class="scroltop fa fa-chevron-up"></button>
       </div>
+
+      <Login :isSignup="isSignup" :isLogin="isLogin" :key="loginKey"></Login>
       <!-- Content END-->
       <!-- Footer -->
       <google-map style="width: 100%" @added-address="updateAddress" />
@@ -1594,6 +1549,7 @@ import vueDropzone from "vue2-dropzone";
 
 import Vue from "vue";
 import VCalendar from "v-calendar";
+import Login from "../components/Login.vue";
 
 Vue.use(VCalendar);
 
@@ -1604,6 +1560,7 @@ export default {
     Footer,
     vueDropzone,
     GoogleMap,
+    Login
   },
 
   data() {
@@ -1683,14 +1640,18 @@ export default {
       name: "",
       port: null,
       isInvalidAdd: true,
-      mapKey: 0
+      mapKey: 0,
+      isLogin: false,
+      isSignup: false,
+      loginKey: 0,
     };
   },
   created() {
     this.port = location.port;
     this.getEventTypes();
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     ready() {
       // Toolbar extra buttons
@@ -1887,6 +1848,13 @@ export default {
         this.eventData.Time.end
       );
 
+      if(!localStorage.getItem('token')) {
+        this.loginKey++;
+        this.isLogin = true;
+        $("#exampleModal").modal('hide')
+        return;
+      }
+      
       let locationData = {
         address: this.eventData.address.address,
         city: this.eventData.address.city,
@@ -1918,7 +1886,11 @@ export default {
       };
 
       axios
-        .post("http://localhost:" + this.port + "/events", requestData)
+        .post("http://localhost:" + this.port + "/events", requestData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
         .then((res) => {
           console.log(res)
           if (res.statusText === "Created") {
@@ -1929,7 +1901,9 @@ export default {
             window.toastr.error("Failed to add new Event");
           }
         }).catch((err) => {
-          window.toastr.error("Failed to add new Event");
+          if(err.response && err.response.request.status == 400)
+            window.toastr.error(err.response.data.message);
+          else window.toastr.error("Bad Connection");
         })
     },
     GoToStep(pos) {
@@ -2002,7 +1976,7 @@ export default {
 
     resetAllData() {
       
-      this.tabIndex = 5;
+      this.tabIndex = 0;
       this.mainEventId = 0;
       this.eventData = {
         userName: "",

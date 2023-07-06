@@ -18,6 +18,13 @@ module.exports = {
           'Content-Type': 'application/json'
         }
       },
+      "/api": {
+        target: "http://164.92.67.121:9928",
+        secure: false,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      },
       "/events": {
         target: "http://164.92.67.121:9921",
         secure: false,
