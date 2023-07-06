@@ -1977,7 +1977,7 @@ export default {
       this.eventData = {
         userName: "",
         partnerName: "",
-        emailAddress: "",
+        emailAddress: localStorage.getItem('username'),
         partnerEmail: "",
         title: "",
         Time: {

@@ -112,7 +112,6 @@ export default {
 		}
 	},
 	mounted() {
-		console.log('aaa')
 		this.port = location.port;
 		if(this.isSignup) {
 			$('#signup').modal('show')
