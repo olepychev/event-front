@@ -1448,7 +1448,7 @@
         <button class="scroltop fa fa-chevron-up"></button>
       </div>
 
-      <Login :isSignup="isSignup" :isLogin="isLogin" :key="loginKey" :isEvent="isEvent"></Login>
+      <Login :isSignup="isSignup" :isLogin="isLogin" :key="loginKey"></Login>
       <!-- Content END-->
       <!-- Footer -->
       <google-map style="width: 100%" @added-address="updateAddress" />
@@ -1563,7 +1563,6 @@ export default {
       mapKey: 0,
       isLogin: false,
       isSignup: false,
-      isEvent: true,
       loginKey: 0,
     };
   },
@@ -1891,6 +1890,7 @@ export default {
     resetAllData() {
       if(!localStorage.getItem('token')) {
         this.loginKey++;
+        localStorage.setItem('loginType', true);
         this.isLogin = true;
         $("#exampleModal").modal('hide')
         return;

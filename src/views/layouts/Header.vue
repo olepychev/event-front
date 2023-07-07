@@ -43,7 +43,7 @@
 						
 						<!-- main header END -->
 		</header>
-		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey" :isEvent="isEvent"></Login>
+		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey"></Login>
 	</div>
 </template>
 
@@ -62,12 +62,12 @@ export default {
 			isLogins: false,
 			isSignups: false,
 			loginKey: 0,
-			isEvent: false
 		}
 	},
 
 	methods: {
 		onLogIn() {
+			localStorage.setItem('loginType', false);
 			this.isLogins = true;
 			this.loginKey ++; 
 			this.isSignups = false;
@@ -75,6 +75,7 @@ export default {
 
 		onSignUp() {
 			this.isSignups = true;
+			localStorage.setItem('loginType', false);
 			this.loginKey ++; 
 			this.isLogins = false;
 		}

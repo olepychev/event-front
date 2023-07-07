@@ -99,7 +99,6 @@ export default {
 	props: {
 		isLogin: Boolean,
 		isSignup: Boolean,
-		isEvent: Boolean
 	},
 
 	data() {
@@ -118,7 +117,6 @@ export default {
 			$('#signup').modal('show')
 		}
 
-		console.log('@@@@', this.isEvent)
 		if(this.isLogin) {
 			this.userData.email = '';
 			this.userData.password = '';
@@ -140,11 +138,9 @@ export default {
 					localStorage.setItem('id', res.data.id);
 					window.toastr.success('Login Successfully!');
 					$('#login').modal('hide')
-					console.log('111', this.isEvent)
-					// if(this.isEvent) {
-						// console.log('@@@@@@@@@@@')
-						// $("#exampleModal").modal('show')
-					// }
+					if(localStorage.getItem('loginType') == 'true') {
+						$("#exampleModal").modal('show')
+					}
 				}).catch(err => {
 					if(err.response && err.response.request.status == 401) 
 						window.toastr.error(err.response.data.message);
