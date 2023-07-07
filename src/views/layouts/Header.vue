@@ -1,4 +1,5 @@
 <template>
+	<div>
     <header class="site-header header-transparent mo-left" id="site-header">
         <!-- main header -->
         <div class="sticky-header main-bar-wraper navbar-expand-lg">
@@ -12,12 +13,18 @@
                     <!-- extra nav -->
                     <div class="extra-nav">
                         <div class="extra-cell">
+														
+													<button class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
+													<button class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>login</span> <i class="la la-sign-in"></i></button>
                             <a href="#" class="btn gradient openbtn"><span>Your Wedding Manager </span><i class="fa fa-bars"></i></a>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
+				
         <div id="mySidenav" class="sidenav right-nav">
             <a href="javascript:void(0)" class="closebtn menu-close"><i class="ti-close"></i></a>
             <ul class="">
@@ -31,16 +38,49 @@
                 <li><a href="scrapbook.html"><i class="la la-laptop"></i>Scrapbook</a></li>
                 <li><a href="settings.html"><i class="la la-cog"></i>Settings</a></li>
                 <li><a href="index.html"><i class="la la-sign-out"></i>Log out</a></li>
-            </ul>
-        </div>
-        <!-- main header END -->
-    </header>
+							</ul>
+						</div>
+						
+						<!-- main header END -->
+		</header>
+		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey" :isEvent="isEvent"></Login>
+	</div>
 </template>
 
 <script>
-    export default {
-        name: "Header"
-    }
+import Login from "../../components/Login.vue";
+
+export default {
+	name: "Header",
+
+	components: {
+		Login,
+	},
+
+	data() {
+		return {
+			isLogins: false,
+			isSignups: false,
+			loginKey: 0,
+			isEvent: false
+		}
+	},
+
+	methods: {
+		onLogIn() {
+			this.isLogins = true;
+			this.loginKey ++; 
+			this.isSignups = false;
+		},
+
+		onSignUp() {
+			this.isSignups = true;
+			this.loginKey ++; 
+			this.isLogins = false;
+		}
+	}
+};
+		
 </script>
 
 <style scoped>
