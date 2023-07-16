@@ -1191,6 +1191,14 @@ export default {
         .post("http://localhost:" + this.port + "/guests", this.guestData)
         .then(() => {
           window.toastr.success("Successfully Added!");
+          this.$router.push({
+          name: "/planner_guest_list",
+
+          query: {
+            mainEventId: this.mainEventId,
+            eventId: this.selected,
+          },
+        });
         })
         .catch(() => {
           window.toastr.error("Add Failed!");
@@ -1292,6 +1300,14 @@ export default {
         )
         .then(() => {
           window.toastr.success("Successfully Updated!");
+          this.$router.push({
+            name: "/planner_guest_list",
+
+            query: {
+              mainEventId: this.mainEventId,
+              eventId: this.selected,
+            },
+          });
           return false;
         })
         .catch(() => {

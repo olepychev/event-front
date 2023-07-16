@@ -13,10 +13,9 @@
                     <!-- extra nav -->
                     <div class="extra-nav">
                         <div class="extra-cell">
-														
-													<button class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
-													<button class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>login</span> <i class="la la-sign-in"></i></button>
-                            <a href="#" class="btn gradient openbtn"><span>Your Wedding Manager </span><i class="fa fa-bars"></i></a>
+														<button class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>login</span> <i class="la la-sign-in"></i></button>
+														<button class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
+                            <!-- <a href="#" class="btn gradient openbtn"><span>Your Wedding Manager </span><i class="fa fa-bars"></i></a> -->
                         </div>
 
                     </div>
@@ -25,22 +24,22 @@
             </div>
         </div>
 				
-        <div id="mySidenav" class="sidenav right-nav">
-            <a href="javascript:void(0)" class="closebtn menu-close"><i class="ti-close"></i></a>
-            <ul class="">
-                <li><a href="my-account.html"><i class="la la-home"></i>Home</a></li>
-                <li><a href="planner-guest-list.html"><i class="la la-user"></i>Guest List</a></li>
-                <li><a href="planner-budget-select.html"><i class="la la-money"></i>Budget</a></li>
-                <li><a href="planner-checklist-select-date.html"><i class="la la-check-square"></i>Checklist</a></li>
-                <li><a href="planner-shortlist.html"><i class="la la-file-text-o"></i>Shortlist</a></li>
-                <li><a href="planner-shortlist.html"><i class="la la-user-plus"></i>Booked Suppliers</a></li>
-                <li><a href="planner-advice.html"><i class="la la-lightbulb-o"></i>Advice</a></li>
-                <li><a href="scrapbook.html"><i class="la la-laptop"></i>Scrapbook</a></li>
-                <li><a href="settings.html"><i class="la la-cog"></i>Settings</a></li>
-                <li><a href="index.html"><i class="la la-sign-out"></i>Log out</a></li>
-							</ul>
-						</div>
-						
+        <!-- <div id="mySidenav" class="sidenav right-nav">
+					<a href="javascript:void(0)" class="closebtn menu-close"><i class="ti-close"></i></a>
+					<ul class="">
+						<li><a href="my-account.html"><i class="la la-home"></i>Home</a></li>
+						<li><a href="planner-guest-list.html"><i class="la la-user"></i>Guest List</a></li>
+						<li><a href="planner-budget-select.html"><i class="la la-money"></i>Budget</a></li>
+						<li><a href="planner-checklist-select-date.html"><i class="la la-check-square"></i>Checklist</a></li>
+						<li><a href="planner-shortlist.html"><i class="la la-file-text-o"></i>Shortlist</a></li>
+						<li><a href="planner-shortlist.html"><i class="la la-user-plus"></i>Booked Suppliers</a></li>
+						<li><a href="planner-advice.html"><i class="la la-lightbulb-o"></i>Advice</a></li>
+						<li><a href="scrapbook.html"><i class="la la-laptop"></i>Scrapbook</a></li>
+						<li><a href="settings.html"><i class="la la-cog"></i>Settings</a></li>
+						<li><a href="index.html"><i class="la la-sign-out"></i>Log out</a></li>
+					</ul>
+				</div> -->
+					
 						<!-- main header END -->
 		</header>
 		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey"></Login>
