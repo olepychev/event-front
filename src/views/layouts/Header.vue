@@ -13,8 +13,10 @@
                     <!-- extra nav -->
                     <div class="extra-nav">
                         <div class="extra-cell">
-														<button class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>login</span> <i class="la la-sign-in"></i></button>
-														<button class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
+
+														<button v-if="!isloggedIn" class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>Sign In</span> <i class="la la-sign-in"></i></button>
+														<button v-if="!isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
+														<button v-if="isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSignOut()"><span>Sign Out</span> <i class="la la-user-plus"></i></button>
                             <!-- <a href="#" class="btn gradient openbtn"><span>Your Wedding Manager </span><i class="fa fa-bars"></i></a> -->
                         </div>
 
@@ -42,7 +44,7 @@
 					
 						<!-- main header END -->
 		</header>
-		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey"></Login>
+		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey" @logInSuccess="logInSuccess"></Login>
 	</div>
 </template>
 
@@ -61,7 +63,12 @@ export default {
 			isLogins: false,
 			isSignups: false,
 			loginKey: 0,
+			isloggedIn: false
 		}
+	},
+
+	mounted() {
+		this.isloggedIn = localStorage.getItem('token') ? true: false;
 	},
 
 	methods: {
@@ -77,6 +84,20 @@ export default {
 			localStorage.setItem('loginType', false);
 			this.loginKey ++; 
 			this.isLogins = false;
+		},
+
+		onSignOut() {
+			localStorage.removeItem('token');
+			localStorage.removeItem('refreshToken');
+			localStorage.removeItem('roles');
+			localStorage.removeItem('username');
+			localStorage.removeItem('id');
+			this.isloggedIn = false;
+			window.toastr.success("SignOut Successfully!");
+		},
+
+		logInSuccess(isLog) {
+			this.isloggedIn = isLog;
 		}
 	}
 };
