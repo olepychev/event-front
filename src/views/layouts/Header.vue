@@ -47,20 +47,17 @@
 						<!-- main header END -->
 		</header>
 		<Login :isSignup="isSignups" :isLogin="isLogins" :key="loginKey" @logInSuccess="logInSuccess"></Login>
-		<Setting></Setting>
 	</div>
 </template>
 
 <script>
 import Login from "../../components/Login.vue";
-import Setting from "../../components/Setting.vue";
 
 export default {
 	name: "Header",
 
 	components: {
 		Login,
-		Setting,
 	},
 
 	data() {
@@ -110,8 +107,11 @@ export default {
 		},
 
 		onSetting() {
-			console.log('asdfsadf')
-			$('#setting').modal('show')
+			this.$router.push({
+        name: "/setting",
+        params: {
+        },
+      });
 		}
 	}
 };

@@ -96,6 +96,144 @@
             <!-- Search Filter END -->
           </div>
         </div>
+
+        <div class="section-full bg-white plan-tools-bx">
+          <div class="container">
+            <ul class="plan-tools-list">
+              <li
+                class="wow fadeIn"
+                data-wow-duration="2s"
+                data-wow-delay="0.1s"
+              >
+                <a href="my-account.html" class="list-box home-list active">
+                  <h6 class="title"><i class="la la-home"></i>Home</h6>
+                  <p>150 days to go</p>
+                </a>
+              </li>
+              <li
+                class="wow fadeIn"
+                data-wow-duration="2s"
+                data-wow-delay="0.2s"
+              >
+                <a href="planner-guest-list.html" class="list-box guest-list">
+                  <h6 class="title"><i class="la la-user"></i>Guest List</h6>
+                  <p>4 invited</p>
+                </a>
+              </li>
+              <li
+                class="wow fadeIn"
+                data-wow-duration="2s"
+                data-wow-delay="0.3s"
+              >
+                <a
+                  href="planner-budget-select.html"
+                  class="list-box budget-list"
+                >
+                  <h6 class="title"><i class="la la-money"></i>Budget</h6>
+                  <p>100% Remaining</p>
+                </a>
+              </li>
+              <li
+                class="wow fadeIn"
+                data-wow-duration="2s"
+                data-wow-delay="0.4s"
+              >
+                <a
+                  href="planner-checklist-select-date.html"
+                  class="list-box check-list"
+                >
+                  <h6 class="title">
+                    <i class="la la-check-square"></i>Checklist
+                  </h6>
+                  <p>19% Complete</p>
+                </a>
+              </li>
+              <li
+                class="wow fadeIn"
+                data-wow-duration="2s"
+                data-wow-delay="0.5s"
+              >
+                <a href="planner-shortlist.html" class="list-box short-list">
+                  <h6 class="title">
+                    <i class="la la-heart-o"></i>Shortlist
+                  </h6>
+                  <p>2 Saved</p>
+                </a>
+              </li>
+              <li
+                class="wow fadeIn"
+                data-wow-duration="2s"
+                data-wow-delay="0.6s"
+              >
+                <a href="planner-advice.html" class="list-box advice-list">
+                  <h6 class="title"><i class="la la-bookmark"></i>Advice</h6>
+                  <p>250 ideas</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+    <div class="wedding-filter-search wedding-filter-advice">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 d-flex">
+						<h2 class="title">My Settings</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Planner advice End -->
+    <!-- contact area -->
+      <div class="section-full content-inner-2 bg-gray">
+          <div class="container">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="settings-box m-b30 gray-input">
+                  <form>
+                    <div class="form-title"><h2>My Wedding Details</h2></div>
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                          <label>Your Name</label>
+                          <input type="text" class="form-control" placeholder="" :value="this.userDetail.username">
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                          <label>Your partner's name</label>
+                          <input type="text" class="form-control" placeholder="">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <form>
+                    <div class="form-title">
+                      <h2>My Login Methods</h2>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                          <label>Change the email</label>
+                          <input type="email" class="form-control" placeholder="Change email">
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6">
+                        <div class="form-group">
+                          <label>Reset password</label>
+                          <input type="password" class="form-control m-b10" placeholder="New Password">
+                          <input type="password" class="form-control m-b10" placeholder="Re Type Password">
+                        </div>
+                      </div>
+                      <button type="button" class="btn gradient btn-block">Save</button>
+                    </div>
+                  </form>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -107,6 +245,18 @@ export default {
   name: "setting",
   components: {
     Header,
+  },
+
+  data() {
+    return {
+      userDetail: {
+        username: '',
+      }
+    }
+  },
+
+  mounted() {
+    this.userDetail.username = localStorage.getItem('username');
   },
 }
 </script>
