@@ -103,6 +103,12 @@ export default {
 
 		logInSuccess(isLog) {
 			this.isloggedIn = isLog;
+			this.$router.push({
+        name: "/dashboard",
+        params: {
+          
+        },
+      });
 		},
 
 		onSetting() {
