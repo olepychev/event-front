@@ -51,7 +51,7 @@
 			}
 		},
 		mounted() {
-			userData.email = localhost.getItem('username')
+			this.userData.email = localStorage.getItem('username')
 		},
 	
 		methods: {

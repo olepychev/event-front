@@ -18,11 +18,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/About.vue"),
   },
-  {
-    path: "/planner_budget",
-    name: "/planner_budget",
-    component: () => import("../views/PlannerBudget.vue"),
-  },
+  
   {
     path: "/planner_expense",
     name: "planner_expense",
@@ -68,9 +64,20 @@ const routes = [
     path: "/todo",
     name: "/todo",
     component: () => import("../views/ToDo.vue"),
-  }
-];
+  },
+  {
+    path: "/planner_budget",
+    name: "/planner_budget",
+    component: () => import("../views/PlannerBudget.vue"),
+  },
+  {
+    path: "/setting",
+    name: "/setting",
+    component: () => import("../views/Setting.vue"),
+  },
 
+];
+  
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
