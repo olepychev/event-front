@@ -13,13 +13,12 @@
                     <!-- extra nav -->
                     <div class="extra-nav">
                         <div class="extra-cell">
-
-														<button v-if="!isloggedIn" class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>Sign In</span> <i class="la la-sign-in"></i></button>
-														<button v-if="!isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
-														<span v-if="isloggedIn" class="text-green" style="font-weight: bold;">{{ this.userDetail.username }}</span>
-														<button v-if="isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSignOut()"><span>Sign Out</span> <i class="la la-user-plus"></i></button>
-														<button v-if="isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSetting()"><span>Setting</span> <i class="la la-user"></i></button>
-                            <!-- <a href="#" class="btn gradient openbtn"><span>Your Wedding Manager </span><i class="fa fa-bars"></i></a> -->
+													<button v-if="!isloggedIn" class="btn green gradient radius-sm m-l10" @click="onLogIn()"><span>Sign In</span> <i class="la la-sign-in"></i></button>
+													<button v-if="!isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSignUp()"><span>Sign Up</span> <i class="la la-user-plus"></i></button>
+													<span v-if="isloggedIn" class="text-green" style="font-weight: bold;">{{ this.userDetail.username }}</span>
+													<button v-if="isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSignOut()"><span>Sign Out</span> <i class="la la-user-plus"></i></button>
+													<button v-if="isloggedIn" class="btn purple gradient radius-sm m-l10" @click="onSetting()"><span>Setting</span> <i class="la la-user"></i></button>
+													<!-- <a href="#" class="btn gradient openbtn"><span>Your Wedding Manager </span><i class="fa fa-bars"></i></a> -->
                         </div>
 
                     </div>

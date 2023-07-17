@@ -75,7 +75,11 @@ const routes = [
     name: "/setting",
     component: () => import("../views/Setting.vue"),
   },
-
+  {
+    path: "/dashboard",
+    name: "/dashboard",
+    component: () => import("../views/Dashboard.vue"),
+  },
 ];
   
 const router = new VueRouter({
