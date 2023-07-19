@@ -1781,10 +1781,10 @@ export default {
       let requestData = {
         title: this.eventData.title,
         multiEvent: "Y",
-        emailAddress: this.eventData.emailAddress,
-        userName: this.eventData.userName,
-        partnerName: this.eventData.partnerName,
-        partnerEmail: this.eventData.emailPartnerAddress,
+        email1: this.eventData.emailAddress,
+        name1: this.eventData.userName,
+        name2: this.eventData.partnerName,
+        email2: this.eventData.emailPartnerAddress,
 
         eventType: this.eventData.type,
         eventSubType: this.eventData.subType,
@@ -1888,13 +1888,13 @@ export default {
     },
 
     resetAllData() {
-      if(!localStorage.getItem('token')) {
-        this.loginKey++;
-        localStorage.setItem('loginType', true);
-        this.isLogin = true;
-        $("#exampleModal").modal('hide')
-        return;
-      }
+      // if(!localStorage.getItem('token')) {
+      //   this.loginKey++;
+      //   localStorage.setItem('loginType', true);
+      //   this.isLogin = true;
+      //   $("#exampleModal").modal('hide')
+      //   return;
+      // }
       this.tabIndex = 0;
       this.mainEventId = 0;
       this.eventData = {

@@ -496,7 +496,7 @@
                 <div class="row">
                   <div class="col-md-6"></div>
                   <div class="col-md-2 text-center m-b30"></div>
-                  <div class="col-md-2">
+                  <div class="col-md-3">
                     <button type="submit" class="btn green">Save</button>
                   </div>
                 </div>
