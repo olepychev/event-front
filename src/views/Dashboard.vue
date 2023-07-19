@@ -109,7 +109,7 @@
 								<div class="reviews-info">
 									<div class="reviews-user">
 										<h6 class="reviewer-name">{{ item.title }}</h6>
-										<h6 class="wedding-date">{{ item.createdOn }}</h6>
+										<h6 class="wedding-date" style="text-align: left;">{{ item.createdOn }}</h6>
 									</div>	
 									<div class="reviews-rating">
 										<ul class="rating">
@@ -126,8 +126,8 @@
 									<div class="review-media">
 										<img src="images/review/thum3.jpg" alt=""/>
 									</div>
-									<h5 class="title">{{ item.shortDescription }}</h5>
-									<p>The best photographer any bride ( especially one who does not like her photo being taken!) could ask for! Can not thank you enough Chanon.</p>
+									<h5 class="title" style="text-align: left;">{{ item.shortDescription }}</h5>
+									<p style="text-align: left;">The best photographer any bride ( especially one who does not like her photo being taken!) could ask for! Can not thank you enough Chanon.</p>
 								</div>
 							</div>
 						</div>
