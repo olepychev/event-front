@@ -318,7 +318,20 @@
                     ref="new_address_id"
                   />
                 </div>
-                <div class="form-group row" style="margin-top: 30px;">
+
+                <div class="form-group row">
+                  <google-map
+                    style="width: 100%"
+                    @added-address="updateAddress"
+                    @input-address="onAddressChange"
+                  />
+                  <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
+                  <!-- <div v-if="isInvalidAdd" class="mytooltip">
+                    Address must be valid.create
+                  </div> -->
+                </div>
+
+                <!-- <div class="form-group row" style="margin-top: 30px;">
                   <input
                     type="hidden"
                     class="form-control"
@@ -337,8 +350,8 @@
                       required
                     />
                   </div>
-                </div>
-                <div class="form-group row">
+                </div> -->
+                <!-- <div class="form-group row">
                   <div class="col-md-3">
                     <label class="label-title">State</label>
                   </div>
@@ -354,9 +367,9 @@
                   <div class="col-md-3">
                     <label class="label-title">Country</label>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-3"> -->
                     <!--<input type="text" class="form-control" placeholder="Country" ref="new_country" required>-->
-                    <select
+                    <!-- <select
                       class="form-control"
                       ref="new_country"
                       style="height: 50px;"
@@ -370,7 +383,9 @@
                       </option>
                     </select>
                   </div>
-                </div>
+                </div> -->
+
+
                 <input
                   type="hidden"
                   class="form-control"
@@ -595,7 +610,23 @@
                   </div>
                   <!--<input type="number" class="form-control" placeholder="Address Id" ref="edit_address_id" v-model="guestData.appUser.addressId" disabled>-->
                 </div>
+
                 <div class="form-group row">
+                  <google-map
+                    style="width: 100%"
+                    @added-address="updateAddress"
+                    @input-address="onAddressChange"
+                    :defaultAddress="this.guestData.appUser.address.latitude == '' ? null: {'lat': parseFloat(this.guestData.appUser.address.latitude), 'lng': parseFloat(this.guestData.appUser.address.longitude)}"
+                    :key="mapKey"
+                  />
+                  <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
+                  <!-- <div v-if="isInvalidAdd" class="mytooltip">
+                    Address must be valid -->
+                    <!-- {{ parseFloat(this.guestData.appUser.address.latitude) }} {{ parseFloat(this.guestData.appUser.address.longitude) }} -->
+                  <!-- </div> -->
+                </div>
+                
+                <!-- <div class="form-group row">
                   <input
                     type="hidden"
                     class="form-control"
@@ -635,7 +666,6 @@
                     <label class="label-title">Country</label>
                   </div>
                   <div class="col-md-3">
-                    <!--<input type="text" class="form-control" placeholder="Country" ref="edit_country" v-model="guestData.appUser.address.country" required>-->
                     <select
                       class="form-control"
                       ref="edit_country"
@@ -658,7 +688,7 @@
                     ref="edit_postal_code"
                     v-model="guestData.appUser.address.postalCode"
                   />
-                </div>
+                </div> -->
                 <!--
                         <div class="form-group row">
                             <div class="col-md-3">
@@ -676,7 +706,7 @@
                         </div>
  
                         -->
-                <div class="form-group row">
+                <div class="form-group row mt-2">
                   <div class="col-md-3">
                     <label class="label-title">Gift Received</label>
                   </div>
@@ -914,6 +944,8 @@ import Header from "@/views/layouts/Header.vue";
 import Footer from "@/views/layouts/Footer.vue";
 import { VueTabs, VTab } from "vue-nav-tabs";
 import "vue-nav-tabs/themes/vue-tabs.css";
+import GoogleMap from "@/components/GoogleMap";
+
 window.$ = require("jquery");
 window.JQuery = require("jquery");
 window.toastr = require("toastr");
@@ -925,6 +957,7 @@ export default {
     Footer,
     VueTabs,
     VTab,
+    GoogleMap
   },
   data() {
     return {
@@ -997,6 +1030,8 @@ export default {
       url: null,
       subeventData: {},
       noData: false,
+      isInvalidAdd: true,
+      mapKey: 0
     };
   },
   created() {
@@ -1022,9 +1057,42 @@ export default {
     this.getData();
   },
   methods: {
-    showDialog() {
-
+    updateAddress(currentPlace) {
+      this.guestData.appUser.address.address = currentPlace.formatted_address;
+      this.isInValidAddress(currentPlace.name)
+      this.guestData.appUser.address.city = currentPlace.vicinity;
+      this.guestData.appUser.address.state = currentPlace.address_components.find(
+        (element) => element.types[0] === "administrative_area_level_1"
+      )?.long_name;
+      this.guestData.appUser.address.country = currentPlace.address_components.find(
+        (element) => element.types[0] === "country"
+      )?.long_name;
+      this.guestData.appUser.address.postalCode = currentPlace.address_components.find(
+        (element) => element.types[0] === "postal_code"
+      )?.long_name;
+      this.guestData.appUser.address.longitude = currentPlace.geometry.location.lng();
+      this.guestData.appUser.address.latitude = currentPlace.geometry.location.lat();
     },
+
+    onAddressChange(current) {
+      console.log('current => ', current)
+      this.isInValidAddress(current)
+    },
+
+    async isInValidAddress(placeName) {
+      if(window.google == undefined) return false;
+      const geocoder = new window.google.maps.Geocoder();
+
+      let isAddress = false;
+      const results = await geocoder.geocode({ address: placeName }).then(res => {
+        isAddress = false;
+      }).catch(err => {
+        isAddress = true;
+      });
+      this.isInvalidAdd = isAddress;
+      console.log(this.isInvalidAdd)
+    },
+
     getSubeventHeaderData() {
       axios
         .get(
@@ -1036,7 +1104,6 @@ export default {
         )
         .then((res) => {
           this.subeventData = res.data;
-          console.log(this.subeventData);
         })
         .catch(() => {
           this.noData = true;
@@ -1072,7 +1139,7 @@ export default {
 
                 this.invites = [];
                 for (let item of this.guestData.invites) {
-                  console.log("guestdata invites" + item);
+                  // console.log("guestdata invites" + item);
                   for (let event of this.events) {
                     if (item.eventId === event.eventId) {
                       this.invites.push({
@@ -1091,6 +1158,10 @@ export default {
                     }
                   }
                 }
+
+                this.isInValidAddress(this.guestData.appUser.address.city)
+                
+                this.mapKey ++;
                 console.log(this.invites);
               });
           });
@@ -1160,6 +1231,7 @@ export default {
         .children("input")
         .val();
 
+      const add = this.guestData.appUser.address;
       this.guestData = {
         appUser: {
           username: this.$refs.new_email.value,
@@ -1174,16 +1246,17 @@ export default {
           cashAmount: this.$refs.new_cash_received.value,
           address: {
             locationType: "GUEST",
-            address: this.$refs.new_address.value,
-            city: this.$refs.new_city.value,
-            state: this.$refs.new_state.value,
-            country: this.$refs.new_country.value,
-            postalCode: this.$refs.new_postal_code.value,
-            latitude: null,
-            longitude: null,
+            address: add.address,
+            city: add.city,
+            state: add.state,
+            country: add.country,
+            postalCode: add.postalCode,
+            latitude: add.latitude,
+            longitude: add.longitude,
           },
           activeStatus: "ACTIVE",
         },
+        /////////////////////////
         invites: this.invites,
       };
       console.log("invites: ", this.invites);
@@ -1212,6 +1285,7 @@ export default {
         .children("input")
         .val();
 
+        const add = this.guestData.appUser.address;
       this.guestData = {
         appUser: {
           username: this.$refs.new_email.value,
@@ -1226,13 +1300,13 @@ export default {
           cashAmount: this.$refs.new_cash_received.value,
           address: {
             locationType: "GUEST",
-            address: this.$refs.new_address.value,
-            city: this.$refs.new_city.value,
-            state: this.$refs.new_state.value,
-            country: this.$refs.new_country.value,
-            postalCode: this.$refs.new_postal_code.value,
-            latitude: null,
-            longitude: null,
+            address: add.address,
+            city: add.city,
+            state: add.state,
+            country: add.country,
+            postalCode: add.postalCode,
+            latitude: add.latitude,
+            longitude: add.longitude,
           },
           activeStatus: "ACTIVE",
         },
