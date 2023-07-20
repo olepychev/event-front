@@ -1,13 +1,13 @@
 <template>
   <div>
     <div v-if="!isHiddenAutoComplete">
-      <h2>Search and add a city</h2>
-      <label>
+      <h2 v-if="!isHideLabel">Search and add a city</h2>
+      <label style="width: 100%">
         <gmap-autocomplete
           @place_changed="setPlace"
           :options="autocompleteOptions"
-          style="width: 400px; font-size: 20px"
           @input="onInput"
+          class="form-control"
           :ref="'autocomplete'"
         >
         </gmap-autocomplete>
@@ -15,7 +15,7 @@
       </label>
       <br />
     </div>
-    <br />
+    <br v-if="isMap"/>
     <gmap-map
       :center="center"
       :zoom="15"
@@ -47,6 +47,7 @@ export default {
     isSearchType: Boolean,
     isHiddenAutoComplete: Boolean,
     defaultAddress: Object,
+    isHideLabel: Boolean
   },
 
   data() {
@@ -67,6 +68,7 @@ export default {
         },
         types: this.isSearchType ? ["address"] : ["(cities)"],
       },
+      isLabelShow: true
     };
   },
 

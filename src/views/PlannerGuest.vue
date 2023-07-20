@@ -320,11 +320,19 @@
                 </div>
 
                 <div class="form-group row">
-                  <google-map
+
+                  <div class="col-md-3">
+                    <label class="label-title">City *</label>
+                  </div>
+                  <div class="col-md-9">
+                    <google-map
                     style="width: 100%"
                     @added-address="updateAddress"
                     @input-address="onAddressChange"
+                    :isHideLabel="true"
                   />
+                  </div>
+                  
                   <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
                   <!-- <div v-if="isInvalidAdd" class="mytooltip">
                     Address must be valid.create
@@ -612,18 +620,32 @@
                 </div>
 
                 <div class="form-group row">
-                  <google-map
+
+                  <div class="col-md-3">
+                    <label class="label-title">City *</label>
+                  </div>
+
+                  <div class="col-md-9">
+                    <google-map
                     style="width: 100%"
                     @added-address="updateAddress"
                     @input-address="onAddressChange"
                     :defaultAddress="this.guestData.appUser.address.latitude == '' ? null: {'lat': parseFloat(this.guestData.appUser.address.latitude), 'lng': parseFloat(this.guestData.appUser.address.longitude)}"
                     :key="mapKey"
-                  />
+                    :isHideLabel="true"
+                    />
+                  </div>
+
+                  
                   <!-- this.eventData.address.address == '' && !(this.eventData.textAddress == '') -->
                   <!-- <div v-if="isInvalidAdd" class="mytooltip">
                     Address must be valid -->
                     <!-- {{ parseFloat(this.guestData.appUser.address.latitude) }} {{ parseFloat(this.guestData.appUser.address.longitude) }} -->
                   <!-- </div> -->
+                  </div>
+
+                <div class="form-group row">
+                  
                 </div>
                 
                 <!-- <div class="form-group row">
