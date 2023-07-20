@@ -12,6 +12,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-.DS_Store
 package-lock.json
-src/.DS_Store
+src/views/.DS_Store
