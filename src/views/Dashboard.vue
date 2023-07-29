@@ -83,17 +83,17 @@
                                       <tr class="table-hr"></tr>
                                       <tr>
                                         <td class="guest-name">Budget</td>
-                                        <td class="guest-invites">{{ item.budgetDto.budget.toLocaleString() }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.budgetDto.budget.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Expenses</td>
-                                        <td class="guest-invites">{{ item.budgetDto.usedBudget.toLocaleString() }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.budgetDto.usedBudget.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Left</td>
-                                        <td class="guest-invites">{{ item.budgetDto.leftBudget.toLocaleString() }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.budgetDto.leftBudget.toLocaleString() }}</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -112,27 +112,27 @@
                                       <tr class="table-hr"></tr>
                                       <tr>
                                         <td class="guest-name">Total</td>
-                                        <td class="guest-invites">{{ item.taskDto.totalTasks }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.taskDto.totalTasks }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Done</td>
-                                        <td class="guest-invites">{{ item.taskDto.doneTasks }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.taskDto.doneTasks }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">UpComing</td>
-                                        <td class="guest-invites">{{ item.taskDto.upcomingTasks }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.taskDto.upcomingTasks }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Due</td>
-                                        <td class="guest-invites">{{ item.taskDto.dueTasks }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.taskDto.dueTasks }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">OverDue</td>
-                                        <td class="guest-invites">{{ item.taskDto.overDueTasks }}</td>
+                                        <td class="guest-invites">{{ item.mainEvent.taskDto.overDueTasks }}</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -176,17 +176,17 @@
                                       <tr class="table-hr"></tr>
                                       <tr>
                                         <td class="guest-name">Budget</td>
-                                        <td class="guest-invites">{{ subItem.budget.toLocaleString() }}</td>
+                                        <td class="guest-invites">{{ subItem.budgetDto.budget.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Expenses</td>
-                                        <td class="guest-invites">8,000</td>
+                                        <td class="guest-invites">{{ subItem.budgetDto.usedBudget.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Left</td>
-                                        <td class="guest-invites">7,000</td>
+                                        <td class="guest-invites">{{ subItem.budgetDto.leftBudget.toLocaleString() }}</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -205,27 +205,27 @@
                                       <tr class="table-hr"></tr>
                                       <tr>
                                         <td class="guest-name">Invited</td>
-                                        <td class="guest-invites">60</td>
+                                        <td class="guest-invites">{{ subItem.guestCountDto.invited.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Attending</td>
-                                        <td class="guest-invites">22</td>
+                                        <td class="guest-invites">{{ subItem.guestCountDto.attending.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">May Be</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.guestCountDto.mayBe.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Not Attending</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.guestCountDto.notAttending.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Unconfirmed</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.guestCountDto.unconfirmed.toLocaleString() }}</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -244,17 +244,17 @@
                                       <tr class="table-hr"></tr>
                                       <tr>
                                         <td class="guest-name">Total</td>
-                                        <td class="guest-invites">60</td>
+                                        <td class="guest-invites">{{ subItem.inviteCountDto.total.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Sent</td>
-                                        <td class="guest-invites">22</td>
+                                        <td class="guest-invites">{{ subItem.inviteCountDto.invited.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">UnSent</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.inviteCountDto.pending.toLocaleString() }}</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -273,27 +273,27 @@
                                       <tr class="table-hr"></tr>
                                       <tr>
                                         <td class="guest-name">Total</td>
-                                        <td class="guest-invites">60</td>
+                                        <td class="guest-invites">{{ subItem.taskDto.totalTasks.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Done</td>
-                                        <td class="guest-invites">22</td>
+                                        <td class="guest-invites">{{ subItem.taskDto.doneTasks.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">UpComing</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.taskDto.upcomingTasks.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">Due</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.taskDto.dueTasks.toLocaleString() }}</td>
                                       </tr>
 
                                       <tr>
                                         <td class="guest-name">OverDue</td>
-                                        <td class="guest-invites">18</td>
+                                        <td class="guest-invites">{{ subItem.taskDto.overDueTasks.toLocaleString() }}</td>
                                       </tr>
                                     </tbody>
                                   </table>
