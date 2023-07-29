@@ -3,7 +3,7 @@
     <!--<div id="loading-area"></div>-->
     <div class="page-wraper">
       <!-- header -->
-      <Header />
+      <!-- <Header /> -->
       <!-- header END -->
       <!-- Content -->
       <div class="page-wraper">

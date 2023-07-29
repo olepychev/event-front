@@ -1,8 +1,27 @@
 <template>
   <div id="app">
+    <Header />
     <router-view/>
+    <Footer />
   </div>
 </template>
+
+<script>
+import Header from './views/layouts/Header.vue';
+import Footer from "./views/layouts/Footer.vue";
+
+export default {
+  components: {
+    Header,
+    Footer
+  },
+
+  data() {
+    return {
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

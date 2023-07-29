@@ -112,6 +112,7 @@
 			}
 		},
 		mounted() {
+			console.log('@@@@@@@@@@@@', $('#login'))
 			this.port = location.port;
 			if(this.isSignup) {
 				$('#signup').modal('show')
