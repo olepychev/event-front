@@ -58,7 +58,7 @@
                                 <h3 class="text-left">{{ item.mainEvent.title }}</h3>
                               </div>
                               <div class="reviews-rating mt-4">
-                                <button class="btn blue gradient radius-sm m-l10">Edit Event<i class="la la-pencil"></i></button>
+                                <button class="btn blue gradient radius-sm m-l10" @click="editMainEvent(item.mainEvent.eventId)">Edit Event<i class="la la-pencil"></i></button>
                               </div>
                             </div>
                             <div class="reviews-content">
@@ -74,7 +74,7 @@
                                         <th class="title-rsvps">Budget</th>
                                         <th class="edit-th">
                                           <div>
-                                            <button class="btn blue gradient">Edit<i class="la la-pencil"></i></button>
+                                            <button class="btn blue gradient" @click="editMainEventBudget(item.mainEvent.eventId)">Edit<i class="la la-pencil"></i></button>
                                           </div>
                                         </th>
                                       </tr>
@@ -104,7 +104,7 @@
                                       <tr>
                                         <th class="title-rsvps">Tasks / Todos</th>
                                         <th class="edit-th">
-                                          <button class="btn blue gradient">Edit<i class="la la-pencil"></i></button>
+                                          <button class="btn blue gradient" @click="editMainEventTodo(item.mainEvent.eventId)">Edit<i class="la la-pencil"></i></button>
                                         </th>
                                       </tr>
                                     </thead>
@@ -145,7 +145,7 @@
                             <div class="featured-gallery p-4 border mb-2" v-for="subItem in item.subEvents">
                               <div class="row" style="justify-content: space-between;">
                                 <h4 class="text-left">{{ subItem.title }}</h4>
-                                <button class="btn blue gradient radius-sm m-l10 float-right">Edit Event<i class="la la-pencil"></i></button>
+                                <button class="btn blue gradient radius-sm m-l10 float-right" @click="editSubEvent(subItem.mainEventId, subItem.eventId)">Edit Event<i class="la la-pencil"></i></button>
                               </div>
 
                               <div class="row mt-4">
@@ -168,7 +168,7 @@
                                       <tr>
                                         <th class="title-rsvps">Budget</th>
                                         <th class="edit-th">
-                                          <button class="btn blue gradient">Edit<i class="la la-pencil"></i></button>
+                                          <button class="btn blue gradient" @click="editSubEventBudget(subItem.mainEventId, subItem.eventId)">Edit<i class="la la-pencil"></i></button>
                                         </th>
                                       </tr>
                                     </thead>
@@ -197,7 +197,7 @@
                                       <tr>
                                         <th class="title-rsvps">Guests</th>
                                         <th class="edit-th">
-                                          <button class="btn blue gradient">Edit<i class="la la-pencil"></i></button>
+                                          <button class="btn blue gradient" @click="editSubEventGuest(subItem.mainEventId, subItem.eventId)">Edit<i class="la la-pencil"></i></button>
                                         </th>
                                       </tr>
                                     </thead>
@@ -236,7 +236,7 @@
                                       <tr>
                                         <th class="title-rsvps">Invites</th>
                                         <th class="edit-th">
-                                          <button class="btn blue gradient">Edit<i class="la la-pencil"></i></button>
+                                          <button class="btn blue gradient" @click="editSubEventInvite(subItem.mainEventId, subItem.eventId)">Edit<i class="la la-pencil"></i></button>
                                         </th>
                                       </tr>
                                     </thead>
@@ -265,7 +265,7 @@
                                       <tr>
                                         <th class="title-rsvps">Tasks / Todos</th>
                                         <th class="edit-th">
-                                          <button class="btn blue gradient">Edit<i class="la la-pencil"></i></button>
+                                          <button class="btn blue gradient" @click="editSubEventTodo(subItem.mainEventId, subItem.eventId)">Edit<i class="la la-pencil"></i></button>
                                         </th>
                                       </tr>
                                     </thead>
@@ -345,7 +345,82 @@ export default {
   },
 
   methods: {
-  
+    editMainEvent(eventId) {
+      this.$router.push({
+        name: "/planner_add_subevent",
+        query: {
+          mainEventId: eventId,
+        },
+      });
+    },
+
+    editMainEventBudget(eventId) {
+      this.$router.push({
+        name: "/planner_budget",
+        query: {
+          mainEventId: eventId,
+        },
+      });
+    },
+
+    editMainEventTodo(eventId) {
+      this.$router.push({
+        name: "/todo",
+        query: {
+          mainEventId: eventId,
+        },
+      });
+    },
+
+    editSubEventGuest(mainId, subId) {
+      this.$router.push({
+        name: "/planner_guest_list",
+        query: {
+          mainEventId: mainId,
+          eventId: subId
+        },
+      });
+    },
+
+    editSubEvent(mainId, subId) {
+      this.$router.push({
+        name: "/planner_add_subevent",
+        query: {
+          mainEventId: mainId,
+          eventId: subId
+        },
+      });
+    },
+
+    editSubEventBudget(mainId, subId) {
+      this.$router.push({
+        name: "/planner_budget",
+        query: {
+          mainEventId: mainId,
+          eventId: subId
+        },
+      });
+    },
+
+    editSubEventInvite(mainId, subId) {
+      // this.$router.push({
+      //   name: "/planner_budget",
+      //   query: {
+      //     mainEventId: mainId,
+      //     eventId: subId
+      //   },
+      // });
+    },
+
+    editSubEventTodo(mainId, subId) {
+      this.$router.push({
+        name: "/todo",
+        query: {
+          mainEventId: mainId,
+          eventId: subId
+        },
+      });
+    }
   },
 };
 </script>

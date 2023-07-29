@@ -81,31 +81,31 @@ export default {
   },
   
   created() {
-    if(this.defaultAddress != null) {
-      let geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ location: this.defaultAddress }, (results, status) => {
-        if (status === 'OK') {
-          console.log('Location:', results[0]);
-          // Assuming you have the address data stored in a variable called 'place'
-          // let compound_code = place.plus_code.compound_code;
-          // const data = compound_code.substring(compound_code.indexOf(' ') + 1);
-          let city, area, country;
-          for (let i = 0; i < results[0].address_components.length; i++) {
-            const component = results[0].address_components[i];
-            if (component.types.includes('locality')) {
-              city = component.long_name;
-            }
-            if (component.types.includes('administrative_area_level_1')) {
-              area = component.short_name;
-            }
-            if (component.types.includes('country')) {
-              country = component.long_name;
-            }
-          }
-          this.$refs.autocomplete.$refs.input.value = `${city}, ${area}, ${country}`;
-        }
-      })
-    }
+    // if(this.defaultAddress != null) {
+    //   let geocoder = new google.maps.Geocoder();
+    //   geocoder.geocode({ location: this.defaultAddress }, (results, status) => {
+    //     if (status === 'OK') {
+    //       console.log('Location:', results[0]);
+    //       // Assuming you have the address data stored in a variable called 'place'
+    //       // let compound_code = place.plus_code.compound_code;
+    //       // const data = compound_code.substring(compound_code.indexOf(' ') + 1);
+    //       let city, area, country;
+    //       for (let i = 0; i < results[0].address_components.length; i++) {
+    //         const component = results[0].address_components[i];
+    //         if (component.types.includes('locality')) {
+    //           city = component.long_name;
+    //         }
+    //         if (component.types.includes('administrative_area_level_1')) {
+    //           area = component.short_name;
+    //         }
+    //         if (component.types.includes('country')) {
+    //           country = component.long_name;
+    //         }
+    //       }
+    //       this.$refs.autocomplete.$refs.input.value = `${city}, ${area}, ${country}`;
+    //     }
+    //   })
+    // }
   },
 
   methods: {
