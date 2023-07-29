@@ -403,13 +403,13 @@ export default {
     },
 
     editSubEventInvite(mainId, subId) {
-      // this.$router.push({
-      //   name: "/planner_budget",
-      //   query: {
-      //     mainEventId: mainId,
-      //     eventId: subId
-      //   },
-      // });
+      this.$router.push({
+        name: "/planner_guest_list",
+        query: {
+          mainEventId: mainId,
+          eventId: subId
+        },
+      });
     },
 
     editSubEventTodo(mainId, subId) {

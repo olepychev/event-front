@@ -490,7 +490,7 @@ export default {
       }
       else {
         axios.get("http://localhost:" + this.port + "/todos/events/" + this.mainEventId).then((res) => {
-          this.activities = res.data.map((val) => {
+          this.activities = res.data.allTodos.map((val) => {
             val.edit = false;
             return val;
           })
