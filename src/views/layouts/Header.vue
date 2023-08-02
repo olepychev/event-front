@@ -7,8 +7,8 @@
                 <div class="container-fluid clearfix">
                     <!-- website logo -->
                     <div class="logo-header mostion">
-                        <a class="header-logo1" href="index.html"><img src="images/logo-white-1.png" alt=""></a>
-                        <a class="header-logo2" href="index.html"><img src="images/logo-black-1.png" alt=""></a>
+                        <a class="header-logo1" href="/"><img src="images/logo-white-1.png" alt=""></a>
+                        <a class="header-logo2" href="/"><img src="images/logo-black-1.png" alt=""></a>
                     </div>
                     <!-- extra nav -->
                     <div class="extra-nav">
